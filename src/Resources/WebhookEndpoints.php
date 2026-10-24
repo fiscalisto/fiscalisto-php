@@ -185,4 +185,33 @@ final class WebhookEndpoints
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
         return $this->client->request('POST', '/v1/webhook_endpoints/' . rawurlencode($id) . '/roll_secret', ['body' => $params], $options);
     }
+
+    /**
+     * Mandar un evento de prueba
+     *
+     * Manda ahora, una sola vez y sin reintentos, un evento del tipo que elija con un objeto de
+     * ejemplo (sus id no existen), firmado como los reales, aunque el webhook no escuche ese tipo.
+     * La respuesta trae lo que contestó su servidor. El evento no sale en GET /v1/events, pero sí
+     * en las entregas del webhook.
+     *
+     * POST /v1/webhook_endpoints/{id}/test
+     *
+     * @param string $id
+     * @param array{
+     *     type?: 'invoice.stamped'|'invoice.failed'|'invoice.canceled'|'invoice.cancellation_pending'|'invoice.cancellation_rejected'|'retention.stamped'|'retention.failed'|'retention.canceled'|'invoice_batch.completed',
+     * } $params
+     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @return array{
+     *     object: 'webhook_test',
+     *     event: array{id: string, object: 'event', type: string, api_version: string, livemode: bool, created_at: string, data: array<string, mixed>},
+     *     delivery: array{ok: bool, status: int|null, error: string|null, response_body: string|null, duration_ms: int},
+     * }
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/webhooks/test-webhook-endpoint
+     */
+    public function test(string $id, array $params = [], array $options = []): array
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('POST', '/v1/webhook_endpoints/' . rawurlencode($id) . '/test', ['body' => $params], $options);
+    }
 }
