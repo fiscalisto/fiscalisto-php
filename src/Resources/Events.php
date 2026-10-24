@@ -29,7 +29,7 @@ final class Events
      * @param array{
      *     limit?: int,
      *     starting_after?: string,
-     *     type?: 'invoice.stamped'|'invoice.failed'|'invoice.canceled'|'invoice.cancellation_pending'|'invoice.cancellation_rejected'|'retention.stamped'|'retention.failed'|'retention.canceled'|'invoice_batch.completed'|'customer_data_request.completed',
+     *     type?: 'invoice.stamped'|'invoice.failed'|'invoice.canceled'|'invoice.cancellation_pending'|'invoice.cancellation_rejected'|'retention.stamped'|'retention.failed'|'retention.canceled'|'invoice_batch.completed'|'customer_data_request.completed'|'issuer.ready',
      *     object?: string,
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options

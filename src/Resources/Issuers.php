@@ -278,4 +278,35 @@ final class Issuers
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
         return $this->client->request('POST', '/v1/issuers/' . rawurlencode($id) . '/efirma', ['body' => $params], $options);
     }
+
+    /**
+     * Crear una liga de alta
+     *
+     * Una página en fiscalisto.com donde el dueño del emisor sube su CSD y firma el contrato con
+     * el PAC con su e.firma, sin que esos archivos ni sus contraseñas pasen por su plataforma.
+     * Mande a su cliente a url; al terminar vuelve a return_url y llega issuer.ready. Cada liga
+     * sirve para un emisor, hasta que vence.
+     *
+     * POST /v1/issuers/{id}/onboarding_links
+     *
+     * @param string $id
+     * @param array{return_url?: string, expires_in_hours?: int} $params
+     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @return array{
+     *     object: 'issuer_onboarding_link',
+     *     livemode: bool,
+     *     issuer: string,
+     *     url: string,
+     *     return_url: string|null,
+     *     expires_at: string|null,
+     *     created_at: string|null,
+     * }
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/emisores/create-issuer-onboarding-link
+     */
+    public function createOnboardingLink(string $id, array $params = [], array $options = []): array
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('POST', '/v1/issuers/' . rawurlencode($id) . '/onboarding_links', ['body' => $params], $options);
+    }
 }
