@@ -1,0 +1,25 @@
+{
+    "name": "fiscalisto/fiscalisto",
+    "description": "SDK de la API de facturación electrónica (CFDI 4.0) de Fiscalisto, para PHP.",
+    "type": "library",
+    "license": "MIT",
+    "keywords": ["cfdi", "factura", "facturacion", "sat", "mexico", "timbrado", "fiscalisto"],
+    "homepage": "https://fiscalisto.com/docs/api/sdk/php",
+    "support": {
+        "docs": "https://fiscalisto.com/docs/api",
+        "source": "https://github.com/RVP97/invoices-retriever/tree/main/sdk/php"
+    },
+    "require": {
+        "php": ">=8.1",
+        "ext-curl": "*",
+        "ext-json": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Fiscalisto\\": "src/"
+        }
+    },
+    "scripts": {
+        "test": "php tests/run.php"
+    }
+}
