@@ -225,11 +225,9 @@ abstract class Core
         if ($body === false) {
             $errno = curl_errno($ch);
             $message = curl_error($ch);
-            curl_close($ch);
             throw new TransportException($message, $errno === CURLE_OPERATION_TIMEDOUT);
         }
         $status = (int) curl_getinfo($ch, CURLINFO_RESPONSE_CODE);
-        curl_close($ch);
         return ['status' => $status, 'headers' => $responseHeaders, 'body' => (string) $body];
     }
 }
