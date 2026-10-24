@@ -28,7 +28,7 @@ final class Advances
      *
      * @param array{
      *     issuer?: string,
-     *     customer: mixed,
+     *     customer: string|array{tax_id: string, legal_name: string, tax_system: string, zip: string, email?: string|null, foreign?: array{country: string, tax_id: string}, ieps_taxpayer?: bool},
      *     use?: string,
      *     amount: float|int,
      *     iva?: '0'|'0.16'|'0.08'|'exento',
@@ -38,8 +38,8 @@ final class Advances
      *     series?: string,
      *     notes?: string,
      *     send_email?: bool,
-     *     email_cc?: mixed,
-     *     metadata?: mixed,
+     *     email_cc?: string|null,
+     *     metadata?: array<string, mixed>,
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
