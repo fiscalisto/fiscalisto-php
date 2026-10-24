@@ -45,7 +45,13 @@ abstract class FiscalistoApi extends Core
     public readonly Resources\InvoiceBatches $invoiceBatches;
 
     /** Clientes. */
+    public readonly Resources\TaxIds $taxIds;
+
+    /** Clientes. */
     public readonly Resources\Customers $customers;
+
+    /** Clientes. */
+    public readonly Resources\CustomerDataRequests $customerDataRequests;
 
     /** Productos. */
     public readonly Resources\Products $products;
@@ -80,7 +86,9 @@ abstract class FiscalistoApi extends Core
         $this->employees = new Resources\Employees($this);
         $this->payrollReceipts = new Resources\PayrollReceipts($this);
         $this->invoiceBatches = new Resources\InvoiceBatches($this);
+        $this->taxIds = new Resources\TaxIds($this);
         $this->customers = new Resources\Customers($this);
+        $this->customerDataRequests = new Resources\CustomerDataRequests($this);
         $this->products = new Resources\Products($this);
         $this->satCatalogs = new Resources\SatCatalogs($this);
         $this->satLists = new Resources\SatLists($this);
