@@ -111,6 +111,9 @@ final class ErrorCode
     /** La cuenta tiene varios emisores y la solicitud no dice cuál: mande issuer (iss_…). */
     public const ISSUER_REQUIRED = 'issuer_required';
 
+    /** La llave es de un entorno de prueba y la solicitud es de toda la cuenta (como crear o borrar entornos): use una llave de pruebas de la cuenta. */
+    public const KEY_IN_SANDBOX = 'key_in_sandbox';
+
     /** La llave es de solo lectura: puede hacer GET, validar RFC, revisar listas del SAT y calcular recibos de nómina, pero nada que timbre, cancele, envíe o cambie datos. */
     public const KEY_READ_ONLY = 'key_read_only';
 
@@ -182,6 +185,9 @@ final class ErrorCode
 
     /** No existe esa ruta. Revise la dirección y la versión (/v1). */
     public const ROUTE_NOT_FOUND = 'route_not_found';
+
+    /** No se pudo crear el entorno de prueba: falta su nombre o la cuenta ya tiene 25 (borre uno que ya no use). */
+    public const SANDBOX_INVALID = 'sandbox_invalid';
 
     /** El SAT rechazó la solicitud de descarga. El mensaje trae su motivo, por ejemplo que ya se pidió el mismo periodo con los mismos filtros demasiadas veces (el SAT pone un límite de por vida). */
     public const SAT_REQUEST_REJECTED = 'sat_request_rejected';

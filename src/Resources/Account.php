@@ -31,7 +31,7 @@ final class Account
      *     livemode: bool,
      *     object: 'account',
      *     name: string,
-     *     key: array{id: string, name: string, issuers: list<string>|null, read_only: bool, expires_at: string|null},
+     *     key: array{id: string, name: string, issuers: list<string>|null, read_only: bool, expires_at: string|null, sandbox: string|null},
      * }
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/cuenta/get-account

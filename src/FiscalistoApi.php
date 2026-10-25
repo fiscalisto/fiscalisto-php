@@ -17,6 +17,9 @@ abstract class FiscalistoApi extends Core
     /** Cuenta. */
     public readonly Resources\TestData $testData;
 
+    /** Entornos de prueba. */
+    public readonly Resources\Sandboxes $sandboxes;
+
     /** Cuenta. */
     public readonly Resources\Balance $balance;
 
@@ -107,6 +110,7 @@ abstract class FiscalistoApi extends Core
         parent::__construct($apiKey, $options);
         $this->account = new Resources\Account($this);
         $this->testData = new Resources\TestData($this);
+        $this->sandboxes = new Resources\Sandboxes($this);
         $this->balance = new Resources\Balance($this);
         $this->issuers = new Resources\Issuers($this);
         $this->invoices = new Resources\Invoices($this);
