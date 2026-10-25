@@ -35,7 +35,7 @@ final class Customers
      *     foreign?: array{country: string, tax_id: string}|null,
      *     ieps_taxpayer?: bool,
      * } $params
-     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     id: string,
      *     livemode: bool,
@@ -57,7 +57,7 @@ final class Customers
     public function create(array $params, array $options = []): array
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
-        return $this->client->request('POST', '/v1/customers', ['body' => $params], $options);
+        return $this->client->request('POST', '/v1/customers', ['body' => $params, 'idempotent' => true], $options);
     }
 
     /**
@@ -124,7 +124,7 @@ final class Customers
      *     foreign?: array{country: string, tax_id: string}|null,
      *     ieps_taxpayer?: bool,
      * } $params
-     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     id: string,
      *     livemode: bool,
@@ -146,7 +146,7 @@ final class Customers
     public function update(string $id, array $params = [], array $options = []): array
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
-        return $this->client->request('POST', '/v1/customers/' . rawurlencode($id), ['body' => $params], $options);
+        return $this->client->request('POST', '/v1/customers/' . rawurlencode($id), ['body' => $params, 'idempotent' => true], $options);
     }
 
     /**

@@ -96,7 +96,7 @@ final class PayrollReceipts
      *     send_email?: bool,
      *     metadata?: array<string, mixed>,
      * } $params
-     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     object: 'payroll_receipt_preview',
      *     employee: string,
@@ -116,6 +116,6 @@ final class PayrollReceipts
     public function preview(array $params, array $options = []): array
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
-        return $this->client->request('POST', '/v1/payroll_receipts/preview', ['body' => $params], $options);
+        return $this->client->request('POST', '/v1/payroll_receipts/preview', ['body' => $params, 'idempotent' => true], $options);
     }
 }

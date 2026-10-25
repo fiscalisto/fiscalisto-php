@@ -37,7 +37,7 @@ final class Issuers
      *     curp?: string|null,
      *     metadata?: array<string, mixed>,
      * } $params
-     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     id: string,
      *     livemode: bool,
@@ -64,7 +64,7 @@ final class Issuers
     public function create(array $params, array $options = []): array
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
-        return $this->client->request('POST', '/v1/issuers', ['body' => $params], $options);
+        return $this->client->request('POST', '/v1/issuers', ['body' => $params, 'idempotent' => true], $options);
     }
 
     /**
@@ -141,7 +141,7 @@ final class Issuers
      *     curp?: string|null,
      *     metadata?: array<string, mixed>|null,
      * } $params
-     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     id: string,
      *     livemode: bool,
@@ -168,7 +168,7 @@ final class Issuers
     public function update(string $id, array $params = [], array $options = []): array
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
-        return $this->client->request('POST', '/v1/issuers/' . rawurlencode($id), ['body' => $params], $options);
+        return $this->client->request('POST', '/v1/issuers/' . rawurlencode($id), ['body' => $params, 'idempotent' => true], $options);
     }
 
     /**
@@ -220,7 +220,7 @@ final class Issuers
      *
      * @param string $id
      * @param array{cer: string, key: string, password: string} $params
-     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     id: string,
      *     livemode: bool,
@@ -247,7 +247,7 @@ final class Issuers
     public function uploadCertificate(string $id, array $params, array $options = []): array
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
-        return $this->client->request('POST', '/v1/issuers/' . rawurlencode($id) . '/certificates', ['body' => $params], $options);
+        return $this->client->request('POST', '/v1/issuers/' . rawurlencode($id) . '/certificates', ['body' => $params, 'idempotent' => true], $options);
     }
 
     /**
@@ -262,7 +262,7 @@ final class Issuers
      *
      * @param string $id
      * @param array{cer: string, key: string, password: string, keep_for_downloads?: bool} $params
-     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     id: string,
      *     livemode: bool,
@@ -289,7 +289,7 @@ final class Issuers
     public function signEfirma(string $id, array $params, array $options = []): array
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
-        return $this->client->request('POST', '/v1/issuers/' . rawurlencode($id) . '/efirma', ['body' => $params], $options);
+        return $this->client->request('POST', '/v1/issuers/' . rawurlencode($id) . '/efirma', ['body' => $params, 'idempotent' => true], $options);
     }
 
     /**
@@ -343,7 +343,7 @@ final class Issuers
      *
      * @param string $id
      * @param array{return_url?: string, expires_in_hours?: int} $params
-     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     object: 'issuer_onboarding_link',
      *     livemode: bool,
@@ -359,7 +359,7 @@ final class Issuers
     public function createOnboardingLink(string $id, array $params = [], array $options = []): array
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
-        return $this->client->request('POST', '/v1/issuers/' . rawurlencode($id) . '/onboarding_links', ['body' => $params], $options);
+        return $this->client->request('POST', '/v1/issuers/' . rawurlencode($id) . '/onboarding_links', ['body' => $params, 'idempotent' => true], $options);
     }
 
     /**
@@ -400,7 +400,7 @@ final class Issuers
      *     window_days?: int,
      *     global_periodicity?: '01'|'02'|'03'|'04',
      * } $params
-     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     object: 'self_invoicing',
      *     livemode: bool,
@@ -416,6 +416,6 @@ final class Issuers
     public function updateSelfInvoicing(string $id, array $params = [], array $options = []): array
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
-        return $this->client->request('POST', '/v1/issuers/' . rawurlencode($id) . '/self_invoicing', ['body' => $params], $options);
+        return $this->client->request('POST', '/v1/issuers/' . rawurlencode($id) . '/self_invoicing', ['body' => $params, 'idempotent' => true], $options);
     }
 }

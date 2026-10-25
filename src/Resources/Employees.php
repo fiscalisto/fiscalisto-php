@@ -47,7 +47,7 @@ final class Employees
      *     department?: string|null,
      *     position?: string|null,
      * } $params
-     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     id: string,
      *     livemode: bool,
@@ -82,7 +82,7 @@ final class Employees
     public function create(array $params, array $options = []): array
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
-        return $this->client->request('POST', '/v1/employees', ['body' => $params], $options);
+        return $this->client->request('POST', '/v1/employees', ['body' => $params, 'idempotent' => true], $options);
     }
 
     /**
@@ -174,7 +174,7 @@ final class Employees
      *     department?: string|null,
      *     position?: string|null,
      * } $params
-     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     id: string,
      *     livemode: bool,
@@ -209,7 +209,7 @@ final class Employees
     public function update(string $id, array $params = [], array $options = []): array
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
-        return $this->client->request('POST', '/v1/employees/' . rawurlencode($id), ['body' => $params], $options);
+        return $this->client->request('POST', '/v1/employees/' . rawurlencode($id), ['body' => $params, 'idempotent' => true], $options);
     }
 
     /**

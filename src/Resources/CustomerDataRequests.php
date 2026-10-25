@@ -36,7 +36,7 @@ final class CustomerDataRequests
      *     description?: string,
      *     expires_in_days?: int,
      * } $params
-     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     id: string,
      *     livemode: bool,
@@ -56,7 +56,7 @@ final class CustomerDataRequests
     public function create(array $params = [], array $options = []): array
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
-        return $this->client->request('POST', '/v1/customer_data_requests', ['body' => $params], $options);
+        return $this->client->request('POST', '/v1/customer_data_requests', ['body' => $params, 'idempotent' => true], $options);
     }
 
     /**

@@ -121,7 +121,8 @@ test('manda la llave y JSON', function (): void {
     same('POST', $r['method']);
     same('http://api.localhost:3000/v1/customers', $r['url']);
     same('Bearer fk_test_abc', $r['headers']['authorization']);
-    same(false, isset($r['headers']['idempotency-key']));
+    // Cada POST lleva su propia llave: un reintento nunca lo hace dos veces.
+    same(1, preg_match('/^[0-9a-f-]{36}$/', $r['headers']['idempotency-key']));
     same('INMOBILIARIA CVA', json_decode($r['body'], true)['legal_name']);
     same(true, str_contains($r['body'], 'INMOBILIARIA CVA'));
 });
@@ -144,12 +145,20 @@ test('lo que timbra lleva Idempotency-Key, la misma en cada reintento', function
     same('https://api.fiscalisto.com/v1/invoices/inv_1%2Fx/substitute', $fake->requests[0]['url']);
 });
 
-test('no repite lo que podría hacer algo dos veces', function (): void {
+test('repite un alta con la misma llave', function () use ($serverError): void {
+    $fake = new Fake([$serverError, new TransportException('down'), answer(201, ['id' => 'cus_1'])]);
+    same('cus_1', $fake->client()->customers->create(['tax_id' => 'X', 'legal_name' => 'X'])['id']);
+    same(1, count(array_unique(array_map(fn ($r) => $r['headers']['idempotency-key'], $fake->requests))));
+});
+
+test('no repite un POST sin llave', function (): void {
+    // Su propia llamada a una ruta, sin idempotent: pudo haber funcionado, así que no se repite.
     $fake = new Fake([answer(500, ['error' => ['type' => 'api_error', 'code' => 'internal_error']])]);
-    $e = throws(FiscalistoException::class, fn () => $fake->client()->customers->create(['tax_id' => 'X', 'legal_name' => 'X']));
+    $e = throws(FiscalistoException::class, fn () => $fake->client()->request('POST', '/v1/customers', ['body' => ['tax_id' => 'X']]));
     same([500, 1], [$e->status, count($fake->requests)]);
+    same(false, isset($fake->requests[0]['headers']['idempotency-key']));
     $fake = new Fake([new TransportException('down')]);
-    $e = throws(FiscalistoException::class, fn () => $fake->client()->customers->create(['tax_id' => 'X', 'legal_name' => 'X']));
+    $e = throws(FiscalistoException::class, fn () => $fake->client()->request('POST', '/v1/customers', ['body' => []]));
     same(['connection_error', 'connection_failed'], [$e->type, $e->errorCode]);
 });
 

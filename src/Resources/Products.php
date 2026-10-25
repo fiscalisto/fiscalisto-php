@@ -40,7 +40,7 @@ final class Products
      *     iva_retention?: float|int,
      *     isr_retention?: float|int,
      * } $params
-     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     id: string,
      *     livemode: bool,
@@ -67,7 +67,7 @@ final class Products
     public function create(array $params, array $options = []): array
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
-        return $this->client->request('POST', '/v1/products', ['body' => $params], $options);
+        return $this->client->request('POST', '/v1/products', ['body' => $params, 'idempotent' => true], $options);
     }
 
     /**
@@ -150,7 +150,7 @@ final class Products
      *     iva_retention?: float|int,
      *     isr_retention?: float|int,
      * } $params
-     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     id: string,
      *     livemode: bool,
@@ -177,7 +177,7 @@ final class Products
     public function update(string $id, array $params = [], array $options = []): array
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
-        return $this->client->request('POST', '/v1/products/' . rawurlencode($id), ['body' => $params], $options);
+        return $this->client->request('POST', '/v1/products/' . rawurlencode($id), ['body' => $params, 'idempotent' => true], $options);
     }
 
     /**

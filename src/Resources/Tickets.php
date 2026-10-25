@@ -43,7 +43,7 @@ final class Tickets
      *     unit_key?: string,
      *     iva?: '0'|'0.16'|'0.08'|'exento',
      * } $params
-     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     id: string,
      *     livemode: bool,
@@ -71,7 +71,7 @@ final class Tickets
     public function create(array $params, array $options = []): array
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
-        return $this->client->request('POST', '/v1/tickets', ['body' => $params], $options);
+        return $this->client->request('POST', '/v1/tickets', ['body' => $params, 'idempotent' => true], $options);
     }
 
     /**

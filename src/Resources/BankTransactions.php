@@ -34,7 +34,7 @@ final class BankTransactions
      *     account?: string,
      *     transactions: list<array{date: string, amount: float|int, description: string, reference?: string, payer_tax_id?: string}>,
      * } $params
-     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     object: 'bank_import',
      *     livemode: bool,
@@ -49,7 +49,7 @@ final class BankTransactions
     public function create(array $params, array $options = []): array
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
-        return $this->client->request('POST', '/v1/bank_transactions', ['body' => $params], $options);
+        return $this->client->request('POST', '/v1/bank_transactions', ['body' => $params, 'idempotent' => true], $options);
     }
 
     /**
@@ -122,7 +122,7 @@ final class BankTransactions
      *
      * @param string $id
      * @param array{invoices?: list<string>} $params
-     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     id: string,
      *     livemode: bool,
@@ -148,7 +148,7 @@ final class BankTransactions
     public function match(string $id, array $params = [], array $options = []): array
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
-        return $this->client->request('POST', '/v1/bank_transactions/' . rawurlencode($id) . '/match', ['body' => $params], $options);
+        return $this->client->request('POST', '/v1/bank_transactions/' . rawurlencode($id) . '/match', ['body' => $params, 'idempotent' => true], $options);
     }
 
     /**
@@ -164,7 +164,7 @@ final class BankTransactions
      *     classification: 'venta'|'prestamo'|'traspaso'|'devolucion',
      *     note?: string,
      * } $params
-     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     id: string,
      *     livemode: bool,
@@ -190,7 +190,7 @@ final class BankTransactions
     public function classify(string $id, array $params, array $options = []): array
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
-        return $this->client->request('POST', '/v1/bank_transactions/' . rawurlencode($id) . '/classify', ['body' => $params], $options);
+        return $this->client->request('POST', '/v1/bank_transactions/' . rawurlencode($id) . '/classify', ['body' => $params, 'idempotent' => true], $options);
     }
 
     /**
@@ -202,7 +202,7 @@ final class BankTransactions
      * POST /v1/bank_transactions/{id}/reopen
      *
      * @param string $id
-     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     id: string,
      *     livemode: bool,
@@ -228,6 +228,6 @@ final class BankTransactions
     public function reopen(string $id, array $options = []): array
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
-        return $this->client->request('POST', '/v1/bank_transactions/' . rawurlencode($id) . '/reopen', [], $options);
+        return $this->client->request('POST', '/v1/bank_transactions/' . rawurlencode($id) . '/reopen', ['idempotent' => true], $options);
     }
 }

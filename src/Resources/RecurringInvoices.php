@@ -38,7 +38,7 @@ final class RecurringInvoices
      *     send_email?: bool,
      *     catch_up?: 'all'|'latest',
      * } $params
-     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     id: string,
      *     livemode: bool,
@@ -65,7 +65,7 @@ final class RecurringInvoices
     public function create(array $params, array $options = []): array
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
-        return $this->client->request('POST', '/v1/recurring_invoices', ['body' => $params], $options);
+        return $this->client->request('POST', '/v1/recurring_invoices', ['body' => $params, 'idempotent' => true], $options);
     }
 
     /**
@@ -146,7 +146,7 @@ final class RecurringInvoices
      *     catch_up?: 'all'|'latest',
      *     active?: bool,
      * } $params
-     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     id: string,
      *     livemode: bool,
@@ -173,7 +173,7 @@ final class RecurringInvoices
     public function update(string $id, array $params = [], array $options = []): array
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
-        return $this->client->request('POST', '/v1/recurring_invoices/' . rawurlencode($id), ['body' => $params], $options);
+        return $this->client->request('POST', '/v1/recurring_invoices/' . rawurlencode($id), ['body' => $params, 'idempotent' => true], $options);
     }
 
     /**
@@ -203,7 +203,7 @@ final class RecurringInvoices
      * POST /v1/recurring_invoices/{id}/skip
      *
      * @param string $id
-     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     id: string,
      *     livemode: bool,
@@ -230,7 +230,7 @@ final class RecurringInvoices
     public function skip(string $id, array $options = []): array
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
-        return $this->client->request('POST', '/v1/recurring_invoices/' . rawurlencode($id) . '/skip', [], $options);
+        return $this->client->request('POST', '/v1/recurring_invoices/' . rawurlencode($id) . '/skip', ['idempotent' => true], $options);
     }
 
     /**
@@ -243,7 +243,7 @@ final class RecurringInvoices
      * POST /v1/recurring_invoices/{id}/run
      *
      * @param string $id
-     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     id: string,
      *     livemode: bool,
@@ -290,6 +290,6 @@ final class RecurringInvoices
     public function run(string $id, array $options = []): array
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
-        return $this->client->request('POST', '/v1/recurring_invoices/' . rawurlencode($id) . '/run', [], $options);
+        return $this->client->request('POST', '/v1/recurring_invoices/' . rawurlencode($id) . '/run', ['idempotent' => true], $options);
     }
 }

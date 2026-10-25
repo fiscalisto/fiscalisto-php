@@ -40,7 +40,7 @@ final class StoreConnections
      *     return_url?: string,
      *     settings?: array{product_key?: string, unit_key?: string, iva?: '0'|'0.16'|'0.08'|'exento', description?: string, folio_prefix?: string, payment_form?: string, payment_forms?: array<string, mixed>, auto_invoice?: bool},
      * } $params
-     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     id: string,
      *     livemode: bool,
@@ -62,7 +62,7 @@ final class StoreConnections
     public function create(array $params, array $options = []): array
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
-        return $this->client->request('POST', '/v1/store_connections', ['body' => $params], $options);
+        return $this->client->request('POST', '/v1/store_connections', ['body' => $params, 'idempotent' => true], $options);
     }
 
     /**
@@ -126,7 +126,7 @@ final class StoreConnections
      * @param array{
      *     settings: array{product_key?: string, unit_key?: string, iva?: '0'|'0.16'|'0.08'|'exento', description?: string, folio_prefix?: string, payment_form?: string, payment_forms?: array<string, mixed>, auto_invoice?: bool},
      * } $params
-     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     id: string,
      *     livemode: bool,
@@ -148,7 +148,7 @@ final class StoreConnections
     public function update(string $id, array $params, array $options = []): array
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
-        return $this->client->request('POST', '/v1/store_connections/' . rawurlencode($id), ['body' => $params], $options);
+        return $this->client->request('POST', '/v1/store_connections/' . rawurlencode($id), ['body' => $params, 'idempotent' => true], $options);
     }
 
     /**
@@ -196,7 +196,7 @@ final class StoreConnections
      *
      * @param string $id
      * @param array{since?: string} $params
-     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     object: 'store_import',
      *     livemode: bool,
@@ -212,6 +212,6 @@ final class StoreConnections
     public function importOrders(string $id, array $params = [], array $options = []): array
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
-        return $this->client->request('POST', '/v1/store_connections/' . rawurlencode($id) . '/import_orders', ['body' => $params], $options);
+        return $this->client->request('POST', '/v1/store_connections/' . rawurlencode($id) . '/import_orders', ['body' => $params, 'idempotent' => true], $options);
     }
 }

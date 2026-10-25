@@ -43,7 +43,7 @@ final class Quotes
      *     terms?: string,
      *     auto_invoice?: bool,
      * } $params
-     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     id: string,
      *     livemode: bool,
@@ -75,7 +75,7 @@ final class Quotes
     public function create(array $params, array $options = []): array
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
-        return $this->client->request('POST', '/v1/quotes', ['body' => $params], $options);
+        return $this->client->request('POST', '/v1/quotes', ['body' => $params, 'idempotent' => true], $options);
     }
 
     /**
@@ -167,7 +167,7 @@ final class Quotes
      *     valid_until?: string,
      *     terms?: string,
      * } $params
-     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     id: string,
      *     livemode: bool,
@@ -199,7 +199,7 @@ final class Quotes
     public function update(string $id, array $params = [], array $options = []): array
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
-        return $this->client->request('POST', '/v1/quotes/' . rawurlencode($id), ['body' => $params], $options);
+        return $this->client->request('POST', '/v1/quotes/' . rawurlencode($id), ['body' => $params, 'idempotent' => true], $options);
     }
 
     /**
@@ -232,7 +232,7 @@ final class Quotes
      *
      * @param string $id
      * @param array{send_email?: bool, to?: string, message?: string, auto_invoice?: bool} $params
-     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     id: string,
      *     livemode: bool,
@@ -264,7 +264,7 @@ final class Quotes
     public function send(string $id, array $params = [], array $options = []): array
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
-        return $this->client->request('POST', '/v1/quotes/' . rawurlencode($id) . '/send', ['body' => $params], $options);
+        return $this->client->request('POST', '/v1/quotes/' . rawurlencode($id) . '/send', ['body' => $params, 'idempotent' => true], $options);
     }
 
     /**
@@ -276,7 +276,7 @@ final class Quotes
      * POST /v1/quotes/{id}/accept
      *
      * @param string $id
-     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     id: string,
      *     livemode: bool,
@@ -308,7 +308,7 @@ final class Quotes
     public function accept(string $id, array $options = []): array
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
-        return $this->client->request('POST', '/v1/quotes/' . rawurlencode($id) . '/accept', [], $options);
+        return $this->client->request('POST', '/v1/quotes/' . rawurlencode($id) . '/accept', ['idempotent' => true], $options);
     }
 
     /**

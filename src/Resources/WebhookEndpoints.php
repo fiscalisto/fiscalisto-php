@@ -27,7 +27,7 @@ final class WebhookEndpoints
      * POST /v1/webhook_endpoints
      *
      * @param array{url: string, events?: list<string>|null, description?: string|null} $params
-     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     id: string,
      *     livemode: bool,
@@ -49,7 +49,7 @@ final class WebhookEndpoints
     public function create(array $params, array $options = []): array
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
-        return $this->client->request('POST', '/v1/webhook_endpoints', ['body' => $params], $options);
+        return $this->client->request('POST', '/v1/webhook_endpoints', ['body' => $params, 'idempotent' => true], $options);
     }
 
     /**
@@ -112,7 +112,7 @@ final class WebhookEndpoints
      *     description?: string|null,
      *     disabled?: bool,
      * } $params
-     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     id: string,
      *     livemode: bool,
@@ -134,7 +134,7 @@ final class WebhookEndpoints
     public function update(string $id, array $params = [], array $options = []): array
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
-        return $this->client->request('POST', '/v1/webhook_endpoints/' . rawurlencode($id), ['body' => $params], $options);
+        return $this->client->request('POST', '/v1/webhook_endpoints/' . rawurlencode($id), ['body' => $params, 'idempotent' => true], $options);
     }
 
     /**
@@ -165,7 +165,7 @@ final class WebhookEndpoints
      *
      * @param string $id
      * @param array{previous_secret_expires_in?: int} $params
-     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     id: string,
      *     livemode: bool,
@@ -187,7 +187,7 @@ final class WebhookEndpoints
     public function rollSecret(string $id, array $params = [], array $options = []): array
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
-        return $this->client->request('POST', '/v1/webhook_endpoints/' . rawurlencode($id) . '/roll_secret', ['body' => $params], $options);
+        return $this->client->request('POST', '/v1/webhook_endpoints/' . rawurlencode($id) . '/roll_secret', ['body' => $params, 'idempotent' => true], $options);
     }
 
     /**
@@ -204,7 +204,7 @@ final class WebhookEndpoints
      * @param array{
      *     type?: 'invoice.stamped'|'invoice.failed'|'invoice.canceled'|'invoice.cancellation_pending'|'invoice.cancellation_rejected'|'invoice.paid'|'invoice.partially_paid'|'retention.stamped'|'retention.failed'|'retention.canceled'|'invoice_batch.completed'|'customer_data_request.completed'|'sat_download.completed'|'sat_download.failed'|'ticket.invoiced'|'ticket.included_in_global'|'recurring_invoice.failed'|'quote.viewed'|'quote.accepted'|'quote.changes_requested'|'quote.rejected'|'issuer.ready'|'balance.low',
      * } $params
-     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     object: 'webhook_test',
      *     event: array{id: string, object: 'event', type: string, api_version: string, livemode: bool, created_at: string, data: array<string, mixed>},
@@ -216,6 +216,6 @@ final class WebhookEndpoints
     public function test(string $id, array $params = [], array $options = []): array
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
-        return $this->client->request('POST', '/v1/webhook_endpoints/' . rawurlencode($id) . '/test', ['body' => $params], $options);
+        return $this->client->request('POST', '/v1/webhook_endpoints/' . rawurlencode($id) . '/test', ['body' => $params, 'idempotent' => true], $options);
     }
 }

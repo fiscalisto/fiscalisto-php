@@ -187,7 +187,7 @@ final class Retentions
      *
      * @param string $id
      * @param array{to?: string} $params
-     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     id: string,
      *     livemode: bool,
@@ -221,7 +221,7 @@ final class Retentions
     public function send(string $id, array $params = [], array $options = []): array
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
-        return $this->client->request('POST', '/v1/retentions/' . rawurlencode($id) . '/send', ['body' => $params], $options);
+        return $this->client->request('POST', '/v1/retentions/' . rawurlencode($id) . '/send', ['body' => $params, 'idempotent' => true], $options);
     }
 
     /**
@@ -233,7 +233,7 @@ final class Retentions
      *
      * @param string $id
      * @param array{motive?: '01'|'02'|'03'|'04', substitution?: string} $params
-     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     id: string,
      *     livemode: bool,
@@ -267,6 +267,6 @@ final class Retentions
     public function cancel(string $id, array $params = [], array $options = []): array
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
-        return $this->client->request('POST', '/v1/retentions/' . rawurlencode($id) . '/cancel', ['body' => $params], $options);
+        return $this->client->request('POST', '/v1/retentions/' . rawurlencode($id) . '/cancel', ['body' => $params, 'idempotent' => true], $options);
     }
 }

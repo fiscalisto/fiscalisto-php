@@ -29,7 +29,7 @@ final class Sandboxes
      * POST /v1/sandboxes
      *
      * @param array{name: string} $params
-     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     id: string,
      *     object: 'sandbox',
@@ -47,7 +47,7 @@ final class Sandboxes
     public function create(array $params, array $options = []): array
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
-        return $this->client->request('POST', '/v1/sandboxes', ['body' => $params], $options);
+        return $this->client->request('POST', '/v1/sandboxes', ['body' => $params, 'idempotent' => true], $options);
     }
 
     /**

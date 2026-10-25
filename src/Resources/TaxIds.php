@@ -37,7 +37,7 @@ final class TaxIds
      *     use?: string,
      *     cif_id?: string,
      * } $params
-     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     object: 'tax_id_validation',
      *     tax_id: string,
@@ -56,6 +56,6 @@ final class TaxIds
     public function validate(array $params, array $options = []): array
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
-        return $this->client->request('POST', '/v1/tax_ids/validate', ['body' => $params], $options);
+        return $this->client->request('POST', '/v1/tax_ids/validate', ['body' => $params, 'idempotent' => true], $options);
     }
 }

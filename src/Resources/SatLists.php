@@ -56,7 +56,7 @@ final class SatLists
      * POST /v1/sat_lists/check
      *
      * @param array{tax_ids: list<string>} $params
-     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     object: 'list',
      *     data: list<array{object: 'sat_list_check', tax_id: string, name: string|null, listed: bool, risk: 'high'|'medium'|'none', lists: list<array<string, mixed>>, lists_updated_at: string|null}>,
@@ -69,6 +69,6 @@ final class SatLists
     public function check(array $params, array $options = []): array
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
-        return $this->client->request('POST', '/v1/sat_lists/check', ['body' => $params], $options);
+        return $this->client->request('POST', '/v1/sat_lists/check', ['body' => $params, 'idempotent' => true], $options);
     }
 }

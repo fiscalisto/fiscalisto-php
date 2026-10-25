@@ -30,7 +30,7 @@ final class TestData
      * POST /v1/test_data/reset
      *
      * @param array{seed?: bool} $params
-     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     object: 'test_data_reset',
      *     livemode: false,
@@ -46,6 +46,6 @@ final class TestData
     public function reset(array $params = [], array $options = []): array
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
-        return $this->client->request('POST', '/v1/test_data/reset', ['body' => $params], $options);
+        return $this->client->request('POST', '/v1/test_data/reset', ['body' => $params, 'idempotent' => true], $options);
     }
 }
