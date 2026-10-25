@@ -24,13 +24,14 @@ abstract class Core
     private readonly int $maxRetries;
     private readonly float $timeout;
     private readonly ?string $apiVersion;
+    private readonly ?string $language;
     /** @var callable(array{method: string, url: string, headers: array<string, string>, body: ?string, timeout: float}): array{status: int, headers: array<string, string>, body: string} */
     private $transport;
     /** @var callable(float): void */
     private $sleep;
 
     /**
-     * @param array{base_url?: string, api_version?: ?string, max_retries?: int, timeout?: float|int, transport?: callable, sleep?: callable} $options
+     * @param array{base_url?: string, api_version?: ?string, language?: 'es'|'en', max_retries?: int, timeout?: float|int, transport?: callable, sleep?: callable} $options
      */
     public function __construct(?string $apiKey = null, array $options = [])
     {
@@ -50,6 +51,8 @@ abstract class Core
         $this->baseUrl = rtrim($options['base_url'] ?? self::DEFAULT_BASE_URL, '/');
         // null: la versión fijada en la cuenta.
         $this->apiVersion = array_key_exists('api_version', $options) ? $options['api_version'] : self::API_VERSION;
+        // 'en': error messages in English (Accept-Language).
+        $this->language = $options['language'] ?? null;
         $this->maxRetries = $options['max_retries'] ?? 2;
         $this->timeout = (float) ($options['timeout'] ?? 80);
         $this->transport = $options['transport'] ?? [self::class, 'curlTransport'];
@@ -82,6 +85,9 @@ abstract class Core
         ];
         if ($this->apiVersion !== null) {
             $headers['fiscalisto-version'] = $this->apiVersion;
+        }
+        if ($this->language !== null) {
+            $headers['accept-language'] = $this->language;
         }
         $idempotencyKey = ($spec['idempotent'] ?? false)
             ? ($options['idempotency_key'] ?? self::uuid())
