@@ -70,6 +70,7 @@ final class Payments
      *     cancellation: array{status: string|null, motive: string|null, substitution: string|null, canceled_at: string|null}|null,
      *     email: array{to: string|null, cc: string|null, sent_at: string|null}|null,
      *     error: array{message: string, sat_code: string|null, raw: string}|null,
+     *     recurring_invoice: string|null,
      *     created_at: string|null,
      *     metadata: array<string, mixed>,
      *     warnings?: list<string>,
