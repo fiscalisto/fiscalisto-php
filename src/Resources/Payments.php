@@ -39,6 +39,7 @@ final class Payments
      *     email?: string,
      *     email_cc?: string|null,
      *     metadata?: array<string, mixed>,
+     *     bank_transaction?: string,
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
@@ -63,6 +64,9 @@ final class Payments
      *     discount: float|int|null,
      *     taxes: array{iva: float|int|null, ieps: float|null, iva_withheld: float|null, isr_withheld: float|null, local_transferred: float|null, local_withheld: float|null}|null,
      *     total: float|int|null,
+     *     payment_status: 'paid'|'partial'|'unpaid'|null,
+     *     amount_due: float|int|null,
+     *     amount_paid: float|int|null,
      *     related: array<string, mixed>|null,
      *     payment?: array{date: string|null, payment_form: string|null, currency: string, exchange_rate: float|int|null, amount: float|int, operation_number: string|null, documents: list<array<string, mixed>>}|null,
      *     payroll?: array{periodicity: string, period: array<string, mixed>, days: float|int, employer: array<string, mixed>, employee: array<string, mixed>, perceptions: list<array<string, mixed>>, deductions: list<array<string, mixed>>, other_payments: list<array<string, mixed>>},

@@ -26,6 +26,12 @@ abstract class FiscalistoApi extends Core
     /** Facturas. */
     public readonly Resources\Invoices $invoices;
 
+    /** Cuentas por cobrar. */
+    public readonly Resources\Receivables $receivables;
+
+    /** Conciliación bancaria. */
+    public readonly Resources\BankTransactions $bankTransactions;
+
     /** Pagos y notas de crédito. */
     public readonly Resources\Payments $payments;
 
@@ -98,6 +104,8 @@ abstract class FiscalistoApi extends Core
         $this->balance = new Resources\Balance($this);
         $this->issuers = new Resources\Issuers($this);
         $this->invoices = new Resources\Invoices($this);
+        $this->receivables = new Resources\Receivables($this);
+        $this->bankTransactions = new Resources\BankTransactions($this);
         $this->payments = new Resources\Payments($this);
         $this->creditNotes = new Resources\CreditNotes($this);
         $this->advances = new Resources\Advances($this);
