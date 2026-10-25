@@ -31,6 +31,8 @@ final class Balance
      *     livemode: bool,
      *     available: int,
      *     unlimited: bool,
+     *     low_balance_at: int,
+     *     auto_recharge: array{timbres: int, at: int, max_per_month: int}|null,
      *     packs: list<array{timbres: int, remaining: int, purchased_at: string|null, expires_at: string|null}>,
      * }
      * @throws FiscalistoException

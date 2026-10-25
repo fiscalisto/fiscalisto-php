@@ -60,7 +60,7 @@ final class ErrorCode
     /** Esa Idempotency-Key ya se usó con otro cuerpo. Use una nueva para un comprobante distinto. */
     public const IDEMPOTENCY_KEY_REUSED = 'idempotency_key_reused';
 
-    /** La cuenta no tiene timbres de producción. Compre un paquete en Desarrolladores › Timbres. En pruebas nunca pasa. */
+    /** La cuenta no tiene timbres de producción. Compre un paquete en Desarrolladores › Timbres. En pruebas nunca pasa. Para enterarse antes, escuche balance.low o active la recarga automática. */
     public const INSUFFICIENT_BALANCE = 'insufficient_balance';
 
     /** Algo falló de nuestro lado. Repita la solicitud con la misma Idempotency-Key: nunca se timbra dos veces. Si sigue, escríbanos con el request_id. */
