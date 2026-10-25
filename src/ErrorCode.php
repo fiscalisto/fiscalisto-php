@@ -99,6 +99,9 @@ final class ErrorCode
     /** La cuenta tiene varios emisores y la solicitud no dice cuál: mande issuer (iss_…). */
     public const ISSUER_REQUIRED = 'issuer_required';
 
+    /** La llave es de solo lectura: puede hacer GET, validar RFC, revisar listas del SAT y calcular recibos de nómina, pero nada que timbre, cancele, envíe o cambie datos. */
+    public const KEY_READ_ONLY = 'key_read_only';
+
     /** La llave está limitada a algunos emisores y la solicitud toca otro (o crea uno nuevo, o usa algo de toda la cuenta como webhooks). */
     public const KEY_RESTRICTED = 'key_restricted';
 
