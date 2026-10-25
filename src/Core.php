@@ -13,6 +13,8 @@ abstract class Core
 {
     public const VERSION = '0.1.0';
     public const DEFAULT_BASE_URL = 'https://api.fiscalisto.com';
+    /** La versión de la API para la que se hizo este SDK (cabecera Fiscalisto-Version). */
+    public const API_VERSION = '2026-10-24';
 
     /** true con una llave fk_live_ (producción), false con fk_test_ (pruebas). */
     public readonly bool $livemode;
@@ -21,13 +23,14 @@ abstract class Core
     private readonly string $baseUrl;
     private readonly int $maxRetries;
     private readonly float $timeout;
+    private readonly ?string $apiVersion;
     /** @var callable(array{method: string, url: string, headers: array<string, string>, body: ?string, timeout: float}): array{status: int, headers: array<string, string>, body: string} */
     private $transport;
     /** @var callable(float): void */
     private $sleep;
 
     /**
-     * @param array{base_url?: string, max_retries?: int, timeout?: float|int, transport?: callable, sleep?: callable} $options
+     * @param array{base_url?: string, api_version?: ?string, max_retries?: int, timeout?: float|int, transport?: callable, sleep?: callable} $options
      */
     public function __construct(?string $apiKey = null, array $options = [])
     {
@@ -45,6 +48,8 @@ abstract class Core
         $this->key = $key;
         $this->livemode = str_starts_with($key, 'fk_live_');
         $this->baseUrl = rtrim($options['base_url'] ?? self::DEFAULT_BASE_URL, '/');
+        // null: la versión fijada en la cuenta.
+        $this->apiVersion = array_key_exists('api_version', $options) ? $options['api_version'] : self::API_VERSION;
         $this->maxRetries = $options['max_retries'] ?? 2;
         $this->timeout = (float) ($options['timeout'] ?? 80);
         $this->transport = $options['transport'] ?? [self::class, 'curlTransport'];
@@ -71,6 +76,9 @@ abstract class Core
             'user-agent' => 'fiscalisto-php/' . self::VERSION . ' PHP/' . PHP_VERSION,
             'accept' => 'application/json',
         ];
+        if ($this->apiVersion !== null) {
+            $headers['fiscalisto-version'] = $this->apiVersion;
+        }
         $idempotencyKey = ($spec['idempotent'] ?? false)
             ? ($options['idempotency_key'] ?? self::uuid())
             : null;

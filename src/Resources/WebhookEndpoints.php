@@ -26,7 +26,12 @@ final class WebhookEndpoints
      *
      * POST /v1/webhook_endpoints
      *
-     * @param array{url: string, events?: list<string>|null, description?: string|null} $params
+     * @param array{
+     *     url: string,
+     *     events?: list<string>|null,
+     *     description?: string|null,
+     *     api_version?: string|null,
+     * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     id: string,
@@ -40,6 +45,7 @@ final class WebhookEndpoints
      *     disabled_reason?: string|null,
      *     failing_since?: string|null,
      *     previous_secret_expires_at: string|null,
+     *     api_version: string|null,
      *     created_at: string|null,
      *     secret?: string,
      * }
@@ -59,7 +65,7 @@ final class WebhookEndpoints
      *
      * @param array{limit?: int, starting_after?: string} $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'webhook_endpoint', sandbox: string|null, url: string, description: string|null, events: list<string>, status: 'enabled'|'failing'|'disabled', disabled_reason?: string|null, failing_since?: string|null, previous_secret_expires_at: string|null, created_at: string|null, secret?: string}>
+     * @return Collection<array{id: string, livemode: bool, object: 'webhook_endpoint', sandbox: string|null, url: string, description: string|null, events: list<string>, status: 'enabled'|'failing'|'disabled', disabled_reason?: string|null, failing_since?: string|null, previous_secret_expires_at: string|null, api_version: string|null, created_at: string|null, secret?: string}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/webhooks/list-webhook-endpoints
      */
@@ -88,6 +94,7 @@ final class WebhookEndpoints
      *     disabled_reason?: string|null,
      *     failing_since?: string|null,
      *     previous_secret_expires_at: string|null,
+     *     api_version: string|null,
      *     created_at: string|null,
      *     secret?: string,
      * }
@@ -111,6 +118,7 @@ final class WebhookEndpoints
      *     events?: list<string>|null,
      *     description?: string|null,
      *     disabled?: bool,
+     *     api_version?: string|null,
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
@@ -125,6 +133,7 @@ final class WebhookEndpoints
      *     disabled_reason?: string|null,
      *     failing_since?: string|null,
      *     previous_secret_expires_at: string|null,
+     *     api_version: string|null,
      *     created_at: string|null,
      *     secret?: string,
      * }
@@ -178,6 +187,7 @@ final class WebhookEndpoints
      *     disabled_reason?: string|null,
      *     failing_since?: string|null,
      *     previous_secret_expires_at: string|null,
+     *     api_version: string|null,
      *     created_at: string|null,
      *     secret?: string,
      * }
