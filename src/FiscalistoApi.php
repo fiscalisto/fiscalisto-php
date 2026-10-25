@@ -80,6 +80,12 @@ abstract class FiscalistoApi extends Core
     /** Autofactura. */
     public readonly Resources\Tickets $tickets;
 
+    /** Contabilidad. */
+    public readonly Resources\Accounting $accounting;
+
+    /** Tiendas en línea. */
+    public readonly Resources\StoreConnections $storeConnections;
+
     /** Facturas recurrentes. */
     public readonly Resources\RecurringInvoices $recurringInvoices;
 
@@ -122,6 +128,8 @@ abstract class FiscalistoApi extends Core
         $this->satDownloads = new Resources\SatDownloads($this);
         $this->satInvoices = new Resources\SatInvoices($this);
         $this->tickets = new Resources\Tickets($this);
+        $this->accounting = new Resources\Accounting($this);
+        $this->storeConnections = new Resources\StoreConnections($this);
         $this->recurringInvoices = new Resources\RecurringInvoices($this);
         $this->quotes = new Resources\Quotes($this);
         $this->webhookEndpoints = new Resources\WebhookEndpoints($this);

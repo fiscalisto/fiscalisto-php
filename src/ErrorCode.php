@@ -48,6 +48,9 @@ final class ErrorCode
     /** El cliente ya mandó sus datos con esa liga: una solicitud completada no se cancela. */
     public const DATA_REQUEST_COMPLETED = 'data_request_completed';
 
+    /** El mes no tiene pagos a proveedores: esa DIOT se presenta sin operaciones desde el portal del SAT. */
+    public const DIOT_EMPTY = 'diot_empty';
+
     /** La e.firma no sirve: no es una e.firma (es un CSD), es de otro RFC, está vencida o la contraseña no abre la llave. */
     public const EFIRMA_INVALID = 'efirma_invalid';
 
@@ -185,6 +188,21 @@ final class ErrorCode
 
     /** Demasiados timbres seguidos del mismo emisor. Espere lo que dice Retry-After; para muchas facturas use POST /v1/invoice_batches. */
     public const STAMP_RATE_LIMIT = 'stamp_rate_limit';
+
+    /** Esa tienda ya está conectada a este emisor. */
+    public const STORE_ALREADY_CONNECTED = 'store_already_connected';
+
+    /** La tienda no aceptó la conexión o no respondió como se esperaba (llaves equivocadas, permisos read_orders/write_orders que faltan, una tienda que no vende en pesos). El mensaje dice qué contestó. */
+    public const STORE_CONNECTION_FAILED = 'store_connection_failed';
+
+    /** La tienda se desconectó: conéctela otra vez con POST /v1/store_connections. */
+    public const STORE_DISCONNECTED = 'store_disconnected';
+
+    /** El vendedor aún no autoriza la conexión en authorize_url. */
+    public const STORE_NOT_AUTHORIZED = 'store_not_authorized';
+
+    /** Esa plataforma aún no está disponible en Fiscalisto. */
+    public const STORE_PLATFORM_UNAVAILABLE = 'store_platform_unavailable';
 
     /** Los complementos de pago y las notas de crédito no se sustituyen: se cancelan y se emite otro. */
     public const SUBSTITUTION_UNSUPPORTED = 'substitution_unsupported';
