@@ -7,7 +7,7 @@
     "homepage": "https://fiscalisto.com/docs/api/sdk/php",
     "support": {
         "docs": "https://fiscalisto.com/docs/api",
-        "source": "https://github.com/RVP97/invoices-retriever/tree/main/sdk/php"
+        "source": "https://github.com/fiscalisto/fiscalisto-php"
     },
     "require": {
         "php": ">=8.1",
