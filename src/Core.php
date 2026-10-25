@@ -60,7 +60,7 @@ abstract class Core
 
     /**
      * @param array{body?: array<mixed>, query?: array<string, mixed>, idempotent?: bool, as?: 'json'|'bytes'|'text'} $spec
-     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int, expand?: list<string>} $options
      * @return mixed El JSON como arreglo, o el texto del PDF o el XML.
      * @throws FiscalistoException
      */
@@ -68,6 +68,10 @@ abstract class Core
     {
         $url = $this->baseUrl . $path;
         $query = self::query($spec['query'] ?? []);
+        // Ids as their objects in the same answer: ['expand' => ['issuer', 'data.recurring_invoice']].
+        foreach ($options['expand'] ?? [] as $e) {
+            $query .= ($query === '' ? '' : '&') . 'expand%5B%5D=' . rawurlencode($e);
+        }
         if ($query !== '') {
             $url .= '?' . $query;
         }
