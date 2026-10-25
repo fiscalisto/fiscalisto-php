@@ -20,6 +20,9 @@ abstract class FiscalistoApi extends Core
     /** Entornos de prueba. */
     public readonly Resources\Sandboxes $sandboxes;
 
+    /** Entornos de prueba. */
+    public readonly Resources\TestClocks $testClocks;
+
     /** Cuenta. */
     public readonly Resources\Balance $balance;
 
@@ -111,6 +114,7 @@ abstract class FiscalistoApi extends Core
         $this->account = new Resources\Account($this);
         $this->testData = new Resources\TestData($this);
         $this->sandboxes = new Resources\Sandboxes($this);
+        $this->testClocks = new Resources\TestClocks($this);
         $this->balance = new Resources\Balance($this);
         $this->issuers = new Resources\Issuers($this);
         $this->invoices = new Resources\Invoices($this);

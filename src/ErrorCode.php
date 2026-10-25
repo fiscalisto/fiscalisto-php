@@ -216,6 +216,21 @@ final class ErrorCode
     /** Los complementos de pago y las notas de crédito no se sustituyen: se cancelan y se emite otro. */
     public const SUBSTITUTION_UNSUPPORTED = 'substitution_unsupported';
 
+    /** El reloj se está adelantando en otra solicitud (409, con Retry-After). Espere a test_clock.ready y repita. */
+    public const TEST_CLOCK_ADVANCING = 'test_clock_advancing';
+
+    /** El emisor ya tiene un reloj de prueba: adelántelo, o bórrelo para volver a la hora real. */
+    public const TEST_CLOCK_EXISTS = 'test_clock_exists';
+
+    /** frozen_time no sirve: no es una fecha y hora ISO 8601, es anterior a la hora del reloj (solo avanza) o va más de dos años adelante de la hora real. */
+    public const TEST_CLOCK_INVALID = 'test_clock_invalid';
+
+    /** El emisor no tiene reloj de prueba: créelo con POST /v1/issuers/{id}/test_clock. */
+    public const TEST_CLOCK_MISSING = 'test_clock_missing';
+
+    /** Los relojes de prueba son de emisores de prueba: use su llave fk_test_ y un emisor de pruebas. */
+    public const TEST_CLOCK_UNSUPPORTED = 'test_clock_unsupported';
+
     /** Esto solo existe en pruebas (como reiniciar los datos de prueba): use su llave fk_test_. */
     public const TEST_MODE_ONLY = 'test_mode_only';
 

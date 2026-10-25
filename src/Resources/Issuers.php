@@ -54,6 +54,7 @@ final class Issuers
      *     curp: string|null,
      *     stamps_as: string,
      *     sandbox: string|null,
+     *     test_clock: array{frozen_time: string}|null,
      *     created_at: string|null,
      *     archived_at: string|null,
      *     metadata: array<string, mixed>,
@@ -79,7 +80,7 @@ final class Issuers
      *     include_archived?: bool,
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'issuer', tax_id: string, legal_name: string|null, tax_system: string|null, zip: string|null, status: 'active'|'needs_certificate'|'certificate_expired'|'needs_efirma'|'archived', requirement: string|null, certificate: array<string, mixed>|null, sat_downloads: array<string, mixed>, employer_registration: string|null, curp: string|null, stamps_as: string, sandbox: string|null, created_at: string|null, archived_at: string|null, metadata: array<string, mixed>}>
+     * @return Collection<array{id: string, livemode: bool, object: 'issuer', tax_id: string, legal_name: string|null, tax_system: string|null, zip: string|null, status: 'active'|'needs_certificate'|'certificate_expired'|'needs_efirma'|'archived', requirement: string|null, certificate: array<string, mixed>|null, sat_downloads: array<string, mixed>, employer_registration: string|null, curp: string|null, stamps_as: string, sandbox: string|null, test_clock: array<string, mixed>|null, created_at: string|null, archived_at: string|null, metadata: array<string, mixed>}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/emisores/list-issuers
      */
@@ -112,6 +113,7 @@ final class Issuers
      *     curp: string|null,
      *     stamps_as: string,
      *     sandbox: string|null,
+     *     test_clock: array{frozen_time: string}|null,
      *     created_at: string|null,
      *     archived_at: string|null,
      *     metadata: array<string, mixed>,
@@ -158,6 +160,7 @@ final class Issuers
      *     curp: string|null,
      *     stamps_as: string,
      *     sandbox: string|null,
+     *     test_clock: array{frozen_time: string}|null,
      *     created_at: string|null,
      *     archived_at: string|null,
      *     metadata: array<string, mixed>,
@@ -196,6 +199,7 @@ final class Issuers
      *     curp: string|null,
      *     stamps_as: string,
      *     sandbox: string|null,
+     *     test_clock: array{frozen_time: string}|null,
      *     created_at: string|null,
      *     archived_at: string|null,
      *     metadata: array<string, mixed>,
@@ -237,6 +241,7 @@ final class Issuers
      *     curp: string|null,
      *     stamps_as: string,
      *     sandbox: string|null,
+     *     test_clock: array{frozen_time: string}|null,
      *     created_at: string|null,
      *     archived_at: string|null,
      *     metadata: array<string, mixed>,
@@ -279,6 +284,7 @@ final class Issuers
      *     curp: string|null,
      *     stamps_as: string,
      *     sandbox: string|null,
+     *     test_clock: array{frozen_time: string}|null,
      *     created_at: string|null,
      *     archived_at: string|null,
      *     metadata: array<string, mixed>,
@@ -318,6 +324,7 @@ final class Issuers
      *     curp: string|null,
      *     stamps_as: string,
      *     sandbox: string|null,
+     *     test_clock: array{frozen_time: string}|null,
      *     created_at: string|null,
      *     archived_at: string|null,
      *     metadata: array<string, mixed>,
