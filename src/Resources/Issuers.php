@@ -354,4 +354,61 @@ final class Issuers
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
         return $this->client->request('POST', '/v1/issuers/' . rawurlencode($id) . '/onboarding_links', ['body' => $params], $options);
     }
+
+    /**
+     * Ver el portal de autofactura de un emisor
+     *
+     * GET /v1/issuers/{id}/self_invoicing
+     *
+     * @param string $id
+     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @return array{
+     *     object: 'self_invoicing',
+     *     livemode: bool,
+     *     issuer: string,
+     *     portal_url: string,
+     *     window: 'month'|'days',
+     *     window_days: int,
+     *     global_periodicity: '01'|'02'|'03'|'04',
+     * }
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/autofactura/get-self-invoicing
+     */
+    public function getSelfInvoicing(string $id, array $options = []): array
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('GET', '/v1/issuers/' . rawurlencode($id) . '/self_invoicing', [], $options);
+    }
+
+    /**
+     * Cambiar las reglas de autofactura
+     *
+     * Hasta cuándo se puede facturar un ticket y cada cuánto se timbra la factura global.
+     *
+     * POST /v1/issuers/{id}/self_invoicing
+     *
+     * @param string $id
+     * @param array{
+     *     window?: 'month'|'days',
+     *     window_days?: int,
+     *     global_periodicity?: '01'|'02'|'03'|'04',
+     * } $params
+     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @return array{
+     *     object: 'self_invoicing',
+     *     livemode: bool,
+     *     issuer: string,
+     *     portal_url: string,
+     *     window: 'month'|'days',
+     *     window_days: int,
+     *     global_periodicity: '01'|'02'|'03'|'04',
+     * }
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/autofactura/update-self-invoicing
+     */
+    public function updateSelfInvoicing(string $id, array $params = [], array $options = []): array
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('POST', '/v1/issuers/' . rawurlencode($id) . '/self_invoicing', ['body' => $params], $options);
+    }
 }
