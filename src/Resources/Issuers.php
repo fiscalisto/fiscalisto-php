@@ -49,6 +49,7 @@ final class Issuers
      *     status: 'active'|'needs_certificate'|'certificate_expired'|'needs_efirma'|'archived',
      *     requirement: string|null,
      *     certificate: array{serial_number: string|null, expires_at: string|null}|null,
+     *     sat_downloads: array{available: bool, efirma_expires_at: string|null},
      *     employer_registration: string|null,
      *     curp: string|null,
      *     stamps_as: string,
@@ -77,7 +78,7 @@ final class Issuers
      *     include_archived?: bool,
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'issuer', tax_id: string, legal_name: string|null, tax_system: string|null, zip: string|null, status: 'active'|'needs_certificate'|'certificate_expired'|'needs_efirma'|'archived', requirement: string|null, certificate: array<string, mixed>|null, employer_registration: string|null, curp: string|null, stamps_as: string, created_at: string|null, archived_at: string|null, metadata: array<string, mixed>}>
+     * @return Collection<array{id: string, livemode: bool, object: 'issuer', tax_id: string, legal_name: string|null, tax_system: string|null, zip: string|null, status: 'active'|'needs_certificate'|'certificate_expired'|'needs_efirma'|'archived', requirement: string|null, certificate: array<string, mixed>|null, sat_downloads: array<string, mixed>, employer_registration: string|null, curp: string|null, stamps_as: string, created_at: string|null, archived_at: string|null, metadata: array<string, mixed>}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/emisores/list-issuers
      */
@@ -105,6 +106,7 @@ final class Issuers
      *     status: 'active'|'needs_certificate'|'certificate_expired'|'needs_efirma'|'archived',
      *     requirement: string|null,
      *     certificate: array{serial_number: string|null, expires_at: string|null}|null,
+     *     sat_downloads: array{available: bool, efirma_expires_at: string|null},
      *     employer_registration: string|null,
      *     curp: string|null,
      *     stamps_as: string,
@@ -149,6 +151,7 @@ final class Issuers
      *     status: 'active'|'needs_certificate'|'certificate_expired'|'needs_efirma'|'archived',
      *     requirement: string|null,
      *     certificate: array{serial_number: string|null, expires_at: string|null}|null,
+     *     sat_downloads: array{available: bool, efirma_expires_at: string|null},
      *     employer_registration: string|null,
      *     curp: string|null,
      *     stamps_as: string,
@@ -185,6 +188,7 @@ final class Issuers
      *     status: 'active'|'needs_certificate'|'certificate_expired'|'needs_efirma'|'archived',
      *     requirement: string|null,
      *     certificate: array{serial_number: string|null, expires_at: string|null}|null,
+     *     sat_downloads: array{available: bool, efirma_expires_at: string|null},
      *     employer_registration: string|null,
      *     curp: string|null,
      *     stamps_as: string,
@@ -224,6 +228,7 @@ final class Issuers
      *     status: 'active'|'needs_certificate'|'certificate_expired'|'needs_efirma'|'archived',
      *     requirement: string|null,
      *     certificate: array{serial_number: string|null, expires_at: string|null}|null,
+     *     sat_downloads: array{available: bool, efirma_expires_at: string|null},
      *     employer_registration: string|null,
      *     curp: string|null,
      *     stamps_as: string,
@@ -244,13 +249,14 @@ final class Issuers
      * Firmar el contrato con el PAC
      *
      * Una sola vez por RFC antes de timbrar en producción: firma el contrato de servicio del PAC
-     * (Finkok) con la e.firma del emisor. La e.firma se usa en memoria para esa firma y nunca se
-     * guarda.
+     * (Finkok) con la e.firma del emisor. La e.firma se usa en memoria para esa firma y no se
+     * guarda, salvo que mande keep_for_downloads: true para pedirle al SAT las facturas del emisor
+     * (POST /v1/sat_downloads); entonces se guarda cifrada y puede borrarla con DELETE.
      *
      * POST /v1/issuers/{id}/efirma
      *
      * @param string $id
-     * @param array{cer: string, key: string, password: string} $params
+     * @param array{cer: string, key: string, password: string, keep_for_downloads?: bool} $params
      * @param array{timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     id: string,
@@ -263,6 +269,7 @@ final class Issuers
      *     status: 'active'|'needs_certificate'|'certificate_expired'|'needs_efirma'|'archived',
      *     requirement: string|null,
      *     certificate: array{serial_number: string|null, expires_at: string|null}|null,
+     *     sat_downloads: array{available: bool, efirma_expires_at: string|null},
      *     employer_registration: string|null,
      *     curp: string|null,
      *     stamps_as: string,
@@ -277,6 +284,44 @@ final class Issuers
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
         return $this->client->request('POST', '/v1/issuers/' . rawurlencode($id) . '/efirma', ['body' => $params], $options);
+    }
+
+    /**
+     * Borrar la e.firma guardada
+     *
+     * Borra la e.firma que guardó con keep_for_downloads. El emisor sigue timbrando; ya no puede
+     * pedir descargas al SAT hasta que la mande de nuevo.
+     *
+     * DELETE /v1/issuers/{id}/efirma
+     *
+     * @param string $id
+     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @return array{
+     *     id: string,
+     *     livemode: bool,
+     *     object: 'issuer',
+     *     tax_id: string,
+     *     legal_name: string|null,
+     *     tax_system: string|null,
+     *     zip: string|null,
+     *     status: 'active'|'needs_certificate'|'certificate_expired'|'needs_efirma'|'archived',
+     *     requirement: string|null,
+     *     certificate: array{serial_number: string|null, expires_at: string|null}|null,
+     *     sat_downloads: array{available: bool, efirma_expires_at: string|null},
+     *     employer_registration: string|null,
+     *     curp: string|null,
+     *     stamps_as: string,
+     *     created_at: string|null,
+     *     archived_at: string|null,
+     *     metadata: array<string, mixed>,
+     * }
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/emisores/delete-efirma
+     */
+    public function deleteEfirma(string $id, array $options = []): array
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('DELETE', '/v1/issuers/' . rawurlencode($id) . '/efirma', [], $options);
     }
 
     /**
