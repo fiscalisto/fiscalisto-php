@@ -198,7 +198,7 @@ final class WebhookEndpoints
      *
      * @param string $id
      * @param array{
-     *     type?: 'invoice.stamped'|'invoice.failed'|'invoice.canceled'|'invoice.cancellation_pending'|'invoice.cancellation_rejected'|'retention.stamped'|'retention.failed'|'retention.canceled'|'invoice_batch.completed'|'customer_data_request.completed'|'sat_download.completed'|'sat_download.failed'|'ticket.invoiced'|'ticket.included_in_global'|'recurring_invoice.failed'|'issuer.ready'|'balance.low',
+     *     type?: 'invoice.stamped'|'invoice.failed'|'invoice.canceled'|'invoice.cancellation_pending'|'invoice.cancellation_rejected'|'retention.stamped'|'retention.failed'|'retention.canceled'|'invoice_batch.completed'|'customer_data_request.completed'|'sat_download.completed'|'sat_download.failed'|'ticket.invoiced'|'ticket.included_in_global'|'recurring_invoice.failed'|'quote.viewed'|'quote.accepted'|'quote.changes_requested'|'quote.rejected'|'issuer.ready'|'balance.low',
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
      * @return array{

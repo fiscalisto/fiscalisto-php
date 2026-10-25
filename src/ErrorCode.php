@@ -129,6 +129,18 @@ final class ErrorCode
     /** El recibo de nómina no se puede calcular o timbrar con esos datos (periodo, días, registro patronal del emisor…). */
     public const PAYROLL_INVALID = 'payroll_invalid';
 
+    /** La cotización no tiene los datos fiscales del cliente: agrégueselos con POST /v1/quotes/{id} (customer) o mándela con auto_invoice para que los dé al aceptarla. */
+    public const QUOTE_CUSTOMER_MISSING = 'quote_customer_missing';
+
+    /** La cotización no se pudo guardar o ya no cambia (aceptada, rechazada o facturada), o no se puede mandar así. El mensaje dice por qué. */
+    public const QUOTE_INVALID = 'quote_invalid';
+
+    /** Solo se borra una cotización que nunca se envió. */
+    public const QUOTE_NOT_DRAFT = 'quote_not_draft';
+
+    /** La cotización se rechazó o venció: no se factura. Si venció, cámbiele valid_until (es una versión nueva). */
+    public const QUOTE_NOT_INVOICEABLE = 'quote_not_invoiceable';
+
     /** Demasiadas solicitudes con la llave. Espere lo que dice Retry-After y reintente. */
     public const RATE_LIMIT = 'rate_limit';
 
