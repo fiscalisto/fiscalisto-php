@@ -22,6 +22,10 @@ final class Employees
     /**
      * Crear un empleado
      *
+     * Un empleado del emisor para sus recibos de nómina: RFC, CURP, NSS, salario diario, salario
+     * diario integrado y periodicidad. Lo que no mande tiene el valor usual (contrato indefinido,
+     * jornada diurna, quincenal, riesgo clase I). warnings dice lo que el SAT podría rechazar.
+     *
      * POST /v1/employees
      *
      * @param array{
@@ -89,6 +93,8 @@ final class Employees
     /**
      * Listar empleados
      *
+     * Los empleados del emisor, los más recientes primero.
+     *
      * GET /v1/employees
      *
      * @param array{limit?: int, starting_after?: string, issuer?: string} $params
@@ -105,6 +111,8 @@ final class Employees
 
     /**
      * Ver un empleado
+     *
+     * Un empleado con sus datos y lo que el SAT podría rechazar en warnings.
      *
      * GET /v1/employees/{id}
      *
@@ -150,6 +158,8 @@ final class Employees
 
     /**
      * Actualizar un empleado
+     *
+     * Cambia solo los campos que manda; los recibos ya timbrados no cambian.
      *
      * POST /v1/employees/{id}
      *

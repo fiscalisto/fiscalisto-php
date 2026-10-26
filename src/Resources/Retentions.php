@@ -22,6 +22,10 @@ final class Retentions
     /**
      * Timbrar una constancia de retenciones
      *
+     * Timbra una constancia de retenciones e información de pagos (Retenciones 2.0) con los folios
+     * RET1, RET2… del emisor. Una vez por Idempotency-Key; con send_email y email la manda al
+     * receptor al timbrarla.
+     *
      * POST /v1/retentions
      *
      * @param array{
@@ -79,6 +83,8 @@ final class Retentions
     /**
      * Listar constancias
      *
+     * Las constancias del emisor, las más recientes primero.
+     *
      * GET /v1/retentions
      *
      * @param array{
@@ -102,6 +108,9 @@ final class Retentions
 
     /**
      * Ver una constancia
+     *
+     * Una constancia de retenciones con su estado, sus impuestos retenidos y, si se mandó, a
+     * quién.
      *
      * GET /v1/retentions/{id}
      *
@@ -147,6 +156,8 @@ final class Retentions
     /**
      * Descargar el PDF
      *
+     * La representación impresa de la constancia.
+     *
      * GET /v1/retentions/{id}/pdf
      *
      * @param string $id
@@ -165,6 +176,8 @@ final class Retentions
     /**
      * Descargar el XML
      *
+     * El XML timbrado de la constancia, tal como lo tiene el SAT.
+     *
      * GET /v1/retentions/{id}/xml
      *
      * @param string $id
@@ -182,6 +195,9 @@ final class Retentions
 
     /**
      * Enviar por correo
+     *
+     * Manda el PDF y el XML de la constancia a los correos de to (o al que se dio al timbrarla).
+     * Dos envíos a la vez de la misma constancia: el segundo contesta email_failed.
      *
      * POST /v1/retentions/{id}/send
      *

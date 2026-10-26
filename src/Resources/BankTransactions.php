@@ -79,6 +79,9 @@ final class BankTransactions
     /**
      * Ver un depósito
      *
+     * Un depósito mandado a conciliación, con las facturas que se le encontraron o el pago que se
+     * registró con él.
+     *
      * GET /v1/bank_transactions/{id}
      *
      * @param string $id

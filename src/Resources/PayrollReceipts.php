@@ -87,6 +87,9 @@ final class PayrollReceipts
     /**
      * Calcular un recibo sin timbrar
      *
+     * El recibo como se timbraría (percepciones, ISR con el subsidio para el empleo, cuotas IMSS y
+     * el neto), sin timbrar ni usar timbres.
+     *
      * POST /v1/payroll_receipts/preview
      *
      * @param array{

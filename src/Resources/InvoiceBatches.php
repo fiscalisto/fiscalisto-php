@@ -61,6 +61,9 @@ final class InvoiceBatches
     /**
      * Listar lotes
      *
+     * Los lotes de facturas, los más recientes primero, con cuántas se timbraron y cuántas
+     * fallaron.
+     *
      * GET /v1/invoice_batches
      *
      * @param array{limit?: int, starting_after?: string, issuer?: string} $params

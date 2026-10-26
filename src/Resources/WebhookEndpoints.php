@@ -61,6 +61,8 @@ final class WebhookEndpoints
     /**
      * Listar webhooks
      *
+     * Los webhooks del modo de la llave. Hasta 16 por modo.
+     *
      * GET /v1/webhook_endpoints
      *
      * @param array{limit?: int, starting_after?: string} $params
@@ -77,6 +79,9 @@ final class WebhookEndpoints
 
     /**
      * Ver un webhook
+     *
+     * Un webhook: su dirección, los eventos que recibe y si sus entregas fallan. El secreto solo
+     * viene al crearlo.
      *
      * GET /v1/webhook_endpoints/{id}
      *
@@ -109,6 +114,9 @@ final class WebhookEndpoints
 
     /**
      * Actualizar un webhook
+     *
+     * Cambia su dirección, sus eventos, su descripción o su versión de la API; con disabled: false
+     * vuelve a encender uno que se apagó.
      *
      * POST /v1/webhook_endpoints/{id}
      *
@@ -148,6 +156,8 @@ final class WebhookEndpoints
 
     /**
      * Borrar un webhook
+     *
+     * Deja de mandar eventos a esa dirección. Los eventos siguen en GET /v1/events.
      *
      * DELETE /v1/webhook_endpoints/{id}
      *
@@ -212,7 +222,7 @@ final class WebhookEndpoints
      *
      * @param string $id
      * @param array{
-     *     type?: 'invoice.stamped'|'invoice.failed'|'invoice.canceled'|'invoice.cancellation_pending'|'invoice.cancellation_rejected'|'invoice.paid'|'invoice.partially_paid'|'retention.stamped'|'retention.failed'|'retention.canceled'|'invoice_batch.completed'|'customer_data_request.completed'|'sat_download.completed'|'sat_download.failed'|'ticket.invoiced'|'ticket.included_in_global'|'recurring_invoice.failed'|'quote.viewed'|'quote.accepted'|'quote.changes_requested'|'quote.rejected'|'issuer.ready'|'balance.low'|'test_clock.ready',
+     *     type?: 'invoice.stamped'|'invoice.failed'|'invoice.canceled'|'invoice.cancellation_pending'|'invoice.cancellation_rejected'|'invoice.paid'|'invoice.partially_paid'|'retention.stamped'|'retention.failed'|'retention.canceled'|'invoice_batch.completed'|'customer_data_request.completed'|'sat_download.completed'|'sat_download.failed'|'sat_declaration.created'|'sat_declaration.updated'|'ticket.invoiced'|'ticket.included_in_global'|'recurring_invoice.failed'|'quote.viewed'|'quote.accepted'|'quote.changes_requested'|'quote.rejected'|'issuer.ready'|'balance.low'|'test_clock.ready',
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{

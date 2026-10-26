@@ -29,7 +29,7 @@ final class Events
      * @param array{
      *     limit?: int,
      *     starting_after?: string,
-     *     type?: 'invoice.stamped'|'invoice.failed'|'invoice.canceled'|'invoice.cancellation_pending'|'invoice.cancellation_rejected'|'invoice.paid'|'invoice.partially_paid'|'retention.stamped'|'retention.failed'|'retention.canceled'|'invoice_batch.completed'|'customer_data_request.completed'|'sat_download.completed'|'sat_download.failed'|'ticket.invoiced'|'ticket.included_in_global'|'recurring_invoice.failed'|'quote.viewed'|'quote.accepted'|'quote.changes_requested'|'quote.rejected'|'issuer.ready'|'balance.low'|'test_clock.ready',
+     *     type?: 'invoice.stamped'|'invoice.failed'|'invoice.canceled'|'invoice.cancellation_pending'|'invoice.cancellation_rejected'|'invoice.paid'|'invoice.partially_paid'|'retention.stamped'|'retention.failed'|'retention.canceled'|'invoice_batch.completed'|'customer_data_request.completed'|'sat_download.completed'|'sat_download.failed'|'sat_declaration.created'|'sat_declaration.updated'|'ticket.invoiced'|'ticket.included_in_global'|'recurring_invoice.failed'|'quote.viewed'|'quote.accepted'|'quote.changes_requested'|'quote.rejected'|'issuer.ready'|'balance.low'|'test_clock.ready',
      *     object?: string,
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
@@ -45,6 +45,8 @@ final class Events
 
     /**
      * Ver un evento
+     *
+     * Un evento de los últimos 30 días, con el objeto como estaba cuando pasó.
      *
      * GET /v1/events/{id}
      *

@@ -71,6 +71,9 @@ final class Issuers
     /**
      * Listar emisores
      *
+     * Los emisores de la cuenta en el modo de la llave, los más recientes primero. Una llave
+     * limitada a algunos emisores solo ve los suyos.
+     *
      * GET /v1/issuers
      *
      * @param array{
@@ -92,6 +95,9 @@ final class Issuers
 
     /**
      * Ver un emisor
+     *
+     * Un emisor: sus datos fiscales, si ya puede timbrar (status, CSD y contrato con el PAC) y su
+     * registro patronal.
      *
      * GET /v1/issuers/{id}
      *
@@ -371,6 +377,9 @@ final class Issuers
 
     /**
      * Ver el portal de autofactura de un emisor
+     *
+     * El portal de autofactura del emisor: su dirección, hasta cuándo se puede facturar un ticket
+     * y cómo se arma la factura global.
      *
      * GET /v1/issuers/{id}/self_invoicing
      *

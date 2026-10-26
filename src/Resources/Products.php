@@ -22,6 +22,9 @@ final class Products
     /**
      * Crear un producto
      *
+     * Un producto o servicio del catálogo del emisor, con su clave del SAT, su unidad, su precio y
+     * sus impuestos, para usarlo en items con product.
+     *
      * POST /v1/products
      *
      * @param array{
@@ -78,6 +81,8 @@ final class Products
     /**
      * Listar productos
      *
+     * Los productos del emisor, los más recientes primero. Filtre por sku o product_key.
+     *
      * GET /v1/products
      *
      * @param array{
@@ -100,6 +105,8 @@ final class Products
 
     /**
      * Ver un producto
+     *
+     * Un producto del catálogo.
      *
      * GET /v1/products/{id}
      *
@@ -139,6 +146,8 @@ final class Products
 
     /**
      * Actualizar un producto
+     *
+     * Cambia solo los campos que manda. Las facturas ya timbradas no cambian.
      *
      * POST /v1/products/{id}
      *
@@ -195,6 +204,8 @@ final class Products
 
     /**
      * Borrar un producto
+     *
+     * Lo quita del catálogo. Las facturas que lo usaron siguen igual.
      *
      * DELETE /v1/products/{id}
      *

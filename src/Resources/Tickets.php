@@ -103,6 +103,9 @@ final class Tickets
     /**
      * Ver un ticket
      *
+     * Un ticket de autofactura: si ya se facturó (invoice) o entró en la factura global
+     * (global_invoice).
+     *
      * GET /v1/tickets/{id}
      *
      * @param string $id

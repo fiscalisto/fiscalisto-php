@@ -53,6 +53,9 @@ final class Sandboxes
     /**
      * Listar entornos de prueba
      *
+     * Los entornos de prueba de la cuenta, cada uno con su emisor de prueba y su llave fk_test_.
+     * Hasta 25 por cuenta.
+     *
      * GET /v1/sandboxes
      *
      * @param array{timeout?: float|int, max_retries?: int} $options
@@ -73,6 +76,8 @@ final class Sandboxes
 
     /**
      * Ver un entorno de prueba
+     *
+     * Un entorno de prueba: su nombre, su emisor y lo que lleva usado hoy de sus reinicios.
      *
      * GET /v1/sandboxes/{id}
      *

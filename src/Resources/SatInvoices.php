@@ -51,6 +51,8 @@ final class SatInvoices
     /**
      * Ver una factura del SAT
      *
+     * Un CFDI que trajo una descarga del SAT, con sus importes y su estado ante el SAT.
+     *
      * GET /v1/sat_invoices/{id}
      *
      * @param string $id

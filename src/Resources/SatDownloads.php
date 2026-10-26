@@ -70,6 +70,8 @@ final class SatDownloads
     /**
      * Listar descargas del SAT
      *
+     * Las descargas pedidas al SAT, las más recientes primero, con su estado.
+     *
      * GET /v1/sat_downloads
      *
      * @param array{limit?: int, starting_after?: string, issuer?: string} $params
@@ -86,6 +88,9 @@ final class SatDownloads
 
     /**
      * Ver una descarga del SAT
+     *
+     * Una descarga del SAT: su periodo, su estado y cuántos CFDI trajo. Al terminar llega
+     * sat_download.completed.
      *
      * GET /v1/sat_downloads/{id}
      *

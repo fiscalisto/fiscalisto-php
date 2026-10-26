@@ -95,6 +95,9 @@ final class RecurringInvoices
     /**
      * Ver una factura recurrente
      *
+     * Una factura recurrente: su calendario, la próxima fecha, la última factura que timbró y, si
+     * falló, por qué en last_error.
+     *
      * GET /v1/recurring_invoices/{id}
      *
      * @param string $id

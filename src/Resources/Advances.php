@@ -94,6 +94,9 @@ final class Advances
     /**
      * Listar anticipos sin aplicar
      *
+     * Los anticipos timbrados que todavía no se aplican a una factura, con lo que queda de cada
+     * uno. Filtre por customer para los de un cliente.
+     *
      * GET /v1/advances
      *
      * @param array{issuer?: string, customer?: string} $params

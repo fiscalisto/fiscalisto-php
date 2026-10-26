@@ -201,6 +201,9 @@ final class Invoices
     /**
      * Descargar el PDF
      *
+     * La representación impresa del CFDI, como la recibe su cliente. En vez del id puede usar el
+     * UUID (con issuer si la cuenta tiene varios emisores).
+     *
      * GET /v1/invoices/{id}/pdf
      *
      * @param string $id

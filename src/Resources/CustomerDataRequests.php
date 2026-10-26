@@ -62,6 +62,8 @@ final class CustomerDataRequests
     /**
      * Listar solicitudes de datos
      *
+     * Las ligas para pedir datos fiscales, las más recientes primero, con su estado.
+     *
      * GET /v1/customer_data_requests
      *
      * @param array{limit?: int, starting_after?: string, issuer?: string} $params
@@ -78,6 +80,9 @@ final class CustomerDataRequests
 
     /**
      * Ver una solicitud de datos
+     *
+     * Una solicitud de datos: su liga y, si el cliente ya contestó, sus datos fiscales y el
+     * cliente que se guardó.
      *
      * GET /v1/customer_data_requests/{id}
      *

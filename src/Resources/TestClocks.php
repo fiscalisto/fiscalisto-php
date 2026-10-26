@@ -56,6 +56,9 @@ final class TestClocks
     /**
      * Ver el reloj de prueba
      *
+     * La hora que es «hoy» para un emisor de prueba y hasta dónde se ha adelantado. Solo emisores
+     * de prueba.
+     *
      * GET /v1/issuers/{id}/test_clock
      *
      * @param string $id

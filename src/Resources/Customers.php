@@ -22,6 +22,9 @@ final class Customers
     /**
      * Crear un cliente
      *
+     * Un cliente del catálogo del emisor, con sus datos fiscales como vienen en su constancia. Un
+     * RFC que ya está en el catálogo contesta customer_exists.
+     *
      * POST /v1/customers
      *
      * @param array{
@@ -64,6 +67,8 @@ final class Customers
     /**
      * Listar clientes
      *
+     * Los clientes del emisor, los más recientes primero. Con tax_id, el de ese RFC.
+     *
      * GET /v1/customers
      *
      * @param array{limit?: int, starting_after?: string, issuer?: string, tax_id?: string} $params
@@ -80,6 +85,8 @@ final class Customers
 
     /**
      * Ver un cliente
+     *
+     * Un cliente del catálogo.
      *
      * GET /v1/customers/{id}
      *
@@ -112,6 +119,8 @@ final class Customers
 
     /**
      * Actualizar un cliente
+     *
+     * Cambia solo los campos que manda. Las facturas ya timbradas no cambian.
      *
      * POST /v1/customers/{id}
      *
@@ -154,6 +163,8 @@ final class Customers
 
     /**
      * Borrar un cliente
+     *
+     * Lo quita del catálogo. Sus facturas timbradas siguen igual.
      *
      * DELETE /v1/customers/{id}
      *

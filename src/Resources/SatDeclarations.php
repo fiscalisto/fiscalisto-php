@@ -71,9 +71,11 @@ final class SatDeclarations
      *     issuer?: string,
      *     year?: int,
      *     source?: 'monthly'|'annual'|'dyp',
+     *     month?: int,
+     *     type?: 'normal'|'complementary',
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'sat_declaration', issuer: string, source: 'monthly'|'annual'|'dyp', year: int, month: int|null, period: string, type: 'normal'|'complementary', complementary_type: string|null, operation_number: string, payment_line: string|null, filed_on: string|null, profit_coefficient: float|int|null, isr_due: float|int|null, vat_due: float|int|null, total_due: float|int|null, sections: list<array<string, mixed>>, receipt: array<string, mixed>|null, files: array<string, mixed>, files_error: string|null, created_at: string|null, updated_at: string|null}>
+     * @return Collection<array{id: string, livemode: bool, object: 'sat_declaration', issuer: string, source: 'monthly'|'annual'|'dyp', year: int, month: int|null, period: string, type: 'normal'|'complementary', complementary_type: string|null, operation_number: string, payment_line: string|null, filed_on: string|null, profit_coefficient: float|int|null, isr_due: float|int|null, vat_due: float|int|null, total_due: float|int|null, sections: list<array<string, mixed>>, receipt: array<string, mixed>|null, summary: array<string, mixed>, files: array<string, mixed>, files_error: string|null, created_at: string|null, updated_at: string|null}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/declaraciones-del-sat/list-sat-declarations
      */
@@ -84,7 +86,39 @@ final class SatDeclarations
     }
 
     /**
+     * Ver el año mes por mes
+     *
+     * Cada mes del ejercicio con sus obligaciones: presentada (con sus declaraciones), falta
+     * (venció y no la encontramos) o por presentar, con el día en que vence (el 17 del mes
+     * siguiente, o el día hábil siguiente, más los días por el sexto dígito del RFC). Se arma con
+     * lo que trajeron sus consultas; no usa timbres.
+     *
+     * GET /v1/sat_declarations/calendar
+     *
+     * @param array{issuer?: string, year?: int} $params
+     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @return array{
+     *     object: 'sat_declaration_calendar',
+     *     livemode: bool,
+     *     issuer: string,
+     *     year: int,
+     *     missing: int,
+     *     months: list<array{month: int|null, due_on: string, obligations: list<array<string, mixed>>}>,
+     * }
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/declaraciones-del-sat/get-sat-declaration-calendar
+     */
+    public function calendar(array $params = [], array $options = []): array
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('GET', '/v1/sat_declarations/calendar', ['query' => $params], $options);
+    }
+
+    /**
      * Ver una declaración del SAT
+     *
+     * Una declaración presentada al SAT, con sus cifras en summary y si ya están su PDF y su
+     * acuse.
      *
      * GET /v1/sat_declarations/{id}
      *
@@ -110,6 +144,7 @@ final class SatDeclarations
      *     total_due: float|int|null,
      *     sections: list<array{tax: string, fields: list<array<string, mixed>>}>,
      *     receipt: array{concepts: list<array<string, mixed>>, total: float|int|null, payment_line: string|null, valid_until: string|null}|null,
+     *     summary: array{obligations: list<array<string, mixed>>, total_to_pay: float|int|null},
      *     files: array{pdf: bool, receipt: bool, financial_statements: bool},
      *     files_error: string|null,
      *     created_at: string|null,

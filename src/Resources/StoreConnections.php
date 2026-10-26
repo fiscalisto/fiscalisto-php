@@ -87,6 +87,9 @@ final class StoreConnections
     /**
      * Ver una tienda
      *
+     * Una tienda conectada (Shopify, Mercado Libre o WooCommerce), su estado y lo último que
+     * importó.
+     *
      * GET /v1/store_connections/{id}
      *
      * @param string $id
