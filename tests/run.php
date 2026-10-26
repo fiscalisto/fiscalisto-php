@@ -222,7 +222,14 @@ test('las listas recorren todas las páginas', function (): void {
     same(1, count($fake->client()->customers->list()->toArray(1)));
 });
 
-$vector = json_decode((string) file_get_contents(__DIR__ . '/../../fixtures/webhook.json'), true);
+// In the published repository the shared fixtures sit in fixtures/ next to the code.
+function fixture(string $name): mixed
+{
+    $local = __DIR__ . '/../fixtures/' . $name;
+    return json_decode((string) file_get_contents(is_file($local) ? $local : __DIR__ . '/../../fixtures/' . $name), true);
+}
+
+$vector = fixture('webhook.json');
 
 test('verifica Standard Webhooks', function () use ($vector): void {
     $h = $vector['headers'];
@@ -259,7 +266,7 @@ test('rechaza lo que no es de Fiscalisto', function () use ($vector): void {
 });
 
 test('cada ruta tiene su método', function (): void {
-    $calls = json_decode((string) file_get_contents(__DIR__ . '/../../fixtures/calls.json'), true);
+    $calls = fixture('calls.json');
     $f = new Fiscalisto('fk_test_x');
     foreach ($calls as $route => $call) {
         [$resource, $method] = explode('->', $call['php']);

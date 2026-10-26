@@ -22,16 +22,18 @@ final class Accounting
     /**
      * Listar las pólizas de un mes
      *
-     * Una póliza de diario por cada CFDI de ingreso o egreso vigente del mes, emitido o recibido
-     * (los recibidos con la categoría de su gasto), con sus cuentas y código agrupador del SAT. En
-     * pesos; un CFDI en otra moneda sin tipo de cambio no se registra. Es un punto de partida para
-     * su contador: no incluye bancos, nómina ni depreciaciones.
+     * Las pólizas de diario del mes, con sus cuentas y código agrupador del SAT: una por cada CFDI
+     * de ingreso o egreso vigente, emitido o recibido (los recibidos con la categoría de su
+     * gasto); una por cada pago de un complemento; una por cada recibo de nómina, y una con la
+     * depreciación de los activos fijos. Un PUE se registra cobrado o pagado según su forma de
+     * pago. En pesos; un CFDI en otra moneda sin tipo de cambio no se registra. No incluye
+     * movimientos de banco sin CFDI ni provisiones.
      *
      * GET /v1/accounting/journal_entries
      *
      * @param array{month: string, limit?: int, starting_after?: string, issuer?: string} $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'journal_entry', issuer: string, date: string, description: string, invoice: string|null, uuid: string, tax_id: string, total: float|int, currency: string, exchange_rate: float|int|null, lines: list<array<string, mixed>>}>
+     * @return Collection<array{id: string, livemode: bool, object: 'journal_entry', issuer: string, type: 'invoice'|'payment_received'|'payment_made'|'payroll'|'depreciation', date: string, description: string, invoice: string|null, uuid: string|null, tax_id: string|null, total: float|int, currency: string, exchange_rate: float|int|null, lines: list<array<string, mixed>>}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/contabilidad/list-journal-entries
      */
@@ -45,8 +47,8 @@ final class Accounting
      * Ver la balanza de comprobación
      *
      * Saldo inicial, cargos, abonos y saldo final de cada cuenta en el mes. Los saldos iniciales
-     * se acumulan desde el primer CFDI (las de resultados, desde enero), y los resultados de cada
-     * año anterior se cierran a capital.
+     * se acumulan desde el primer CFDI, o desde los saldos iniciales capturados en la app (las de
+     * resultados, desde enero), y los resultados de cada año anterior se cierran a capital.
      *
      * GET /v1/accounting/trial_balance
      *
@@ -68,6 +70,68 @@ final class Accounting
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
         return $this->client->request('GET', '/v1/accounting/trial_balance', ['query' => $params], $options);
+    }
+
+    /**
+     * Ver los estados financieros
+     *
+     * El estado de resultados (del mes y del año hasta ese mes) y el balance general al cierre del
+     * mes, leídos de la misma balanza, así que siempre suman las mismas pólizas.
+     *
+     * GET /v1/accounting/financial_statements
+     *
+     * @param array{month: string, issuer?: string} $params
+     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @return array{
+     *     object: 'financial_statements',
+     *     livemode: bool,
+     *     issuer: string,
+     *     month: string,
+     *     income_statement: array{month: array<string, mixed>, year_to_date: array<string, mixed>},
+     *     balance_sheet: array{assets: array<string, mixed>, liabilities: array<string, mixed>, equity: array<string, mixed>, net_income_year_to_date: float|int, liabilities_and_equity: float|int, difference: float|int},
+     *     journal_entries: int,
+     *     opening_balances_date: string|null,
+     *     missing_invoices: int,
+     * }
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/contabilidad/get-financial-statements
+     */
+    public function financialStatements(array $params, array $options = []): array
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('GET', '/v1/accounting/financial_statements', ['query' => $params], $options);
+    }
+
+    /**
+     * Cruzar lo declarado con lo facturado
+     *
+     * Cada mes ya vencido del año: el IVA trasladado, acreditable y retenido y los ingresos para
+     * ISR que el emisor declaró (de GET /v1/sat_declarations, después de POST
+     * /v1/sat_declarations/refresh) contra lo que dicen sus CFDI. Hasta $2 de diferencia es
+     * redondeo (las declaraciones van en pesos enteros). Una cifra que la declaración no trae en
+     * un renglón reconocible es unreadable con declared null, nunca 0. También el IVA a favor y el
+     * régimen con que factura. Gratis: no consulta al SAT.
+     *
+     * GET /v1/accounting/cross_checks
+     *
+     * @param array{year?: int, issuer?: string} $params
+     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @return array{
+     *     object: 'cross_checks',
+     *     livemode: bool,
+     *     issuer: string,
+     *     year: int,
+     *     months: list<array{month: string, status: 'matches'|'differs'|'not_filed'|'unreadable', checks: list<array<string, mixed>>}>,
+     *     vat_balance_in_favor: array{periods: list<array<string, mixed>>, total: float|int, credited: float|int, remaining: float|int},
+     *     tax_regimes: array{registered: list<string>, invoiced: list<array<string, mixed>>},
+     * }
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/contabilidad/get-cross-checks
+     */
+    public function crossChecks(array $params = [], array $options = []): array
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('GET', '/v1/accounting/cross_checks', ['query' => $params], $options);
     }
 
     /**
