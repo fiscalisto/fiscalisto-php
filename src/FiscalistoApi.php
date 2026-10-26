@@ -83,6 +83,9 @@ abstract class FiscalistoApi extends Core
     /** Descargas del SAT. */
     public readonly Resources\SatInvoices $satInvoices;
 
+    /** Declaraciones del SAT. */
+    public readonly Resources\SatDeclarations $satDeclarations;
+
     /** Autofactura. */
     public readonly Resources\Tickets $tickets;
 
@@ -135,6 +138,7 @@ abstract class FiscalistoApi extends Core
         $this->satLists = new Resources\SatLists($this);
         $this->satDownloads = new Resources\SatDownloads($this);
         $this->satInvoices = new Resources\SatInvoices($this);
+        $this->satDeclarations = new Resources\SatDeclarations($this);
         $this->tickets = new Resources\Tickets($this);
         $this->accounting = new Resources\Accounting($this);
         $this->storeConnections = new Resources\StoreConnections($this);

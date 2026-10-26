@@ -1,0 +1,20 @@
+# Checks a version tag (v0.1.1) from Fiscalisto's repository (scripts/sdk-release.sh).
+# Packagist publishes the tag by itself, through this repository's webhook.
+name: release
+on:
+  push:
+    tags: ["v*"]
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.3"
+      - name: The tag is the package's version
+        run: grep -q "VERSION = '${GITHUB_REF_NAME#v}'" src/Core.php
+      - run: composer validate --strict --no-check-lock
+      - run: php tests/run.php

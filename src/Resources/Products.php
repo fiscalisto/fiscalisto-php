@@ -32,13 +32,15 @@ final class Products
      *     unit_key?: string,
      *     unit_name?: string|null,
      *     sku?: string|null,
-     *     unit_price: float|int,
+     *     unit_price?: float|int,
+     *     open_price?: bool,
      *     taxability?: '01'|'02'|'03'|'04'|'05'|'06'|'07'|'08',
      *     iva?: '0'|'0.16'|'0.08'|'exento',
      *     ieps?: float|int|null,
      *     ieps_factor?: 'Tasa'|'Cuota',
      *     iva_retention?: float|int,
      *     isr_retention?: float|int,
+     *     local_taxes?: list<array{retention: bool, name: string, rate: float|int}>,
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
@@ -53,12 +55,15 @@ final class Products
      *     unit_name: string|null,
      *     sku: string|null,
      *     unit_price: float|int,
+     *     open_price: bool,
      *     taxability: string,
      *     iva: string,
      *     ieps: float|int|null,
      *     ieps_factor: string|null,
      *     iva_retention: float|int,
      *     isr_retention: float|int,
+     *     local_taxes: list<array{retention: bool, name: string, rate: float|int}>,
+     *     created_at: string,
      *     updated_at: string|null,
      * }
      * @throws FiscalistoException
@@ -83,7 +88,7 @@ final class Products
      *     product_key?: string,
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'product', issuer: string, name: string|null, description: string, product_key: string, unit_key: string, unit_name: string|null, sku: string|null, unit_price: float|int, taxability: string, iva: string, ieps: float|int|null, ieps_factor: string|null, iva_retention: float|int, isr_retention: float|int, updated_at: string|null}>
+     * @return Collection<array{id: string, livemode: bool, object: 'product', issuer: string, name: string|null, description: string, product_key: string, unit_key: string, unit_name: string|null, sku: string|null, unit_price: float|int, open_price: bool, taxability: string, iva: string, ieps: float|int|null, ieps_factor: string|null, iva_retention: float|int, isr_retention: float|int, local_taxes: list<array<string, mixed>>, created_at: string, updated_at: string|null}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/productos/list-products
      */
@@ -112,12 +117,15 @@ final class Products
      *     unit_name: string|null,
      *     sku: string|null,
      *     unit_price: float|int,
+     *     open_price: bool,
      *     taxability: string,
      *     iva: string,
      *     ieps: float|int|null,
      *     ieps_factor: string|null,
      *     iva_retention: float|int,
      *     isr_retention: float|int,
+     *     local_taxes: list<array{retention: bool, name: string, rate: float|int}>,
+     *     created_at: string,
      *     updated_at: string|null,
      * }
      * @throws FiscalistoException
@@ -143,12 +151,14 @@ final class Products
      *     unit_name?: string|null,
      *     sku?: string|null,
      *     unit_price?: float|int,
+     *     open_price?: bool,
      *     taxability?: '01'|'02'|'03'|'04'|'05'|'06'|'07'|'08',
      *     iva?: '0'|'0.16'|'0.08'|'exento',
      *     ieps?: float|int|null,
      *     ieps_factor?: 'Tasa'|'Cuota',
      *     iva_retention?: float|int,
      *     isr_retention?: float|int,
+     *     local_taxes?: list<array{retention: bool, name: string, rate: float|int}>,
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
@@ -163,12 +173,15 @@ final class Products
      *     unit_name: string|null,
      *     sku: string|null,
      *     unit_price: float|int,
+     *     open_price: bool,
      *     taxability: string,
      *     iva: string,
      *     ieps: float|int|null,
      *     ieps_factor: string|null,
      *     iva_retention: float|int,
      *     isr_retention: float|int,
+     *     local_taxes: list<array{retention: bool, name: string, rate: float|int}>,
+     *     created_at: string,
      *     updated_at: string|null,
      * }
      * @throws FiscalistoException

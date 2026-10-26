@@ -11,7 +11,7 @@ namespace Fiscalisto;
  */
 abstract class Core
 {
-    public const VERSION = '0.1.0';
+    public const VERSION = '0.1.1';
     public const DEFAULT_BASE_URL = 'https://api.fiscalisto.com';
     /** La versión de la API para la que se hizo este SDK (cabecera Fiscalisto-Version). */
     public const API_VERSION = '2026-10-24';
@@ -145,7 +145,17 @@ abstract class Core
                 if ($as !== 'json') {
                     return $response['body'];
                 }
-                return json_decode($response['body'], true, 512, JSON_THROW_ON_ERROR);
+                try {
+                    return json_decode($response['body'], true, 512, JSON_THROW_ON_ERROR);
+                } catch (\JsonException) {
+                    // A proxy's or a network portal's page answered instead of the API.
+                    $text = substr(trim((string) preg_replace('/\s+/', ' ', $response['body'])), 0, 80);
+                    throw new FiscalistoException([
+                        'type' => 'api_error',
+                        'code' => 'invalid_response',
+                        'message' => "La respuesta ($status) no es de la API: " . ($text !== '' ? $text : 'vacía') . '. ¿Hay un proxy o un portal de por medio?',
+                    ], $status, $requestId);
+                }
             }
             $parsed = json_decode($response['body'], true);
             /** @var array<string, mixed> $raw */

@@ -75,6 +75,7 @@ final class Employees
      *     department: string|null,
      *     position: string|null,
      *     warnings: list<string>,
+     *     created_at: string,
      * }
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/nomina/create-employee
@@ -92,7 +93,7 @@ final class Employees
      *
      * @param array{limit?: int, starting_after?: string, issuer?: string} $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'employee', issuer: string, number: string, name: string, tax_id: string, curp: string, social_security_number: string, zip: string, email: string|null, start_date: string, end_date: string|null, daily_salary: float|int, integrated_daily_salary: float|int, contract_type: string, workday_type: string, regime_type: string, periodicity: string, risk_class: string, state: string, border_zone: bool, unionized: bool, department: string|null, position: string|null, warnings: list<string>}>
+     * @return Collection<array{id: string, livemode: bool, object: 'employee', issuer: string, number: string, name: string, tax_id: string, curp: string, social_security_number: string, zip: string, email: string|null, start_date: string, end_date: string|null, daily_salary: float|int, integrated_daily_salary: float|int, contract_type: string, workday_type: string, regime_type: string, periodicity: string, risk_class: string, state: string, border_zone: bool, unionized: bool, department: string|null, position: string|null, warnings: list<string>, created_at: string}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/nomina/list-employees
      */
@@ -136,6 +137,7 @@ final class Employees
      *     department: string|null,
      *     position: string|null,
      *     warnings: list<string>,
+     *     created_at: string,
      * }
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/nomina/get-employee
@@ -202,6 +204,7 @@ final class Employees
      *     department: string|null,
      *     position: string|null,
      *     warnings: list<string>,
+     *     created_at: string,
      * }
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/nomina/update-employee

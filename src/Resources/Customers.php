@@ -49,6 +49,7 @@ final class Customers
      *     use: string|null,
      *     foreign: array{country: string, tax_id: string|null}|null,
      *     ieps_taxpayer: bool,
+     *     created_at: string,
      *     updated_at: string|null,
      * }
      * @throws FiscalistoException
@@ -67,7 +68,7 @@ final class Customers
      *
      * @param array{limit?: int, starting_after?: string, issuer?: string, tax_id?: string} $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'customer', issuer: string, tax_id: string, legal_name: string, tax_system: string, zip: string, email: string|null, use: string|null, foreign: array<string, mixed>|null, ieps_taxpayer: bool, updated_at: string|null}>
+     * @return Collection<array{id: string, livemode: bool, object: 'customer', issuer: string, tax_id: string, legal_name: string, tax_system: string, zip: string, email: string|null, use: string|null, foreign: array<string, mixed>|null, ieps_taxpayer: bool, created_at: string, updated_at: string|null}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/clientes/list-customers
      */
@@ -97,6 +98,7 @@ final class Customers
      *     use: string|null,
      *     foreign: array{country: string, tax_id: string|null}|null,
      *     ieps_taxpayer: bool,
+     *     created_at: string,
      *     updated_at: string|null,
      * }
      * @throws FiscalistoException
@@ -138,6 +140,7 @@ final class Customers
      *     use: string|null,
      *     foreign: array{country: string, tax_id: string|null}|null,
      *     ieps_taxpayer: bool,
+     *     created_at: string,
      *     updated_at: string|null,
      * }
      * @throws FiscalistoException

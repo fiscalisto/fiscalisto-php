@@ -227,7 +227,7 @@ final class Retentions
     /**
      * Cancelar una constancia
      *
-     * Se cancela en el momento (no espera aceptación). Usa un timbre.
+     * Se cancela en el momento (no espera aceptación). No usa timbres.
      *
      * POST /v1/retentions/{id}/cancel
      *
