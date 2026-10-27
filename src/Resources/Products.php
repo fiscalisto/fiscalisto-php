@@ -44,6 +44,10 @@ final class Products
      *     iva_retention?: float|int,
      *     isr_retention?: float|int,
      *     local_taxes?: list<array{retention: bool, name: string, rate: float|int}>,
+     *     track_stock?: bool,
+     *     cost?: float|int|null,
+     *     barcode?: string|null,
+     *     min_stock?: float|int|null,
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
@@ -66,6 +70,10 @@ final class Products
      *     iva_retention: float|int,
      *     isr_retention: float|int,
      *     local_taxes: list<array{retention: bool, name: string, rate: float|int}>,
+     *     track_stock: bool,
+     *     cost: float|int|null,
+     *     barcode: string|null,
+     *     min_stock: float|int|null,
      *     created_at: string,
      *     updated_at: string|null,
      * }
@@ -93,7 +101,7 @@ final class Products
      *     product_key?: string,
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'product', issuer: string, name: string|null, description: string, product_key: string, unit_key: string, unit_name: string|null, sku: string|null, unit_price: float|int, open_price: bool, taxability: string, iva: string, ieps: float|int|null, ieps_factor: string|null, iva_retention: float|int, isr_retention: float|int, local_taxes: list<array<string, mixed>>, created_at: string, updated_at: string|null}>
+     * @return Collection<array{id: string, livemode: bool, object: 'product', issuer: string, name: string|null, description: string, product_key: string, unit_key: string, unit_name: string|null, sku: string|null, unit_price: float|int, open_price: bool, taxability: string, iva: string, ieps: float|int|null, ieps_factor: string|null, iva_retention: float|int, isr_retention: float|int, local_taxes: list<array<string, mixed>>, track_stock: bool, cost: float|int|null, barcode: string|null, min_stock: float|int|null, created_at: string, updated_at: string|null}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/productos/list-products
      */
@@ -132,6 +140,10 @@ final class Products
      *     iva_retention: float|int,
      *     isr_retention: float|int,
      *     local_taxes: list<array{retention: bool, name: string, rate: float|int}>,
+     *     track_stock: bool,
+     *     cost: float|int|null,
+     *     barcode: string|null,
+     *     min_stock: float|int|null,
      *     created_at: string,
      *     updated_at: string|null,
      * }
@@ -168,6 +180,10 @@ final class Products
      *     iva_retention?: float|int,
      *     isr_retention?: float|int,
      *     local_taxes?: list<array{retention: bool, name: string, rate: float|int}>,
+     *     track_stock?: bool,
+     *     cost?: float|int|null,
+     *     barcode?: string|null,
+     *     min_stock?: float|int|null,
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
@@ -190,6 +206,10 @@ final class Products
      *     iva_retention: float|int,
      *     isr_retention: float|int,
      *     local_taxes: list<array{retention: bool, name: string, rate: float|int}>,
+     *     track_stock: bool,
+     *     cost: float|int|null,
+     *     barcode: string|null,
+     *     min_stock: float|int|null,
      *     created_at: string,
      *     updated_at: string|null,
      * }
@@ -219,5 +239,30 @@ final class Products
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
         return $this->client->request('DELETE', '/v1/products/' . rawurlencode($id), [], $options);
+    }
+
+    /**
+     * Ver las existencias de un producto
+     *
+     * Lo que hay del producto en cada almacén del emisor (también en 0), apartado por cotizaciones
+     * y disponible.
+     *
+     * GET /v1/products/{id}/stock
+     *
+     * @param string $id
+     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @return array{
+     *     object: 'list',
+     *     data: list<array{id: string, livemode: bool, object: 'stock_level', product: string, warehouse: string, on_hand: float|int, reserved: float|int, available: float|int, value: float|int, average_cost: float|int|null}>,
+     *     has_more: bool,
+     *     url: string,
+     * }
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/inventario/get-product-stock
+     */
+    public function stock(string $id, array $options = []): array
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('GET', '/v1/products/' . rawurlencode($id) . '/stock', [], $options);
     }
 }

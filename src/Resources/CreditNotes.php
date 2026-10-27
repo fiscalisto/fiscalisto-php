@@ -43,6 +43,7 @@ final class CreditNotes
      *     livemode: bool,
      *     object: 'invoice',
      *     issuer: string,
+     *     branch: string|null,
      *     type: 'I'|'E'|'P'|'T'|'N',
      *     status: 'processing'|'pending'|'valid'|'rejected'|'canceled',
      *     uuid: string|null,

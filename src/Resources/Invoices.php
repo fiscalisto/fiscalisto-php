@@ -31,6 +31,8 @@ final class Invoices
      *
      * @param array{
      *     issuer?: string,
+     *     branch?: string,
+     *     warehouse?: string,
      *     customer: string|array{tax_id: string, legal_name: string, tax_system: string, zip: string, email?: string|null, foreign?: array{country: string, tax_id: string}, ieps_taxpayer?: bool},
      *     items: list<array{product?: string, description?: string, product_key?: string, unit_key?: string, unit_name?: string|null, sku?: string|null, quantity?: float|int, unit_price?: float|int, discount?: float|int, taxability?: '01'|'02'|'03'|'04'|'05'|'06'|'07'|'08', iva?: '0'|'0.16'|'0.08'|'exento', ieps?: float|int, ieps_factor?: 'Tasa'|'Cuota', ieps_units?: float|int, iva_retention?: float|int, isr_retention?: float|int, predial?: list<string>, pedimentos?: list<string>, third_party?: array{tax_id: string, name: string, tax_system: string, zip: string}, iedu?: array{student_name: string, curp: string, level: 'Preescolar'|'Primaria'|'Secundaria'|'Profesional técnico'|'Bachillerato o su equivalente', rvoe: string, payer_tax_id?: string|null}, used_vehicle?: array{purchase_amount: float|int, sale_amount: float|int, vehicle_key: string, make: string, type: string, model: string, engine_number?: string, serial_number?: string, niv?: string, guide_value: float|int, customs?: list<array<string, mixed>>}, addenda?: array<string, mixed>}>,
      *     type?: 'I'|'T',
@@ -66,6 +68,7 @@ final class Invoices
      *     livemode: bool,
      *     object: 'invoice',
      *     issuer: string,
+     *     branch: string|null,
      *     type: 'I'|'E'|'P'|'T'|'N',
      *     status: 'processing'|'pending'|'valid'|'rejected'|'canceled',
      *     uuid: string|null,
@@ -129,7 +132,7 @@ final class Invoices
      *     created_lte?: string,
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'invoice', issuer: string, type: 'I'|'E'|'P'|'T'|'N', status: 'processing'|'pending'|'valid'|'rejected'|'canceled', uuid: string|null, series: string|null, folio: string|null, date: string|null, customer: array<string, mixed>, use: string|null, payment_form: string|null, payment_method: string|null, currency: string, exchange_rate: float|int|null, items: list<array<string, mixed>>, subtotal: float|int|null, discount: float|int|null, taxes: array<string, mixed>|null, total: float|int|null, payment_status: 'paid'|'partial'|'unpaid'|null, amount_due: float|int|null, amount_paid: float|int|null, related: array<string, mixed>|null, payment?: array<string, mixed>|null, payroll?: array<string, mixed>, global?: array<string, mixed>, cancellation: array<string, mixed>|null, email: array<string, mixed>|null, error: array<string, mixed>|null, recurring_invoice: string|null, created_at: string|null, metadata: array<string, mixed>, warnings?: list<string>, email_error?: string, substitutes?: array<string, mixed>, advance_application?: array<string, mixed>}>
+     * @return Collection<array{id: string, livemode: bool, object: 'invoice', issuer: string, branch: string|null, type: 'I'|'E'|'P'|'T'|'N', status: 'processing'|'pending'|'valid'|'rejected'|'canceled', uuid: string|null, series: string|null, folio: string|null, date: string|null, customer: array<string, mixed>, use: string|null, payment_form: string|null, payment_method: string|null, currency: string, exchange_rate: float|int|null, items: list<array<string, mixed>>, subtotal: float|int|null, discount: float|int|null, taxes: array<string, mixed>|null, total: float|int|null, payment_status: 'paid'|'partial'|'unpaid'|null, amount_due: float|int|null, amount_paid: float|int|null, related: array<string, mixed>|null, payment?: array<string, mixed>|null, payroll?: array<string, mixed>, global?: array<string, mixed>, cancellation: array<string, mixed>|null, email: array<string, mixed>|null, error: array<string, mixed>|null, recurring_invoice: string|null, created_at: string|null, metadata: array<string, mixed>, warnings?: list<string>, email_error?: string, substitutes?: array<string, mixed>, advance_application?: array<string, mixed>}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/facturas/list-invoices
      */
@@ -154,6 +157,7 @@ final class Invoices
      *     livemode: bool,
      *     object: 'invoice',
      *     issuer: string,
+     *     branch: string|null,
      *     type: 'I'|'E'|'P'|'T'|'N',
      *     status: 'processing'|'pending'|'valid'|'rejected'|'canceled',
      *     uuid: string|null,
@@ -255,6 +259,7 @@ final class Invoices
      *     livemode: bool,
      *     object: 'invoice',
      *     issuer: string,
+     *     branch: string|null,
      *     type: 'I'|'E'|'P'|'T'|'N',
      *     status: 'processing'|'pending'|'valid'|'rejected'|'canceled',
      *     uuid: string|null,
@@ -315,6 +320,7 @@ final class Invoices
      *     livemode: bool,
      *     object: 'invoice',
      *     issuer: string,
+     *     branch: string|null,
      *     type: 'I'|'E'|'P'|'T'|'N',
      *     status: 'processing'|'pending'|'valid'|'rejected'|'canceled',
      *     uuid: string|null,
@@ -370,6 +376,8 @@ final class Invoices
      * @param string $id
      * @param array{
      *     issuer?: string,
+     *     branch?: string,
+     *     warehouse?: string,
      *     customer: string|array{tax_id: string, legal_name: string, tax_system: string, zip: string, email?: string|null, foreign?: array{country: string, tax_id: string}, ieps_taxpayer?: bool},
      *     items: list<array{product?: string, description?: string, product_key?: string, unit_key?: string, unit_name?: string|null, sku?: string|null, quantity?: float|int, unit_price?: float|int, discount?: float|int, taxability?: '01'|'02'|'03'|'04'|'05'|'06'|'07'|'08', iva?: '0'|'0.16'|'0.08'|'exento', ieps?: float|int, ieps_factor?: 'Tasa'|'Cuota', ieps_units?: float|int, iva_retention?: float|int, isr_retention?: float|int, predial?: list<string>, pedimentos?: list<string>, third_party?: array{tax_id: string, name: string, tax_system: string, zip: string}, iedu?: array{student_name: string, curp: string, level: 'Preescolar'|'Primaria'|'Secundaria'|'Profesional técnico'|'Bachillerato o su equivalente', rvoe: string, payer_tax_id?: string|null}, used_vehicle?: array{purchase_amount: float|int, sale_amount: float|int, vehicle_key: string, make: string, type: string, model: string, engine_number?: string, serial_number?: string, niv?: string, guide_value: float|int, customs?: list<array<string, mixed>>}, addenda?: array<string, mixed>}>,
      *     type?: 'I'|'T',
@@ -405,6 +413,7 @@ final class Invoices
      *     livemode: bool,
      *     object: 'invoice',
      *     issuer: string,
+     *     branch: string|null,
      *     type: 'I'|'E'|'P'|'T'|'N',
      *     status: 'processing'|'pending'|'valid'|'rejected'|'canceled',
      *     uuid: string|null,
@@ -464,6 +473,7 @@ final class Invoices
      *     livemode: bool,
      *     object: 'invoice',
      *     issuer: string,
+     *     branch: string|null,
      *     type: 'I'|'E'|'P'|'T'|'N',
      *     status: 'processing'|'pending'|'valid'|'rejected'|'canceled',
      *     uuid: string|null,
@@ -524,6 +534,7 @@ final class Invoices
      *     livemode: bool,
      *     object: 'invoice',
      *     issuer: string,
+     *     branch: string|null,
      *     type: 'I'|'E'|'P'|'T'|'N',
      *     status: 'processing'|'pending'|'valid'|'rejected'|'canceled',
      *     uuid: string|null,

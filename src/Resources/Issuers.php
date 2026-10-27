@@ -376,6 +376,199 @@ final class Issuers
     }
 
     /**
+     * Ver la opinión de cumplimiento (32-D)
+     *
+     * La última opinión que trajo del SAT: positiva, negativa (con sus motivos), sin obligaciones
+     * o en suspensión. result es null hasta la primera consulta. No usa timbres.
+     *
+     * GET /v1/issuers/{id}/compliance_opinion
+     *
+     * @param string $id
+     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @return array{
+     *     object: 'compliance_opinion',
+     *     livemode: bool,
+     *     issuer: string,
+     *     result: 'positive'|'negative'|'no_obligations'|'suspended'|null,
+     *     date: string|null,
+     *     folio: string|null,
+     *     reasons: list<string>,
+     *     pdf: bool,
+     *     checked_at: string|null,
+     *     last_error: string|null,
+     * }
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/cumplimiento-sat/get-compliance-opinion
+     */
+    public function complianceOpinion(string $id, array $options = []): array
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('GET', '/v1/issuers/' . rawurlencode($id) . '/compliance_opinion', [], $options);
+    }
+
+    /**
+     * Pedir la opinión de cumplimiento al SAT
+     *
+     * La pide al SAT ahora con la e.firma guardada del emisor (POST /v1/issuers/{id}/efirma con
+     * keep_for_downloads: true). 1 timbre en producción, una vez cada 10 minutos; regresa si el
+     * SAT no contesta. Si el SAT tarda, contesta status processing y el resultado llega a GET
+     * /v1/issuers/{id}/compliance_opinion. En pruebas da una positiva de ejemplo.
+     *
+     * POST /v1/issuers/{id}/compliance_opinion/refresh
+     *
+     * @param string $id
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
+     * @return array{
+     *     object: 'sat_refresh',
+     *     livemode: bool,
+     *     issuer: string,
+     *     document: 'compliance_opinion'|'tax_status_certificate'|'sat_mailbox',
+     *     status: 'completed'|'processing',
+     *     refreshed_at: string|null,
+     *     next_refresh_at: string|null,
+     *     url: string,
+     * }
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/cumplimiento-sat/refresh-compliance-opinion
+     */
+    public function refreshComplianceOpinion(string $id, array $options = []): array
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('POST', '/v1/issuers/' . rawurlencode($id) . '/compliance_opinion/refresh', ['idempotent' => true], $options);
+    }
+
+    /**
+     * Descargar el PDF de la opinión de cumplimiento
+     *
+     * El PDF de la última opinión, como lo da el SAT. No usa timbres.
+     *
+     * GET /v1/issuers/{id}/compliance_opinion/pdf
+     *
+     * @param string $id
+     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @return string Los bytes del PDF.
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/cumplimiento-sat/get-compliance-opinion-pdf
+     */
+    public function complianceOpinionPdf(string $id, array $options = []): string
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('GET', '/v1/issuers/' . rawurlencode($id) . '/compliance_opinion/pdf', ['as' => 'bytes'], $options);
+    }
+
+    /**
+     * Ver la constancia de situación fiscal
+     *
+     * Lo que dice la última constancia generada: razón social, regímenes, código postal, estatus
+     * en el padrón e idCIF. No usa timbres.
+     *
+     * GET /v1/issuers/{id}/tax_status_certificate
+     *
+     * @param string $id
+     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @return array{
+     *     object: 'tax_status_certificate',
+     *     livemode: bool,
+     *     issuer: string,
+     *     issued_on: string|null,
+     *     id_cif: string|null,
+     *     tax_id: string,
+     *     legal_name: string|null,
+     *     tax_systems: list<array{code: string, name: string}>,
+     *     zip: string|null,
+     *     status: string|null,
+     *     pdf: bool,
+     *     created_at: string|null,
+     * }
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/cumplimiento-sat/get-tax-status-certificate
+     */
+    public function taxStatusCertificate(string $id, array $options = []): array
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('GET', '/v1/issuers/' . rawurlencode($id) . '/tax_status_certificate', [], $options);
+    }
+
+    /**
+     * Generar la constancia de situación fiscal en el SAT
+     *
+     * Genera una constancia nueva con la e.firma guardada del emisor. 1 timbre en producción, una
+     * vez cada 10 minutos; regresa si el SAT no contesta. En pruebas hace una con los datos del
+     * emisor.
+     *
+     * POST /v1/issuers/{id}/tax_status_certificate/refresh
+     *
+     * @param string $id
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
+     * @return array{
+     *     object: 'sat_refresh',
+     *     livemode: bool,
+     *     issuer: string,
+     *     document: 'compliance_opinion'|'tax_status_certificate'|'sat_mailbox',
+     *     status: 'completed'|'processing',
+     *     refreshed_at: string|null,
+     *     next_refresh_at: string|null,
+     *     url: string,
+     * }
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/cumplimiento-sat/refresh-tax-status-certificate
+     */
+    public function refreshTaxStatusCertificate(string $id, array $options = []): array
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('POST', '/v1/issuers/' . rawurlencode($id) . '/tax_status_certificate/refresh', ['idempotent' => true], $options);
+    }
+
+    /**
+     * Descargar el PDF de la constancia
+     *
+     * El PDF de la última constancia, como lo da el SAT. No usa timbres.
+     *
+     * GET /v1/issuers/{id}/tax_status_certificate/pdf
+     *
+     * @param string $id
+     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @return string Los bytes del PDF.
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/cumplimiento-sat/get-tax-status-certificate-pdf
+     */
+    public function taxStatusCertificatePdf(string $id, array $options = []): string
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('GET', '/v1/issuers/' . rawurlencode($id) . '/tax_status_certificate/pdf', ['as' => 'bytes'], $options);
+    }
+
+    /**
+     * Revisar el buzón tributario en el SAT
+     *
+     * Lee los avisos del buzón tributario del emisor ahora, con su e.firma guardada; nunca abre
+     * notificaciones (abrirlas firma el acuse y corren los plazos). 1 timbre en producción, una
+     * vez cada 10 minutos. En pruebas deja dos avisos de ejemplo.
+     *
+     * POST /v1/issuers/{id}/sat_mailbox/refresh
+     *
+     * @param string $id
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
+     * @return array{
+     *     object: 'sat_refresh',
+     *     livemode: bool,
+     *     issuer: string,
+     *     document: 'compliance_opinion'|'tax_status_certificate'|'sat_mailbox',
+     *     status: 'completed'|'processing',
+     *     refreshed_at: string|null,
+     *     next_refresh_at: string|null,
+     *     url: string,
+     * }
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/cumplimiento-sat/refresh-sat-mailbox
+     */
+    public function refreshSatMailbox(string $id, array $options = []): array
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('POST', '/v1/issuers/' . rawurlencode($id) . '/sat_mailbox/refresh', ['idempotent' => true], $options);
+    }
+
+    /**
      * Ver el portal de autofactura de un emisor
      *
      * El portal de autofactura del emisor: su dirección, hasta cuándo se puede facturar un ticket

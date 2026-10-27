@@ -62,6 +62,9 @@ abstract class FiscalistoApi extends Core
     /** Clientes. */
     public readonly Resources\TaxIds $taxIds;
 
+    /** Sucursales. */
+    public readonly Resources\Branches $branches;
+
     /** Clientes. */
     public readonly Resources\Customers $customers;
 
@@ -70,6 +73,21 @@ abstract class FiscalistoApi extends Core
 
     /** Productos. */
     public readonly Resources\Products $products;
+
+    /** Cumplimiento SAT. */
+    public readonly Resources\SatMailboxMessages $satMailboxMessages;
+
+    /** Cumplimiento SAT. */
+    public readonly Resources\SatFindings $satFindings;
+
+    /** Inventario. */
+    public readonly Resources\Warehouses $warehouses;
+
+    /** Inventario. */
+    public readonly Resources\StockMovements $stockMovements;
+
+    /** Inventario. */
+    public readonly Resources\StockAdjustments $stockAdjustments;
 
     /** Catálogos del SAT. */
     public readonly Resources\SatCatalogs $satCatalogs;
@@ -131,9 +149,15 @@ abstract class FiscalistoApi extends Core
         $this->payrollReceipts = new Resources\PayrollReceipts($this);
         $this->invoiceBatches = new Resources\InvoiceBatches($this);
         $this->taxIds = new Resources\TaxIds($this);
+        $this->branches = new Resources\Branches($this);
         $this->customers = new Resources\Customers($this);
         $this->customerDataRequests = new Resources\CustomerDataRequests($this);
         $this->products = new Resources\Products($this);
+        $this->satMailboxMessages = new Resources\SatMailboxMessages($this);
+        $this->satFindings = new Resources\SatFindings($this);
+        $this->warehouses = new Resources\Warehouses($this);
+        $this->stockMovements = new Resources\StockMovements($this);
+        $this->stockAdjustments = new Resources\StockAdjustments($this);
         $this->satCatalogs = new Resources\SatCatalogs($this);
         $this->satLists = new Resources\SatLists($this);
         $this->satDownloads = new Resources\SatDownloads($this);

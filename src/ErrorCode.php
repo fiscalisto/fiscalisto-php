@@ -24,6 +24,12 @@ final class ErrorCode
     /** El cuerpo pasa de 10 MB. Divida el trabajo en varios lotes. */
     public const BODY_TOO_LARGE = 'body_too_large';
 
+    /** El emisor ya tiene una sucursal con ese código postal (cada una lleva el suyo); el mensaje dice cuál. Si está archivada, restáurela con archived: false. */
+    public const BRANCH_EXISTS = 'branch_exists';
+
+    /** La sucursal ya facturó, así que no se borra: archívela con archived: true y sus facturas la siguen nombrando. */
+    public const BRANCH_HAS_INVOICES = 'branch_has_invoices';
+
     /** La API se llama desde su servidor, nunca desde el navegador: la llave secreta quedaría expuesta. */
     public const BROWSER_NOT_SUPPORTED = 'browser_not_supported';
 
@@ -95,6 +101,9 @@ final class ErrorCode
 
     /** La respuesta no se pudo leer (api_error): no es el JSON de la API, sino la página de un proxy o de un portal de la red. status dice qué contestó. */
     public const INVALID_RESPONSE = 'invalid_response';
+
+    /** Inventario no lo permite: el mensaje dice por qué (un lote que no es de ese producto, otro ajuste del mismo almacén en curso). */
+    public const INVENTORY_REFUSED = 'inventory_refused';
 
     /** La factura no cumple una regla del SAT que Fiscalisto revisa antes de mandarla al PAC (uso contra régimen, totales, complementos…). No se usó ningún timbre. */
     public const INVOICE_INVALID = 'invoice_invalid';
