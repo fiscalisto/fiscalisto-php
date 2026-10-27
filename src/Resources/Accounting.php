@@ -135,6 +135,45 @@ final class Accounting
     }
 
     /**
+     * Ver los CFDI de una cifra del cruce
+     *
+     * Los CFDI que forman lo facturado (invoiced) de una cifra del cruce de un mes, con los mismos
+     * cálculos de Impuestos: cada factura PUE o nota de crédito en su mes y cada factura PPD por
+     * lo que se pagó en el mes, con lo que aporta. La suma de cfdi más adjustment es invoiced.
+     * Sirve para ver por qué una cifra differs. Gratis: no consulta al SAT.
+     *
+     * GET /v1/accounting/cross_checks/cfdi
+     *
+     * @param array{
+     *     month: string,
+     *     key: 'vat_charged'|'vat_creditable'|'vat_withheld'|'isr_income'|'isr_withheld_salaries'|'isr_withheld_suppliers'|'vat_withheld_suppliers',
+     *     issuer?: string,
+     * } $params
+     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @return array{
+     *     object: 'cross_check_cfdi',
+     *     livemode: bool,
+     *     issuer: string,
+     *     month: string,
+     *     key: 'vat_charged'|'vat_creditable'|'vat_withheld'|'isr_income'|'isr_withheld_salaries'|'isr_withheld_suppliers'|'vat_withheld_suppliers',
+     *     status: 'matches'|'differs'|'not_filed'|'unreadable',
+     *     declared: float|int|null,
+     *     invoiced: float|int,
+     *     difference: float|int|null,
+     *     operation_number: string|null,
+     *     cfdi: list<array{uuid: string|null, type: 'invoice'|'credit_note'|'payment', date: string|null, tax_id: string|null, name: string|null, amount: float|int}>,
+     *     adjustment: float|int,
+     * }
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/contabilidad/get-cross-check-cfdi
+     */
+    public function crossCheckCfdi(array $params, array $options = []): array
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('GET', '/v1/accounting/cross_checks/cfdi', ['query' => $params], $options);
+    }
+
+    /**
      * Ver el catálogo de cuentas
      *
      * Las cuentas que usan las pólizas, con su código agrupador del SAT.
