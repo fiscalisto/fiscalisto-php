@@ -158,6 +158,7 @@ final class Accounting
      *     key: 'vat_charged'|'vat_creditable'|'vat_withheld'|'isr_income'|'isr_withheld_salaries'|'isr_withheld_suppliers'|'vat_withheld_suppliers',
      *     status: 'matches'|'differs'|'not_filed'|'unreadable',
      *     declared: float|int|null,
+     *     declared_without_cfdi: float|int,
      *     invoiced: float|int,
      *     difference: float|int|null,
      *     operation_number: string|null,
