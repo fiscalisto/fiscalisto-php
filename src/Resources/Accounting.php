@@ -161,7 +161,7 @@ final class Accounting
      *     invoiced: float|int,
      *     difference: float|int|null,
      *     operation_number: string|null,
-     *     cfdi: list<array{uuid: string|null, type: 'invoice'|'credit_note'|'payment', date: string|null, tax_id: string|null, name: string|null, amount: float|int}>,
+     *     cfdi: list<array{uuid: string|null, type: 'invoice'|'credit_note'|'payment'|'withholding_certificate', date: string|null, tax_id: string|null, name: string|null, amount: float|int}>,
      *     adjustment: float|int,
      * }
      * @throws FiscalistoException
