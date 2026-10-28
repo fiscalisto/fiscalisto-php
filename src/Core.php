@@ -11,7 +11,7 @@ namespace Fiscalisto;
  */
 abstract class Core
 {
-    public const VERSION = '0.1.11';
+    public const VERSION = '0.1.12';
     public const DEFAULT_BASE_URL = 'https://api.fiscalisto.com';
     /** La versión de la API para la que se hizo este SDK (cabecera Fiscalisto-Version). */
     public const API_VERSION = '2026-10-24';
