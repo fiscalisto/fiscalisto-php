@@ -56,6 +56,9 @@ abstract class FiscalistoApi extends Core
     /** Nómina. */
     public readonly Resources\PayrollReceipts $payrollReceipts;
 
+    /** Nómina. */
+    public readonly Resources\PayrollBatches $payrollBatches;
+
     /** Lotes. */
     public readonly Resources\InvoiceBatches $invoiceBatches;
 
@@ -147,6 +150,7 @@ abstract class FiscalistoApi extends Core
         $this->retentions = new Resources\Retentions($this);
         $this->employees = new Resources\Employees($this);
         $this->payrollReceipts = new Resources\PayrollReceipts($this);
+        $this->payrollBatches = new Resources\PayrollBatches($this);
         $this->invoiceBatches = new Resources\InvoiceBatches($this);
         $this->taxIds = new Resources\TaxIds($this);
         $this->branches = new Resources\Branches($this);
