@@ -222,7 +222,7 @@ final class WebhookEndpoints
      *
      * @param string $id
      * @param array{
-     *     type?: 'invoice.stamped'|'invoice.failed'|'invoice.canceled'|'invoice.cancellation_pending'|'invoice.cancellation_rejected'|'invoice.paid'|'invoice.partially_paid'|'retention.stamped'|'retention.failed'|'retention.canceled'|'invoice_batch.completed'|'payroll_batch.completed'|'customer_data_request.completed'|'sat_download.completed'|'sat_download.failed'|'sat_declaration.created'|'sat_declaration.updated'|'ticket.invoiced'|'ticket.included_in_global'|'recurring_invoice.failed'|'quote.viewed'|'quote.accepted'|'quote.changes_requested'|'quote.rejected'|'issuer.ready'|'balance.low'|'test_clock.ready',
+     *     type?: 'invoice.stamped'|'invoice.failed'|'invoice.canceled'|'invoice.cancellation_pending'|'invoice.cancellation_rejected'|'invoice.paid'|'invoice.partially_paid'|'invoice.email_bounced'|'invoice.email_complained'|'retention.stamped'|'retention.failed'|'retention.canceled'|'invoice_batch.completed'|'payroll_batch.completed'|'customer_data_request.completed'|'sat_download.completed'|'sat_download.failed'|'sat_declaration.created'|'sat_declaration.updated'|'ticket.invoiced'|'ticket.included_in_global'|'recurring_invoice.failed'|'quote.viewed'|'quote.accepted'|'quote.changes_requested'|'quote.rejected'|'issuer.ready'|'balance.low'|'test_clock.ready',
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{

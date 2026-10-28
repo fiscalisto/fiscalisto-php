@@ -278,7 +278,7 @@ final class RecurringInvoices
      *     payroll?: array{type: 'O'|'E', calculation: 'fiscalisto'|'external', periodicity: string, period: array<string, mixed>, days: float|int, references: array<string, mixed>|null, employer: array<string, mixed>, employee: array<string, mixed>, perceptions: list<array<string, mixed>>, deductions: list<array<string, mixed>>, other_payments: list<array<string, mixed>>, separation?: array<string, mixed>, retirement?: array<string, mixed>, disabilities?: list<array<string, mixed>>, totals: array<string, mixed>},
      *     global?: array<string, mixed>,
      *     cancellation: array{status: string|null, motive: string|null, substitution: string|null, canceled_at: string|null}|null,
-     *     email: array{to: string|null, cc: string|null, sent_at: string|null}|null,
+     *     email: array{to: string|null, cc: string|null, sent_at: string|null, status: 'sent'|'delayed'|'delivered'|'opened'|'bounced'|'complained', recipients: list<array<string, mixed>>}|null,
      *     error: array{message: string, sat_code: string|null, raw: string}|null,
      *     recurring_invoice: string|null,
      *     created_at: string|null,
