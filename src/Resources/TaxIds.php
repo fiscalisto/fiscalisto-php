@@ -48,7 +48,7 @@ final class TaxIds
      *     warnings: list<array{param: string, code: string, message: string, suggestion: string|null}>,
      *     sat_record: array{legal_name: string|null, zip: string|null, tax_systems: list<string>}|null,
      *     sat_error: string|null,
-     *     sat_lists: array{object: 'sat_list_check', tax_id: string, name: string|null, listed: bool, risk: 'high'|'medium'|'none', lists: list<array<string, mixed>>, lists_updated_at: string|null}|null,
+     *     sat_lists: array{object: 'sat_list_check', tax_id: string, name: string|null, listed: bool, risk: 'high'|'medium'|'none'|'unknown', verified: bool, lists: list<array<string, mixed>>, lists_updated_at: string|null, lists_unavailable: list<string>}|null,
      * }
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/clientes/validate-tax-id

@@ -34,9 +34,11 @@ final class SatLists
      *     tax_id: string,
      *     name: string|null,
      *     listed: bool,
-     *     risk: 'high'|'medium'|'none',
+     *     risk: 'high'|'medium'|'none'|'unknown',
+     *     verified: bool,
      *     lists: list<array{list: '69'|'69b'|'69b_bis', source: string, source_name: string, situation: string|null, published_on: string|null, details: array<string, mixed>|null}>,
      *     lists_updated_at: string|null,
+     *     lists_unavailable: list<string>,
      * }
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/listas-del-sat/get-sat-list-check
@@ -59,7 +61,7 @@ final class SatLists
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     object: 'list',
-     *     data: list<array{object: 'sat_list_check', tax_id: string, name: string|null, listed: bool, risk: 'high'|'medium'|'none', lists: list<array<string, mixed>>, lists_updated_at: string|null}>,
+     *     data: list<array{object: 'sat_list_check', tax_id: string, name: string|null, listed: bool, risk: 'high'|'medium'|'none'|'unknown', verified: bool, lists: list<array<string, mixed>>, lists_updated_at: string|null, lists_unavailable: list<string>}>,
      *     has_more: bool,
      *     url: string,
      * }
