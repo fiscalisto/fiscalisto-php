@@ -33,11 +33,13 @@ final class SatFindings
      *     direction?: 'issued'|'received',
      *     date_gte?: string,
      *     date_lte?: string,
+     *     severity?: 'critical'|'warning'|'info',
+     *     counterparty?: string,
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     object: 'list',
-     *     data: list<array{id: string, livemode: bool, object: 'sat_finding', issuer: string, code: string, severity: 'critical'|'warning'|'info', title: string, explanation: string|null, invoices: int, amount: float|int}>,
+     *     data: list<array{id: string, livemode: bool, object: 'sat_finding', issuer: string, code: string, severity: 'critical'|'warning'|'info', title: string, explanation: string|null, invoices: int, counterparties: int, amount: float|int, last_date: string|null}>,
      *     has_more: bool,
      *     url: string,
      * }
