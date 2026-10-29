@@ -586,6 +586,10 @@ final class Issuers
      *     window: 'month'|'days',
      *     window_days: int,
      *     global_periodicity: '01'|'02'|'03'|'04',
+     *     ask_total: bool,
+     *     portal_title: string|null,
+     *     portal_message: string|null,
+     *     code_hint: string|null,
      * }
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/autofactura/get-self-invoicing
@@ -608,6 +612,10 @@ final class Issuers
      *     window?: 'month'|'days',
      *     window_days?: int,
      *     global_periodicity?: '01'|'02'|'03'|'04',
+     *     ask_total?: bool,
+     *     portal_title?: string|null,
+     *     portal_message?: string|null,
+     *     code_hint?: string|null,
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
@@ -618,6 +626,10 @@ final class Issuers
      *     window: 'month'|'days',
      *     window_days: int,
      *     global_periodicity: '01'|'02'|'03'|'04',
+     *     ask_total: bool,
+     *     portal_title: string|null,
+     *     portal_message: string|null,
+     *     code_hint: string|null,
      * }
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/autofactura/update-self-invoicing
