@@ -51,7 +51,7 @@ final class Quotes
      *     issuer: string,
      *     number: string,
      *     version: int,
-     *     status: 'draft'|'sent'|'viewed'|'accepted'|'rejected'|'expired'|'invoiced',
+     *     status: 'draft'|'sent'|'viewed'|'accepted'|'rejected'|'withdrawn'|'expired'|'invoiced',
      *     url: string|null,
      *     customer: array{tax_id: string|null, name: string|null, email: string|null, catalog_id: string|null},
      *     currency: string,
@@ -61,6 +61,8 @@ final class Quotes
      *     terms: string|null,
      *     notes: string|null,
      *     auto_invoice: bool,
+     *     remind: bool,
+     *     reminded_at: string|null,
      *     customer_comment: string|null,
      *     sent_at: string|null,
      *     viewed_at: string|null,
@@ -89,10 +91,10 @@ final class Quotes
      *     limit?: int,
      *     starting_after?: string,
      *     issuer?: string,
-     *     status?: 'draft'|'sent'|'viewed'|'accepted'|'rejected'|'expired'|'invoiced',
+     *     status?: 'draft'|'sent'|'viewed'|'accepted'|'rejected'|'withdrawn'|'expired'|'invoiced',
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'quote', issuer: string, number: string, version: int, status: 'draft'|'sent'|'viewed'|'accepted'|'rejected'|'expired'|'invoiced', url: string|null, customer: array<string, mixed>, currency: string, items: list<array<string, mixed>>, total: float|int|null, valid_until: string, terms: string|null, notes: string|null, auto_invoice: bool, customer_comment: string|null, sent_at: string|null, viewed_at: string|null, decided_at: string|null, decided_by: 'customer'|'user'|null, invoice: string|null, created_at: string|null}>
+     * @return Collection<array{id: string, livemode: bool, object: 'quote', issuer: string, number: string, version: int, status: 'draft'|'sent'|'viewed'|'accepted'|'rejected'|'withdrawn'|'expired'|'invoiced', url: string|null, customer: array<string, mixed>, currency: string, items: list<array<string, mixed>>, total: float|int|null, valid_until: string, terms: string|null, notes: string|null, auto_invoice: bool, remind: bool, reminded_at: string|null, customer_comment: string|null, sent_at: string|null, viewed_at: string|null, decided_at: string|null, decided_by: 'customer'|'user'|null, invoice: string|null, created_at: string|null}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/cotizaciones/list-quotes
      */
@@ -118,7 +120,7 @@ final class Quotes
      *     issuer: string,
      *     number: string,
      *     version: int,
-     *     status: 'draft'|'sent'|'viewed'|'accepted'|'rejected'|'expired'|'invoiced',
+     *     status: 'draft'|'sent'|'viewed'|'accepted'|'rejected'|'withdrawn'|'expired'|'invoiced',
      *     url: string|null,
      *     customer: array{tax_id: string|null, name: string|null, email: string|null, catalog_id: string|null},
      *     currency: string,
@@ -128,6 +130,8 @@ final class Quotes
      *     terms: string|null,
      *     notes: string|null,
      *     auto_invoice: bool,
+     *     remind: bool,
+     *     reminded_at: string|null,
      *     customer_comment: string|null,
      *     sent_at: string|null,
      *     viewed_at: string|null,
@@ -148,9 +152,10 @@ final class Quotes
     /**
      * Cambiar una cotización
      *
-     * Solo lo que mande cambia. Un borrador cambia ahí mismo; una que ya se envió se vuelve una
-     * versión nueva en borrador (mismo número, version + 1) que el cliente ve al mandarla;
-     * mientras, su liga muestra la anterior. Una aceptada, rechazada o facturada ya no cambia.
+     * Solo lo que mande cambia. Un borrador cambia ahí mismo; una que ya se envió (también si
+     * venció, se rechazó o se retiró) se vuelve una versión nueva en borrador (mismo número,
+     * version + 1) que el cliente ve al mandarla; mientras, su liga muestra la anterior. Una
+     * aceptada o facturada ya no cambia.
      *
      * POST /v1/quotes/{id}
      *
@@ -175,7 +180,7 @@ final class Quotes
      *     issuer: string,
      *     number: string,
      *     version: int,
-     *     status: 'draft'|'sent'|'viewed'|'accepted'|'rejected'|'expired'|'invoiced',
+     *     status: 'draft'|'sent'|'viewed'|'accepted'|'rejected'|'withdrawn'|'expired'|'invoiced',
      *     url: string|null,
      *     customer: array{tax_id: string|null, name: string|null, email: string|null, catalog_id: string|null},
      *     currency: string,
@@ -185,6 +190,8 @@ final class Quotes
      *     terms: string|null,
      *     notes: string|null,
      *     auto_invoice: bool,
+     *     remind: bool,
+     *     reminded_at: string|null,
      *     customer_comment: string|null,
      *     sent_at: string|null,
      *     viewed_at: string|null,
@@ -205,7 +212,9 @@ final class Quotes
     /**
      * Borrar una cotización
      *
-     * Solo una que nunca se envió; si no, 400 quote_not_draft.
+     * Borra la cotización con todas sus versiones; si ya se envió, su url deja de funcionar. Una
+     * aceptada o facturada no se borra: 400 quote_not_deletable. Para cerrarla sin borrarla, POST
+     * /v1/quotes/{id}/withdraw.
      *
      * DELETE /v1/quotes/{id}
      *
@@ -231,7 +240,13 @@ final class Quotes
      * POST /v1/quotes/{id}/send
      *
      * @param string $id
-     * @param array{send_email?: bool, to?: string, message?: string, auto_invoice?: bool} $params
+     * @param array{
+     *     send_email?: bool,
+     *     to?: string,
+     *     message?: string,
+     *     auto_invoice?: bool,
+     *     remind?: bool,
+     * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     id: string,
@@ -240,7 +255,7 @@ final class Quotes
      *     issuer: string,
      *     number: string,
      *     version: int,
-     *     status: 'draft'|'sent'|'viewed'|'accepted'|'rejected'|'expired'|'invoiced',
+     *     status: 'draft'|'sent'|'viewed'|'accepted'|'rejected'|'withdrawn'|'expired'|'invoiced',
      *     url: string|null,
      *     customer: array{tax_id: string|null, name: string|null, email: string|null, catalog_id: string|null},
      *     currency: string,
@@ -250,6 +265,8 @@ final class Quotes
      *     terms: string|null,
      *     notes: string|null,
      *     auto_invoice: bool,
+     *     remind: bool,
+     *     reminded_at: string|null,
      *     customer_comment: string|null,
      *     sent_at: string|null,
      *     viewed_at: string|null,
@@ -284,7 +301,7 @@ final class Quotes
      *     issuer: string,
      *     number: string,
      *     version: int,
-     *     status: 'draft'|'sent'|'viewed'|'accepted'|'rejected'|'expired'|'invoiced',
+     *     status: 'draft'|'sent'|'viewed'|'accepted'|'rejected'|'withdrawn'|'expired'|'invoiced',
      *     url: string|null,
      *     customer: array{tax_id: string|null, name: string|null, email: string|null, catalog_id: string|null},
      *     currency: string,
@@ -294,6 +311,8 @@ final class Quotes
      *     terms: string|null,
      *     notes: string|null,
      *     auto_invoice: bool,
+     *     remind: bool,
+     *     reminded_at: string|null,
      *     customer_comment: string|null,
      *     sent_at: string|null,
      *     viewed_at: string|null,
@@ -309,6 +328,103 @@ final class Quotes
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
         return $this->client->request('POST', '/v1/quotes/' . rawurlencode($id) . '/accept', ['idempotent' => true], $options);
+    }
+
+    /**
+     * Retirar una cotización
+     *
+     * Usted ya no la ofrece: su liga dice que se retiró y el cliente ya no la puede aceptar
+     * (status withdrawn, decided_by user). Llega quote.withdrawn. Para ofrecerla de nuevo,
+     * cámbiela con POST /v1/quotes/{id} (una versión nueva) y mándela. Una que nunca se envió se
+     * borra: 400 quote_not_sent.
+     *
+     * POST /v1/quotes/{id}/withdraw
+     *
+     * @param string $id
+     * @param array{note?: string} $params
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
+     * @return array{
+     *     id: string,
+     *     livemode: bool,
+     *     object: 'quote',
+     *     issuer: string,
+     *     number: string,
+     *     version: int,
+     *     status: 'draft'|'sent'|'viewed'|'accepted'|'rejected'|'withdrawn'|'expired'|'invoiced',
+     *     url: string|null,
+     *     customer: array{tax_id: string|null, name: string|null, email: string|null, catalog_id: string|null},
+     *     currency: string,
+     *     items: list<array{description: string, product_key: string, quantity?: float|int, unit_key?: string, unit_price: float|int}>,
+     *     total: float|int|null,
+     *     valid_until: string,
+     *     terms: string|null,
+     *     notes: string|null,
+     *     auto_invoice: bool,
+     *     remind: bool,
+     *     reminded_at: string|null,
+     *     customer_comment: string|null,
+     *     sent_at: string|null,
+     *     viewed_at: string|null,
+     *     decided_at: string|null,
+     *     decided_by: 'customer'|'user'|null,
+     *     invoice: string|null,
+     *     created_at: string|null,
+     * }
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/cotizaciones/withdraw-quote
+     */
+    public function withdraw(string $id, array $params = [], array $options = []): array
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('POST', '/v1/quotes/' . rawurlencode($id) . '/withdraw', ['body' => $params, 'idempotent' => true], $options);
+    }
+
+    /**
+     * Marcar rechazada
+     *
+     * El cliente le dijo que no por teléfono, en persona… (status rejected, decided_by user; su
+     * nota en customer_comment). Llega quote.rejected. También para una vencida que ya no va a
+     * seguir.
+     *
+     * POST /v1/quotes/{id}/reject
+     *
+     * @param string $id
+     * @param array{note?: string} $params
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
+     * @return array{
+     *     id: string,
+     *     livemode: bool,
+     *     object: 'quote',
+     *     issuer: string,
+     *     number: string,
+     *     version: int,
+     *     status: 'draft'|'sent'|'viewed'|'accepted'|'rejected'|'withdrawn'|'expired'|'invoiced',
+     *     url: string|null,
+     *     customer: array{tax_id: string|null, name: string|null, email: string|null, catalog_id: string|null},
+     *     currency: string,
+     *     items: list<array{description: string, product_key: string, quantity?: float|int, unit_key?: string, unit_price: float|int}>,
+     *     total: float|int|null,
+     *     valid_until: string,
+     *     terms: string|null,
+     *     notes: string|null,
+     *     auto_invoice: bool,
+     *     remind: bool,
+     *     reminded_at: string|null,
+     *     customer_comment: string|null,
+     *     sent_at: string|null,
+     *     viewed_at: string|null,
+     *     decided_at: string|null,
+     *     decided_by: 'customer'|'user'|null,
+     *     invoice: string|null,
+     *     created_at: string|null,
+     * }
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/cotizaciones/reject-quote
+     */
+    public function reject(string $id, array $params = [], array $options = []): array
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('POST', '/v1/quotes/' . rawurlencode($id) . '/reject', ['body' => $params, 'idempotent' => true], $options);
     }
 
     /**

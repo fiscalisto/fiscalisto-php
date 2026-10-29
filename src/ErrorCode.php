@@ -189,11 +189,14 @@ final class ErrorCode
     /** La cotización no se pudo guardar o ya no cambia (aceptada, rechazada o facturada), o no se puede mandar así. El mensaje dice por qué. */
     public const QUOTE_INVALID = 'quote_invalid';
 
-    /** Solo se borra una cotización que nunca se envió. */
-    public const QUOTE_NOT_DRAFT = 'quote_not_draft';
+    /** La cotización ya se aceptó o se facturó: no se borra. Para cerrar una que no se aceptó, también puede retirarla (POST /v1/quotes/{id}/withdraw). */
+    public const QUOTE_NOT_DELETABLE = 'quote_not_deletable';
 
-    /** La cotización se rechazó o venció: no se factura. Si venció, cámbiele valid_until (es una versión nueva). */
+    /** La cotización se rechazó, se retiró o venció: no se factura. Si venció o se retiró, cámbiela (es una versión nueva) y vuelva a mandarla. */
     public const QUOTE_NOT_INVOICEABLE = 'quote_not_invoiceable';
+
+    /** La cotización nunca se envió, así que no se retira ni se marca rechazada: bórrela con DELETE /v1/quotes/{id}. */
+    public const QUOTE_NOT_SENT = 'quote_not_sent';
 
     /** Demasiadas solicitudes con la llave. Espere lo que dice Retry-After y reintente. */
     public const RATE_LIMIT = 'rate_limit';
