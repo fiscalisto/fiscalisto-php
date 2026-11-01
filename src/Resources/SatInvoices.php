@@ -109,4 +109,25 @@ final class SatInvoices
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
         return $this->client->request('GET', '/v1/sat_invoices/' . rawurlencode($id) . '/xml', ['as' => 'text'], $options);
     }
+
+    /**
+     * Descargar el PDF de una factura del SAT
+     *
+     * El CFDI en PDF, como lo ofrece Facturas: si se timbró en Fiscalisto, el mismo que recibió el
+     * cliente; si no, dibujado con el diseño de PDF del emisor (el de un proveedor, con su estilo
+     * y color, nunca con su logo). El XML es el documento válido ante el SAT.
+     *
+     * GET /v1/sat_invoices/{id}/pdf
+     *
+     * @param string $id
+     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @return string Los bytes del PDF.
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/descargas-del-sat/get-sat-invoice-pdf
+     */
+    public function pdf(string $id, array $options = []): string
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('GET', '/v1/sat_invoices/' . rawurlencode($id) . '/pdf', ['as' => 'bytes'], $options);
+    }
 }
