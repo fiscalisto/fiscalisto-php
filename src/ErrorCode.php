@@ -51,6 +51,12 @@ final class ErrorCode
     /** No se pudo conectar con la API (connection_error). */
     public const CONNECTION_FAILED = 'connection_failed';
 
+    /** El emisor ya tiene un centro de costo con ese nombre (sin importar mayúsculas). Si está archivado, restáurelo con archived: false. */
+    public const COST_CENTER_EXISTS = 'cost_center_exists';
+
+    /** El emisor llegó a 500 centros de costo: archive o borre los que ya no use. */
+    public const COST_CENTER_LIMIT = 'cost_center_limit';
+
     /** Ya hay un cliente con ese RFC en el catálogo del emisor (o un producto con ese SKU). */
     public const CUSTOMER_EXISTS = 'customer_exists';
 

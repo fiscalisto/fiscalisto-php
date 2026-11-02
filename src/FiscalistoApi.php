@@ -80,6 +80,9 @@ abstract class FiscalistoApi extends Core
     /** Sucursales. */
     public readonly Resources\Branches $branches;
 
+    /** Centros de costo. */
+    public readonly Resources\CostCenters $costCenters;
+
     /** Clientes. */
     public readonly Resources\Customers $customers;
 
@@ -173,6 +176,7 @@ abstract class FiscalistoApi extends Core
         $this->invoiceBatches = new Resources\InvoiceBatches($this);
         $this->taxIds = new Resources\TaxIds($this);
         $this->branches = new Resources\Branches($this);
+        $this->costCenters = new Resources\CostCenters($this);
         $this->customers = new Resources\Customers($this);
         $this->customerDataRequests = new Resources\CustomerDataRequests($this);
         $this->products = new Resources\Products($this);

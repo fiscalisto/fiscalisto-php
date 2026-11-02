@@ -445,6 +445,7 @@ final class Quotes
      *     object: 'invoice',
      *     issuer: string,
      *     branch: string|null,
+     *     cost_center: string|null,
      *     type: 'I'|'E'|'P'|'T'|'N',
      *     status: 'processing'|'pending'|'valid'|'rejected'|'canceled',
      *     uuid: string|null,
