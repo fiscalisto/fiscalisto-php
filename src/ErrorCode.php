@@ -186,6 +186,9 @@ final class ErrorCode
     /** No se pudo dibujar el PDF de ese CFDI (su XML trae algo que el generador no lee). Descargue el XML: es el documento válido ante el SAT. */
     public const PDF_UNAVAILABLE = 'pdf_unavailable';
 
+    /** El ticket de compra no se puede guardar, corregir o pedir así (un archivo que no es foto ni PDF, un RFC o uso que no corresponde, una tienda que no factura con Fiscalisto, faltan datos fiscales del emisor…). El mensaje dice por qué. */
+    public const PURCHASE_RECEIPT_INVALID = 'purchase_receipt_invalid';
+
     /** La cotización no tiene los datos fiscales del cliente: agrégueselos con POST /v1/quotes/{id} (customer) o mándela con auto_invoice para que los dé al aceptarla. */
     public const QUOTE_CUSTOMER_MISSING = 'quote_customer_missing';
 

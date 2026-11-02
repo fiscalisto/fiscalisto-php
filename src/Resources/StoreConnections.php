@@ -23,22 +23,28 @@ final class StoreConnections
      * Conectar una tienda
      *
      * Shopify: con el dominio y las llaves de la app de la tienda (Dev Dashboard, permisos
-     * read_orders y write_orders) registra los webhooks y queda active. Mercado Libre: queda
-     * pending hasta que el vendedor autorice en authorize_url. Desde entonces cada pedido pagado
-     * es un ticket (folio SHOP-1001 o ML-…), que su comprador factura en el portal o entra en la
-     * factura global; un pedido cancelado o reembolsado completo cancela su ticket.
+     * read_orders y write_orders) registra los webhooks y queda active. WooCommerce: con la
+     * dirección de la tienda y una llave de su API REST de Lectura/Escritura, igual. Mercado
+     * Libre, Tiendanube y Amazon: queda pending hasta que el vendedor autorice en authorize_url
+     * (Amazon no tiene webhooks: sus pedidos se leen cada hora). Desde entonces cada pedido pagado
+     * es un ticket (folio SHOP-1001, WEB-1001, TN-1001, ML-… o AMZ-…), que su comprador factura en
+     * el portal o entra en la factura global; un pedido cancelado o reembolsado completo cancela
+     * su ticket.
      *
      * POST /v1/store_connections
      *
      * @param array{
      *     issuer?: string,
-     *     platform: 'shopify'|'mercadolibre',
+     *     platform: 'shopify'|'mercadolibre'|'amazon'|'tiendanube'|'woocommerce',
      *     shop?: string,
      *     client_id?: string,
      *     client_secret?: string,
      *     access_token?: string,
+     *     site?: string,
+     *     consumer_key?: string,
+     *     consumer_secret?: string,
      *     return_url?: string,
-     *     settings?: array{product_key?: string, unit_key?: string, iva?: '0'|'0.16'|'0.08'|'exento', description?: string, folio_prefix?: string, payment_form?: string, payment_forms?: array<string, mixed>, auto_invoice?: bool},
+     *     settings?: array{product_key?: string, unit_key?: string, iva?: '0'|'0.16'|'0.08'|'exento', description?: string, folio_prefix?: string, payment_form?: string, payment_forms?: array<string, mixed>, auto_invoice?: bool, notify_buyer?: bool},
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
@@ -46,11 +52,12 @@ final class StoreConnections
      *     livemode: bool,
      *     object: 'store_connection',
      *     issuer: string,
-     *     platform: 'shopify'|'mercadolibre',
+     *     platform: 'shopify'|'mercadolibre'|'amazon'|'tiendanube'|'woocommerce',
      *     shop: string|null,
+     *     name: string|null,
      *     status: 'pending'|'active'|'disconnected',
      *     authorize_url: string|null,
-     *     settings: array{product_key: string|null, unit_key: string|null, iva: '0'|'0.16'|'0.08'|'exento', description: string|null, folio_prefix: string, payment_form: string|null, payment_forms: array<string, mixed>, auto_invoice: bool|null},
+     *     settings: array{product_key: string|null, unit_key: string|null, iva: '0'|'0.16'|'0.08'|'exento', description: string|null, folio_prefix: string, payment_form: string|null, payment_forms: array<string, mixed>, auto_invoice: bool|null, notify_buyer: bool|null},
      *     orders_count: int,
      *     last_order_at: string|null,
      *     last_error: array{message: string, at: string|null}|null,
@@ -74,7 +81,7 @@ final class StoreConnections
      *
      * @param array{limit?: int, starting_after?: string, issuer?: string} $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'store_connection', issuer: string, platform: 'shopify'|'mercadolibre', shop: string|null, status: 'pending'|'active'|'disconnected', authorize_url: string|null, settings: array<string, mixed>, orders_count: int, last_order_at: string|null, last_error: array<string, mixed>|null, created_at: string|null}>
+     * @return Collection<array{id: string, livemode: bool, object: 'store_connection', issuer: string, platform: 'shopify'|'mercadolibre'|'amazon'|'tiendanube'|'woocommerce', shop: string|null, name: string|null, status: 'pending'|'active'|'disconnected', authorize_url: string|null, settings: array<string, mixed>, orders_count: int, last_order_at: string|null, last_error: array<string, mixed>|null, created_at: string|null}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/tiendas-en-linea/list-store-connections
      */
@@ -99,11 +106,12 @@ final class StoreConnections
      *     livemode: bool,
      *     object: 'store_connection',
      *     issuer: string,
-     *     platform: 'shopify'|'mercadolibre',
+     *     platform: 'shopify'|'mercadolibre'|'amazon'|'tiendanube'|'woocommerce',
      *     shop: string|null,
+     *     name: string|null,
      *     status: 'pending'|'active'|'disconnected',
      *     authorize_url: string|null,
-     *     settings: array{product_key: string|null, unit_key: string|null, iva: '0'|'0.16'|'0.08'|'exento', description: string|null, folio_prefix: string, payment_form: string|null, payment_forms: array<string, mixed>, auto_invoice: bool|null},
+     *     settings: array{product_key: string|null, unit_key: string|null, iva: '0'|'0.16'|'0.08'|'exento', description: string|null, folio_prefix: string, payment_form: string|null, payment_forms: array<string, mixed>, auto_invoice: bool|null, notify_buyer: bool|null},
      *     orders_count: int,
      *     last_order_at: string|null,
      *     last_error: array{message: string, at: string|null}|null,
@@ -127,7 +135,7 @@ final class StoreConnections
      *
      * @param string $id
      * @param array{
-     *     settings: array{product_key?: string, unit_key?: string, iva?: '0'|'0.16'|'0.08'|'exento', description?: string, folio_prefix?: string, payment_form?: string, payment_forms?: array<string, mixed>, auto_invoice?: bool},
+     *     settings: array{product_key?: string, unit_key?: string, iva?: '0'|'0.16'|'0.08'|'exento', description?: string, folio_prefix?: string, payment_form?: string, payment_forms?: array<string, mixed>, auto_invoice?: bool, notify_buyer?: bool},
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
@@ -135,11 +143,12 @@ final class StoreConnections
      *     livemode: bool,
      *     object: 'store_connection',
      *     issuer: string,
-     *     platform: 'shopify'|'mercadolibre',
+     *     platform: 'shopify'|'mercadolibre'|'amazon'|'tiendanube'|'woocommerce',
      *     shop: string|null,
+     *     name: string|null,
      *     status: 'pending'|'active'|'disconnected',
      *     authorize_url: string|null,
-     *     settings: array{product_key: string|null, unit_key: string|null, iva: '0'|'0.16'|'0.08'|'exento', description: string|null, folio_prefix: string, payment_form: string|null, payment_forms: array<string, mixed>, auto_invoice: bool|null},
+     *     settings: array{product_key: string|null, unit_key: string|null, iva: '0'|'0.16'|'0.08'|'exento', description: string|null, folio_prefix: string, payment_form: string|null, payment_forms: array<string, mixed>, auto_invoice: bool|null, notify_buyer: bool|null},
      *     orders_count: int,
      *     last_order_at: string|null,
      *     last_error: array{message: string, at: string|null}|null,
@@ -169,11 +178,12 @@ final class StoreConnections
      *     livemode: bool,
      *     object: 'store_connection',
      *     issuer: string,
-     *     platform: 'shopify'|'mercadolibre',
+     *     platform: 'shopify'|'mercadolibre'|'amazon'|'tiendanube'|'woocommerce',
      *     shop: string|null,
+     *     name: string|null,
      *     status: 'pending'|'active'|'disconnected',
      *     authorize_url: string|null,
-     *     settings: array{product_key: string|null, unit_key: string|null, iva: '0'|'0.16'|'0.08'|'exento', description: string|null, folio_prefix: string, payment_form: string|null, payment_forms: array<string, mixed>, auto_invoice: bool|null},
+     *     settings: array{product_key: string|null, unit_key: string|null, iva: '0'|'0.16'|'0.08'|'exento', description: string|null, folio_prefix: string, payment_form: string|null, payment_forms: array<string, mixed>, auto_invoice: bool|null, notify_buyer: bool|null},
      *     orders_count: int,
      *     last_order_at: string|null,
      *     last_error: array{message: string, at: string|null}|null,
