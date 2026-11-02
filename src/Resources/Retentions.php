@@ -34,8 +34,9 @@ final class Retentions
      *     description?: string|null,
      *     recipient: array{foreign?: bool, tax_id?: string|null, legal_name: string, zip?: string, curp?: string|null},
      *     period: array{year: int, month?: int, from_month?: int, to_month?: int},
-     *     totals: array{operation: float|int, taxed?: float|int, exempt?: float|int},
-     *     taxes: list<array{tax: string, base: float|int, amount: float|int, payment_type?: string}>,
+     *     totals?: array{operation: float|int, taxed?: float|int, exempt?: float|int},
+     *     taxes?: list<array{tax: string, base: float|int, amount: float|int, payment_type?: string}>,
+     *     platform?: array{type: string, periodicity?: string, isr_definitive?: bool, foreign_account?: bool, services: list<array{date: string, payment_form: string, price: float|int, rate?: float|int|string|null, subtype?: string|null, authorized_tax_id?: string|null, commission?: array<string, mixed>|null, contribution?: array<string, mixed>|null}>},
      *     dividends?: array{type: '01'|'02'|'03'|'04'|'05'|'06', isr_mexico: float|int, isr_foreign: float|int, foreign_retention?: float|int|null, company: 'nacional'|'extranjera', national_credit?: float|int|null, accumulated_national?: float|int|null, accumulated_foreign?: float|int|null},
      *     interest?: array{financial_system: bool, retirement: bool, derivatives: bool, nominal: float|int, real: float|int, loss: float|int},
      *     foreign_payment?: array{beneficiary: bool, country?: string|null, concept: '1'|'2'|'3'|'4'|'5'|'6'|'7'|'8'|'9', description: string, beneficiary_tax_id?: string|null, beneficiary_curp?: string|null, beneficiary_name?: string|null},
@@ -77,6 +78,7 @@ final class Retentions
      *     retirement_plan?: array<string, mixed>,
      *     mortgage_interest?: array<string, mixed>,
      *     financial_derivatives?: array<string, mixed>,
+     *     platform?: array<string, mixed>,
      *     cancellation: array{status: string, motive: string|null, canceled_at: string|null}|null,
      *     email: array{to: string|null, sent_at: string|null}|null,
      *     error: array{message: string, sat_code: string|null, raw: string}|null,
@@ -110,7 +112,7 @@ final class Retentions
      *     year?: string,
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'retention', issuer: string, status: 'processing'|'valid'|'rejected'|'canceled', uuid: string|null, folio: int|null, internal_folio: string|null, date: string|null, code: string, description: string|null, recipient: array<string, mixed>, period: array<string, mixed>, totals: array<string, mixed>, taxes: list<array<string, mixed>>, dividends?: array<string, mixed>, interest?: array<string, mixed>, foreign_payment?: array<string, mixed>, trust_lease?: array<string, mixed>, share_sale?: array<string, mixed>, prize?: array<string, mixed>, trust?: array<string, mixed>, retirement_plan?: array<string, mixed>, mortgage_interest?: array<string, mixed>, financial_derivatives?: array<string, mixed>, cancellation: array<string, mixed>|null, email: array<string, mixed>|null, error: array<string, mixed>|null, created_at: string|null, metadata: array<string, mixed>, warnings?: list<string>, email_error?: string}>
+     * @return Collection<array{id: string, livemode: bool, object: 'retention', issuer: string, status: 'processing'|'valid'|'rejected'|'canceled', uuid: string|null, folio: int|null, internal_folio: string|null, date: string|null, code: string, description: string|null, recipient: array<string, mixed>, period: array<string, mixed>, totals: array<string, mixed>, taxes: list<array<string, mixed>>, dividends?: array<string, mixed>, interest?: array<string, mixed>, foreign_payment?: array<string, mixed>, trust_lease?: array<string, mixed>, share_sale?: array<string, mixed>, prize?: array<string, mixed>, trust?: array<string, mixed>, retirement_plan?: array<string, mixed>, mortgage_interest?: array<string, mixed>, financial_derivatives?: array<string, mixed>, platform?: array<string, mixed>, cancellation: array<string, mixed>|null, email: array<string, mixed>|null, error: array<string, mixed>|null, created_at: string|null, metadata: array<string, mixed>, warnings?: list<string>, email_error?: string}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/retenciones/list-retentions
      */
@@ -157,6 +159,7 @@ final class Retentions
      *     retirement_plan?: array<string, mixed>,
      *     mortgage_interest?: array<string, mixed>,
      *     financial_derivatives?: array<string, mixed>,
+     *     platform?: array<string, mixed>,
      *     cancellation: array{status: string, motive: string|null, canceled_at: string|null}|null,
      *     email: array{to: string|null, sent_at: string|null}|null,
      *     error: array{message: string, sat_code: string|null, raw: string}|null,
@@ -251,6 +254,7 @@ final class Retentions
      *     retirement_plan?: array<string, mixed>,
      *     mortgage_interest?: array<string, mixed>,
      *     financial_derivatives?: array<string, mixed>,
+     *     platform?: array<string, mixed>,
      *     cancellation: array{status: string, motive: string|null, canceled_at: string|null}|null,
      *     email: array{to: string|null, sent_at: string|null}|null,
      *     error: array{message: string, sat_code: string|null, raw: string}|null,
@@ -304,6 +308,7 @@ final class Retentions
      *     retirement_plan?: array<string, mixed>,
      *     mortgage_interest?: array<string, mixed>,
      *     financial_derivatives?: array<string, mixed>,
+     *     platform?: array<string, mixed>,
      *     cancellation: array{status: string, motive: string|null, canceled_at: string|null}|null,
      *     email: array{to: string|null, sent_at: string|null}|null,
      *     error: array{message: string, sat_code: string|null, raw: string}|null,
