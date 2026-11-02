@@ -22,11 +22,12 @@ final class PurchaseReceipts
     /**
      * Guardar un ticket de compra
      *
-     * La foto o el PDF de un ticket que el emisor pagó sin factura, en base64. La IA lee la
-     * tienda, su RFC, la fecha, el total, la forma de pago, el folio, los datos que pide su portal
-     * y la liga de facturación; lo que usted mande gana a lo que se lea. El mismo archivo dos
-     * veces devuelve el ticket que ya estaba, sin leerlo otra vez. Si llega una factura de esa
-     * tienda por el mismo total con las descargas del SAT, el ticket queda invoiced solo.
+     * La foto o el PDF de un ticket que el emisor pagó sin factura, en base64, con los datos que
+     * usted tenga: la tienda, su RFC, la fecha, el total, la forma de pago, el folio, los datos
+     * que pide su portal y la liga de facturación. Si qr_text es la liga de una tienda que factura
+     * con Fiscalisto, el folio y el total se llenan solos. El mismo archivo dos veces devuelve el
+     * ticket que ya estaba. Si llega una factura de esa tienda por el mismo total con las
+     * descargas del SAT, el ticket queda invoiced solo.
      *
      * POST /v1/purchase_receipts
      *
@@ -35,7 +36,6 @@ final class PurchaseReceipts
      *     file: string,
      *     file_type: 'image/jpeg'|'image/png'|'image/webp'|'application/pdf',
      *     qr_text?: string,
-     *     read?: bool,
      *     store_name?: string|null,
      *     store_tax_id?: string|null,
      *     date?: string|null,
@@ -63,8 +63,6 @@ final class PurchaseReceipts
      *     fields: list<array{label: string, value: string}>,
      *     use: string|null,
      *     note: string|null,
-     *     read_by: 'ai'|'manual'|null,
-     *     read_note: string|null,
      *     file_type: string|null,
      *     cash_over_limit: bool,
      *     days_left_in_month: int|null,
@@ -98,7 +96,7 @@ final class PurchaseReceipts
      *     status?: 'pending'|'requested'|'invoiced'|'non_deductible',
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'purchase_receipt', issuer: string, status: 'pending'|'requested'|'invoiced'|'non_deductible', store: array<string, mixed>, date: string|null, total: float|int|null, payment_method: 'efectivo'|'tarjeta'|'otro'|null, folio: string|null, fields: list<array<string, mixed>>, use: string|null, note: string|null, read_by: 'ai'|'manual'|null, read_note: string|null, file_type: string|null, cash_over_limit: bool, days_left_in_month: int|null, requested: array<string, mixed>|null, invoice_uuid: string|null, invoice: string|null, invoiced_at: string|null, non_deductible_at: string|null, created_at: string|null}>
+     * @return Collection<array{id: string, livemode: bool, object: 'purchase_receipt', issuer: string, status: 'pending'|'requested'|'invoiced'|'non_deductible', store: array<string, mixed>, date: string|null, total: float|int|null, payment_method: 'efectivo'|'tarjeta'|'otro'|null, folio: string|null, fields: list<array<string, mixed>>, use: string|null, note: string|null, file_type: string|null, cash_over_limit: bool, days_left_in_month: int|null, requested: array<string, mixed>|null, invoice_uuid: string|null, invoice: string|null, invoiced_at: string|null, non_deductible_at: string|null, created_at: string|null}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/tickets-de-compra/list-purchase-receipts
      */
@@ -131,8 +129,6 @@ final class PurchaseReceipts
      *     fields: list<array{label: string, value: string}>,
      *     use: string|null,
      *     note: string|null,
-     *     read_by: 'ai'|'manual'|null,
-     *     read_note: string|null,
      *     file_type: string|null,
      *     cash_over_limit: bool,
      *     days_left_in_month: int|null,
@@ -189,8 +185,6 @@ final class PurchaseReceipts
      *     fields: list<array{label: string, value: string}>,
      *     use: string|null,
      *     note: string|null,
-     *     read_by: 'ai'|'manual'|null,
-     *     read_note: string|null,
      *     file_type: string|null,
      *     cash_over_limit: bool,
      *     days_left_in_month: int|null,
@@ -230,51 +224,6 @@ final class PurchaseReceipts
     }
 
     /**
-     * Leer el ticket de nuevo
-     *
-     * La IA vuelve a leer el archivo y llena solo los datos que siguen vacíos. Cuenta en el límite
-     * diario de tickets de compra.
-     *
-     * POST /v1/purchase_receipts/{id}/read
-     *
-     * @param string $id
-     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
-     * @return array{
-     *     id: string,
-     *     livemode: bool,
-     *     object: 'purchase_receipt',
-     *     issuer: string,
-     *     status: 'pending'|'requested'|'invoiced'|'non_deductible',
-     *     store: array{name: string|null, tax_id: string|null, email: string|null, portal_url: string|null, on_fiscalisto: bool},
-     *     date: string|null,
-     *     total: float|int|null,
-     *     payment_method: 'efectivo'|'tarjeta'|'otro'|null,
-     *     folio: string|null,
-     *     fields: list<array{label: string, value: string}>,
-     *     use: string|null,
-     *     note: string|null,
-     *     read_by: 'ai'|'manual'|null,
-     *     read_note: string|null,
-     *     file_type: string|null,
-     *     cash_over_limit: bool,
-     *     days_left_in_month: int|null,
-     *     requested: array{method: string|null, to: string|null, at: string|null}|null,
-     *     invoice_uuid: string|null,
-     *     invoice: string|null,
-     *     invoiced_at: string|null,
-     *     non_deductible_at: string|null,
-     *     created_at: string|null,
-     * }
-     * @throws FiscalistoException
-     * @see https://fiscalisto.com/docs/api/referencia/tickets-de-compra/read-purchase-receipt
-     */
-    public function read(string $id, array $options = []): array
-    {
-        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
-        return $this->client->request('POST', '/v1/purchase_receipts/' . rawurlencode($id) . '/read', ['idempotent' => true], $options);
-    }
-
-    /**
      * Pedir la factura a la tienda
      *
      * fiscalisto: la tienda factura con Fiscalisto (store.on_fiscalisto), se timbra al momento con
@@ -306,8 +255,6 @@ final class PurchaseReceipts
      *     fields: list<array{label: string, value: string}>,
      *     use: string|null,
      *     note: string|null,
-     *     read_by: 'ai'|'manual'|null,
-     *     read_note: string|null,
      *     file_type: string|null,
      *     cash_over_limit: bool,
      *     days_left_in_month: int|null,
@@ -352,8 +299,6 @@ final class PurchaseReceipts
      *     fields: list<array{label: string, value: string}>,
      *     use: string|null,
      *     note: string|null,
-     *     read_by: 'ai'|'manual'|null,
-     *     read_note: string|null,
      *     file_type: string|null,
      *     cash_over_limit: bool,
      *     days_left_in_month: int|null,
@@ -396,8 +341,6 @@ final class PurchaseReceipts
      *     fields: list<array{label: string, value: string}>,
      *     use: string|null,
      *     note: string|null,
-     *     read_by: 'ai'|'manual'|null,
-     *     read_note: string|null,
      *     file_type: string|null,
      *     cash_over_limit: bool,
      *     days_left_in_month: int|null,
@@ -441,8 +384,6 @@ final class PurchaseReceipts
      *     fields: list<array{label: string, value: string}>,
      *     use: string|null,
      *     note: string|null,
-     *     read_by: 'ai'|'manual'|null,
-     *     read_note: string|null,
      *     file_type: string|null,
      *     cash_over_limit: bool,
      *     days_left_in_month: int|null,
