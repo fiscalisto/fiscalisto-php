@@ -129,7 +129,7 @@ final class ErrorCode
     /** El emisor está archivado: ya no timbra. Sus comprobantes se pueden consultar y cancelar. */
     public const ISSUER_ARCHIVED = 'issuer_archived';
 
-    /** Se crearon 500 emisores en 24 horas. Escríbanos si necesita más. */
+    /** Se crearon 500 emisores en 24 horas. Mañana puede crear más. */
     public const ISSUER_CREATION_LIMIT = 'issuer_creation_limit';
 
     /** Ese RFC ya es un emisor de la cuenta en este modo. */

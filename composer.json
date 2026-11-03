@@ -4,7 +4,7 @@
     "type": "library",
     "license": "MIT",
     "keywords": ["cfdi", "factura", "facturacion", "sat", "mexico", "timbrado", "fiscalisto"],
-    "homepage": "https://fiscalisto.com/docs/api/sdk/php",
+    "homepage": "https://fiscalisto.com/docs/api/sdk",
     "support": {
         "docs": "https://fiscalisto.com/docs/api",
         "source": "https://github.com/fiscalisto/fiscalisto-php"
