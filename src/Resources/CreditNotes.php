@@ -27,6 +27,7 @@ final class CreditNotes
      * POST /v1/credit_notes
      *
      * @param array{
+     *     issuer?: string,
      *     invoice: string,
      *     amount: float|int,
      *     description?: string,
