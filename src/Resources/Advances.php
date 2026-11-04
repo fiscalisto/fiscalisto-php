@@ -144,7 +144,7 @@ final class Advances
      *     donation?: array{in_kind?: bool, deducted?: bool},
      *     local_taxes?: list<array{retention: bool, name: string, rate: float|int, amount: float|int}>,
      *     export?: '01'|'02'|'03'|'04',
-     *     comercio_exterior?: array{motive?: '05', owners?: list<array{tax_id: string, country: string}>, incoterm?: string, certificate?: string, usd_rate: float|int, issuer_curp?: string, issuer_address?: array{street: string, exterior?: string, interior?: string, zip?: string}, receiver_address?: array{street: string, exterior?: string, interior?: string, colony?: string, locality?: string, municipality?: string, state?: string, country: string, zip: string}, recipient?: array{name?: string, tax_id?: string, address: array<string, mixed>}, goods: list<array{id?: string, tariff?: string, unit: string, quantity?: float|int, unit_value_usd?: float|int}>, notes?: string},
+     *     comercio_exterior?: array{motive?: '05', owners?: list<array{tax_id: string, country: string}>, incoterm?: string, certificate?: string, usd_rate: float|int, issuer_curp?: string, issuer_address?: array{street: string, exterior?: string, interior?: string, zip?: string}, receiver_address?: array{street: string, exterior?: string, interior?: string, colony?: string, locality?: string, municipality?: string, state?: string, country: string, zip: string}, recipient?: array{name?: string, tax_id?: string, address: array<string, mixed>}, goods: list<array{id?: string, tariff?: string, unit?: string, quantity?: float|int, unit_value_usd?: float|int}>, notes?: string},
      *     global?: array{periodicity: string, months: string, year: int},
      *     use?: string,
      *     payment_form?: string,
