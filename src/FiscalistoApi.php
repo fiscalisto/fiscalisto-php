@@ -149,6 +149,9 @@ abstract class FiscalistoApi extends Core
     /** Cotizaciones. */
     public readonly Resources\Quotes $quotes;
 
+    /** Pedidos. */
+    public readonly Resources\SalesOrders $salesOrders;
+
     /** Webhooks. */
     public readonly Resources\WebhookEndpoints $webhookEndpoints;
 
@@ -208,6 +211,7 @@ abstract class FiscalistoApi extends Core
         $this->storeConnections = new Resources\StoreConnections($this);
         $this->recurringInvoices = new Resources\RecurringInvoices($this);
         $this->quotes = new Resources\Quotes($this);
+        $this->salesOrders = new Resources\SalesOrders($this);
         $this->webhookEndpoints = new Resources\WebhookEndpoints($this);
         $this->events = new Resources\Events($this);
     }
