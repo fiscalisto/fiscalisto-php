@@ -35,6 +35,9 @@ abstract class FiscalistoApi extends Core
     /** Cuentas por cobrar. */
     public readonly Resources\Receivables $receivables;
 
+    /** Cuentas por cobrar. */
+    public readonly Resources\Customers $customers;
+
     /** Conciliación bancaria. */
     public readonly Resources\BankTransactions $bankTransactions;
 
@@ -83,8 +86,14 @@ abstract class FiscalistoApi extends Core
     /** Centros de costo. */
     public readonly Resources\CostCenters $costCenters;
 
-    /** Clientes. */
-    public readonly Resources\Customers $customers;
+    /** Viáticos y gastos. */
+    public readonly Resources\ExpensePeople $expensePeople;
+
+    /** Viáticos y gastos. */
+    public readonly Resources\ExpenseReports $expenseReports;
+
+    /** Viáticos y gastos. */
+    public readonly Resources\ExpensePolicy $expensePolicy;
 
     /** Clientes. */
     public readonly Resources\CustomerDataRequests $customerDataRequests;
@@ -161,6 +170,7 @@ abstract class FiscalistoApi extends Core
         $this->issuers = new Resources\Issuers($this);
         $this->invoices = new Resources\Invoices($this);
         $this->receivables = new Resources\Receivables($this);
+        $this->customers = new Resources\Customers($this);
         $this->bankTransactions = new Resources\BankTransactions($this);
         $this->purchaseReceipts = new Resources\PurchaseReceipts($this);
         $this->payments = new Resources\Payments($this);
@@ -177,7 +187,9 @@ abstract class FiscalistoApi extends Core
         $this->taxIds = new Resources\TaxIds($this);
         $this->branches = new Resources\Branches($this);
         $this->costCenters = new Resources\CostCenters($this);
-        $this->customers = new Resources\Customers($this);
+        $this->expensePeople = new Resources\ExpensePeople($this);
+        $this->expenseReports = new Resources\ExpenseReports($this);
+        $this->expensePolicy = new Resources\ExpensePolicy($this);
         $this->customerDataRequests = new Resources\CustomerDataRequests($this);
         $this->products = new Resources\Products($this);
         $this->satMailboxMessages = new Resources\SatMailboxMessages($this);

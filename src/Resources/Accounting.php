@@ -33,7 +33,7 @@ final class Accounting
      *
      * @param array{month: string, limit?: int, starting_after?: string, issuer?: string} $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'journal_entry', issuer: string, type: 'invoice'|'payment_received'|'payment_made'|'payroll'|'depreciation', date: string, description: string, invoice: string|null, uuid: string|null, tax_id: string|null, total: float|int, currency: string, exchange_rate: float|int|null, lines: list<array<string, mixed>>}>
+     * @return Collection<array{id: string, livemode: bool, object: 'journal_entry', issuer: string, type: 'invoice'|'payment_received'|'payment_made'|'payroll'|'employee_expenses'|'depreciation', date: string, description: string, invoice: string|null, uuid: string|null, tax_id: string|null, total: float|int, currency: string, exchange_rate: float|int|null, lines: list<array<string, mixed>>}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/contabilidad/list-journal-entries
      */
@@ -132,6 +132,41 @@ final class Accounting
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
         return $this->client->request('GET', '/v1/accounting/cross_checks', ['query' => $params], $options);
+    }
+
+    /**
+     * Ver el IVA a favor y preparar su devolución
+     *
+     * El IVA a favor de cada mes de los últimos cinco años (de las declaraciones leídas con POST
+     * /v1/sat_declarations/refresh o, sin ellas, de sus CFDI, con estimated en true), cuánto se
+     * acreditó después (del saldo más antiguo primero), cuánto queda, qué está en devolución y
+     * cuándo prescribe. Con `month`, la revisión de ese mes antes de pedirlo en el SAT:
+     * declaración, cruce con CFDI, DIOT, opinión de cumplimiento, Buzón Tributario, e.firma,
+     * listas del SAT, CFDI de proveedores con hallazgos y CLABE, con el monto a pedir. No presenta
+     * nada en el SAT. Gratis.
+     *
+     * GET /v1/accounting/vat_refund
+     *
+     * @param array{month?: string, issuer?: string} $params
+     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @return array{
+     *     object: 'vat_refund',
+     *     livemode: bool,
+     *     issuer: string,
+     *     available: float|int,
+     *     in_refund: float|int,
+     *     refunded: float|int,
+     *     estimated: bool,
+     *     balances: list<array{month: string, source: 'declaration'|'cfdi', amount: float|int, operation_number: string|null, credited: float|int, credited_in: list<array<string, mixed>>, available: float|int, status: 'available'|'credited'|'in_refund'|'refunded'|'denied'|'prescribed', prescribes_on: string}>,
+     *     review: array{month: string, amount_to_request: float|int, remainder: bool, ready: bool, checks: list<array<string, mixed>>, suppliers: array<string, mixed>, customers: array<string, mixed>}|null,
+     * }
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/contabilidad/get-vat-refund
+     */
+    public function vatRefund(array $params = [], array $options = []): array
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('GET', '/v1/accounting/vat_refund', ['query' => $params], $options);
     }
 
     /**

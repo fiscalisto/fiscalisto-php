@@ -11,12 +11,56 @@ use Fiscalisto\Core;
 use Fiscalisto\FiscalistoException;
 
 /**
- * Clientes: $fiscalisto->customers.
+ * Cuentas por cobrar: $fiscalisto->customers.
  */
 final class Customers
 {
     public function __construct(private readonly Core $client)
     {
+    }
+
+    /**
+     * Ver cómo paga un cliente
+     *
+     * Cuántos días tarda en pagar, qué parte llega a tiempo con sus días de crédito, si paga más
+     * lento que antes, cómo le paga y cuándo le llegaría lo que debe. De sus facturas a crédito
+     * (PPD) de los últimos 12 meses y sus complementos de pago, como «Cómo paga» en la app. No
+     * aplica a XAXX010101000 ni XEXX010101000.
+     *
+     * GET /v1/customers/{id}/payment_behavior
+     *
+     * @param string $id
+     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @return array{
+     *     object: 'customer_payment_behavior',
+     *     livemode: bool,
+     *     issuer: string,
+     *     customer: string,
+     *     tax_id: string,
+     *     credit_days: int,
+     *     rating: 'on_time'|'sometimes_late'|'late'|'very_late'|'no_history',
+     *     paid_invoices: int,
+     *     average_days_to_pay: float|int|null,
+     *     median_days_to_pay: int|null,
+     *     p75_days_to_pay: int|null,
+     *     on_time_share: float|int|null,
+     *     average_days_late: float|int|null,
+     *     trend: array{direction: 'slower'|'faster'|'steady', recent_days: float|int, earlier_days: float|int}|null,
+     *     overdue_amount: float|int,
+     *     overdue_invoices: int,
+     *     payment_forms: list<array{payment_form: string, amount: float|int, share: float|int}>,
+     *     months: list<array{month: string, average_days_to_pay: float|int|null, amount: float|int, paid_invoices: int}>,
+     *     last_payment: array{date: string, amount: float|int}|null,
+     *     cash_invoices: int,
+     *     open_invoices: list<array{uuid: string, date: string, payment_method: 'PPD'|'PUE', amount_due: float|int, due_date: string, expected_payment_date: string}>,
+     * }
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/cuentas-por-cobrar/get-customer-payment-behavior
+     */
+    public function paymentBehavior(string $id, array $options = []): array
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('GET', '/v1/customers/' . rawurlencode($id) . '/payment_behavior', [], $options);
     }
 
     /**
