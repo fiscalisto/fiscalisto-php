@@ -44,6 +44,7 @@ final class Tickets
      *     product_key?: string,
      *     unit_key?: string,
      *     iva?: '0'|'0.16'|'0.08'|'exento',
+     *     buyer?: array{name?: string, email?: string},
      *     lines?: list<array{product?: string, description?: string, product_key?: string, unit_key?: string, iva?: '0'|'0.16'|'0.08'|'exento', quantity?: float|int, total: float|int}>,
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
@@ -67,6 +68,7 @@ final class Tickets
      *     invoice: string|null,
      *     global_invoice: string|null,
      *     customer: array{tax_id: string, legal_name: string|null}|null,
+     *     buyer: array{name: string|null, email: string|null}|null,
      *     created_at: string|null,
      * }
      * @throws FiscalistoException
@@ -94,7 +96,7 @@ final class Tickets
      *     sold_at_lte?: string,
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'ticket', issuer: string, folio: string, code: string, status: 'pending'|'invoiced'|'global'|'cancelled', url: string|null, total: float|int, tip: float|int, payment_form: string, description: string, product_key: string, lines: list<array<string, mixed>>, sold_at: string, invoiceable_until: string, invoice: string|null, global_invoice: string|null, customer: array<string, mixed>|null, created_at: string|null}>
+     * @return Collection<array{id: string, livemode: bool, object: 'ticket', issuer: string, folio: string, code: string, status: 'pending'|'invoiced'|'global'|'cancelled', url: string|null, total: float|int, tip: float|int, payment_form: string, description: string, product_key: string, lines: list<array<string, mixed>>, sold_at: string, invoiceable_until: string, invoice: string|null, global_invoice: string|null, customer: array<string, mixed>|null, buyer: array<string, mixed>|null, created_at: string|null}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/autofactura/list-tickets
      */
@@ -134,6 +136,7 @@ final class Tickets
      *     invoice: string|null,
      *     global_invoice: string|null,
      *     customer: array{tax_id: string, legal_name: string|null}|null,
+     *     buyer: array{name: string|null, email: string|null}|null,
      *     created_at: string|null,
      * }
      * @throws FiscalistoException
@@ -175,6 +178,7 @@ final class Tickets
      *     invoice: string|null,
      *     global_invoice: string|null,
      *     customer: array{tax_id: string, legal_name: string|null}|null,
+     *     buyer: array{name: string|null, email: string|null}|null,
      *     created_at: string|null,
      * }
      * @throws FiscalistoException
