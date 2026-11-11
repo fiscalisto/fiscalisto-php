@@ -96,6 +96,9 @@ final class ErrorCode
     /** Viáticos y gastos no lo permite en ese momento: el mensaje dice por qué (un gasto con errores al enviarla, un reembolso antes de aprobarla, aprobar lo que usted mismo envió). */
     public const EXPENSE_REPORT_INVALID = 'expense_report_invalid';
 
+    /** En producción, inventario avanzado, portal de proveedores, pedidos de venta y comprobación de gastos siguen el plan de la empresa, como en la app: vienen del plan Negocio en adelante. En modo de pruebas están todos. */
+    public const FEATURE_NOT_IN_PLAN = 'feature_not_in_plan';
+
     /** Idempotency-Key es de 1 a 255 caracteres ASCII, sin acentos ni ñ: el id de su pedido o un UUID. */
     public const IDEMPOTENCY_KEY_INVALID = 'idempotency_key_invalid';
 
@@ -156,6 +159,9 @@ final class ErrorCode
     /** Al emisor le falta su RFC (sus datos fiscales): regístrelos antes, con el CSD o la e.firma. */
     public const ISSUER_NOT_READY = 'issuer_not_ready';
 
+    /** El emisor es un RFC de la propia empresa (Desarrolladores de la empresa): es emisor mientras la empresa lo tenga y no se archiva. */
+    public const ISSUER_OWN_RFC = 'issuer_own_rfc';
+
     /** La cuenta tiene varios emisores y la solicitud no dice cuál: mande issuer (iss_…). */
     public const ISSUER_REQUIRED = 'issuer_required';
 
@@ -176,6 +182,9 @@ final class ErrorCode
 
     /** Falta el encabezado Authorization: Bearer fk_test_… o fk_live_…. */
     public const MISSING_API_KEY = 'missing_api_key';
+
+    /** En el plan Gratis, la API ya hizo sus solicitudes de producción de los últimos 30 días: 10,000 más 500 por cada timbre que usó. Con un plan de paga son 100,000 más 500 por timbre, y al pasarlas la API solo va más despacio (10 solicitudes cada 10 segundos, rate_limit). Use webhooks en vez de consultar seguido; para más, escriba a soporte@fiscalisto.com. */
+    public const MONTHLY_ALLOWANCE = 'monthly_allowance';
 
     /** Un campo tiene un valor que no se acepta (formato, catálogo del SAT, rango). param dice cuál y message cómo corregirlo. */
     public const PARAMETER_INVALID = 'parameter_invalid';
