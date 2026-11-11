@@ -91,6 +91,7 @@ final class Invoices
      *     payment_status: 'paid'|'partial'|'unpaid'|null,
      *     amount_due: float|int|null,
      *     amount_paid: float|int|null,
+     *     paid_on: string|null,
      *     related: array<string, mixed>|null,
      *     payment?: array{date: string|null, payment_form: string|null, currency: string, exchange_rate: float|int|null, amount: float|int, operation_number: string|null, documents: list<array<string, mixed>>}|null,
      *     payroll?: array{type: 'O'|'E', calculation: 'fiscalisto'|'external', periodicity: string, period: array<string, mixed>, days: float|int, references: array<string, mixed>|null, employer: array<string, mixed>, employee: array<string, mixed>, perceptions: list<array<string, mixed>>, deductions: list<array<string, mixed>>, other_payments: list<array<string, mixed>>, separation?: array<string, mixed>, retirement?: array<string, mixed>, disabilities?: list<array<string, mixed>>, totals: array<string, mixed>},
@@ -135,7 +136,7 @@ final class Invoices
      *     cost_center?: string,
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'invoice', issuer: string, branch: string|null, cost_center: string|null, type: 'I'|'E'|'P'|'T'|'N', status: 'processing'|'pending'|'valid'|'rejected'|'canceled', uuid: string|null, series: string|null, folio: string|null, date: string|null, customer: array<string, mixed>, use: string|null, payment_form: string|null, payment_method: string|null, currency: string, exchange_rate: float|int|null, items: list<array<string, mixed>>, subtotal: float|int|null, discount: float|int|null, taxes: array<string, mixed>|null, total: float|int|null, payment_status: 'paid'|'partial'|'unpaid'|null, amount_due: float|int|null, amount_paid: float|int|null, related: array<string, mixed>|null, payment?: array<string, mixed>|null, payroll?: array<string, mixed>, global?: array<string, mixed>, cancellation: array<string, mixed>|null, email: array<string, mixed>|null, error: array<string, mixed>|null, recurring_invoice: string|null, created_at: string|null, metadata: array<string, mixed>, warnings?: list<string>, email_error?: string, substitutes?: array<string, mixed>, advance_application?: array<string, mixed>}>
+     * @return Collection<array{id: string, livemode: bool, object: 'invoice', issuer: string, branch: string|null, cost_center: string|null, type: 'I'|'E'|'P'|'T'|'N', status: 'processing'|'pending'|'valid'|'rejected'|'canceled', uuid: string|null, series: string|null, folio: string|null, date: string|null, customer: array<string, mixed>, use: string|null, payment_form: string|null, payment_method: string|null, currency: string, exchange_rate: float|int|null, items: list<array<string, mixed>>, subtotal: float|int|null, discount: float|int|null, taxes: array<string, mixed>|null, total: float|int|null, payment_status: 'paid'|'partial'|'unpaid'|null, amount_due: float|int|null, amount_paid: float|int|null, paid_on: string|null, related: array<string, mixed>|null, payment?: array<string, mixed>|null, payroll?: array<string, mixed>, global?: array<string, mixed>, cancellation: array<string, mixed>|null, email: array<string, mixed>|null, error: array<string, mixed>|null, recurring_invoice: string|null, created_at: string|null, metadata: array<string, mixed>, warnings?: list<string>, email_error?: string, substitutes?: array<string, mixed>, advance_application?: array<string, mixed>}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/facturas/list-invoices
      */
@@ -182,6 +183,7 @@ final class Invoices
      *     payment_status: 'paid'|'partial'|'unpaid'|null,
      *     amount_due: float|int|null,
      *     amount_paid: float|int|null,
+     *     paid_on: string|null,
      *     related: array<string, mixed>|null,
      *     payment?: array{date: string|null, payment_form: string|null, currency: string, exchange_rate: float|int|null, amount: float|int, operation_number: string|null, documents: list<array<string, mixed>>}|null,
      *     payroll?: array{type: 'O'|'E', calculation: 'fiscalisto'|'external', periodicity: string, period: array<string, mixed>, days: float|int, references: array<string, mixed>|null, employer: array<string, mixed>, employee: array<string, mixed>, perceptions: list<array<string, mixed>>, deductions: list<array<string, mixed>>, other_payments: list<array<string, mixed>>, separation?: array<string, mixed>, retirement?: array<string, mixed>, disabilities?: list<array<string, mixed>>, totals: array<string, mixed>},
@@ -244,6 +246,7 @@ final class Invoices
      *     payment_status: 'paid'|'partial'|'unpaid'|null,
      *     amount_due: float|int|null,
      *     amount_paid: float|int|null,
+     *     paid_on: string|null,
      *     related: array<string, mixed>|null,
      *     payment?: array{date: string|null, payment_form: string|null, currency: string, exchange_rate: float|int|null, amount: float|int, operation_number: string|null, documents: list<array<string, mixed>>}|null,
      *     payroll?: array{type: 'O'|'E', calculation: 'fiscalisto'|'external', periodicity: string, period: array<string, mixed>, days: float|int, references: array<string, mixed>|null, employer: array<string, mixed>, employee: array<string, mixed>, perceptions: list<array<string, mixed>>, deductions: list<array<string, mixed>>, other_payments: list<array<string, mixed>>, separation?: array<string, mixed>, retirement?: array<string, mixed>, disabilities?: list<array<string, mixed>>, totals: array<string, mixed>},
@@ -347,6 +350,7 @@ final class Invoices
      *     payment_status: 'paid'|'partial'|'unpaid'|null,
      *     amount_due: float|int|null,
      *     amount_paid: float|int|null,
+     *     paid_on: string|null,
      *     related: array<string, mixed>|null,
      *     payment?: array{date: string|null, payment_form: string|null, currency: string, exchange_rate: float|int|null, amount: float|int, operation_number: string|null, documents: list<array<string, mixed>>}|null,
      *     payroll?: array{type: 'O'|'E', calculation: 'fiscalisto'|'external', periodicity: string, period: array<string, mixed>, days: float|int, references: array<string, mixed>|null, employer: array<string, mixed>, employee: array<string, mixed>, perceptions: list<array<string, mixed>>, deductions: list<array<string, mixed>>, other_payments: list<array<string, mixed>>, separation?: array<string, mixed>, retirement?: array<string, mixed>, disabilities?: list<array<string, mixed>>, totals: array<string, mixed>},
@@ -411,6 +415,7 @@ final class Invoices
      *     payment_status: 'paid'|'partial'|'unpaid'|null,
      *     amount_due: float|int|null,
      *     amount_paid: float|int|null,
+     *     paid_on: string|null,
      *     related: array<string, mixed>|null,
      *     payment?: array{date: string|null, payment_form: string|null, currency: string, exchange_rate: float|int|null, amount: float|int, operation_number: string|null, documents: list<array<string, mixed>>}|null,
      *     payroll?: array{type: 'O'|'E', calculation: 'fiscalisto'|'external', periodicity: string, period: array<string, mixed>, days: float|int, references: array<string, mixed>|null, employer: array<string, mixed>, employee: array<string, mixed>, perceptions: list<array<string, mixed>>, deductions: list<array<string, mixed>>, other_payments: list<array<string, mixed>>, separation?: array<string, mixed>, retirement?: array<string, mixed>, disabilities?: list<array<string, mixed>>, totals: array<string, mixed>},
@@ -506,6 +511,7 @@ final class Invoices
      *     payment_status: 'paid'|'partial'|'unpaid'|null,
      *     amount_due: float|int|null,
      *     amount_paid: float|int|null,
+     *     paid_on: string|null,
      *     related: array<string, mixed>|null,
      *     payment?: array{date: string|null, payment_form: string|null, currency: string, exchange_rate: float|int|null, amount: float|int, operation_number: string|null, documents: list<array<string, mixed>>}|null,
      *     payroll?: array{type: 'O'|'E', calculation: 'fiscalisto'|'external', periodicity: string, period: array<string, mixed>, days: float|int, references: array<string, mixed>|null, employer: array<string, mixed>, employee: array<string, mixed>, perceptions: list<array<string, mixed>>, deductions: list<array<string, mixed>>, other_payments: list<array<string, mixed>>, separation?: array<string, mixed>, retirement?: array<string, mixed>, disabilities?: list<array<string, mixed>>, totals: array<string, mixed>},
@@ -533,12 +539,14 @@ final class Invoices
     /**
      * Marcar pagada
      *
-     * Una factura PUE timbrada con paid_later (o marcada por cobrar) ya se pagó: queda paid y
-     * llega invoice.paid. Una PPD se paga con su complemento de pago (POST /v1/payments).
+     * Una factura PUE timbrada con paid_later (o marcada por cobrar) ya se pagó: queda paid, con
+     * paid_on el día que indique (hoy si no), y llega invoice.paid. Una PPD se paga con su
+     * complemento de pago (POST /v1/payments).
      *
      * POST /v1/invoices/{id}/mark_paid
      *
      * @param string $id
+     * @param array{paid_on?: string} $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     id: string,
@@ -567,6 +575,7 @@ final class Invoices
      *     payment_status: 'paid'|'partial'|'unpaid'|null,
      *     amount_due: float|int|null,
      *     amount_paid: float|int|null,
+     *     paid_on: string|null,
      *     related: array<string, mixed>|null,
      *     payment?: array{date: string|null, payment_form: string|null, currency: string, exchange_rate: float|int|null, amount: float|int, operation_number: string|null, documents: list<array<string, mixed>>}|null,
      *     payroll?: array{type: 'O'|'E', calculation: 'fiscalisto'|'external', periodicity: string, period: array<string, mixed>, days: float|int, references: array<string, mixed>|null, employer: array<string, mixed>, employee: array<string, mixed>, perceptions: list<array<string, mixed>>, deductions: list<array<string, mixed>>, other_payments: list<array<string, mixed>>, separation?: array<string, mixed>, retirement?: array<string, mixed>, disabilities?: list<array<string, mixed>>, totals: array<string, mixed>},
@@ -585,10 +594,10 @@ final class Invoices
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/cuentas-por-cobrar/mark-invoice-paid
      */
-    public function markPaid(string $id, array $options = []): array
+    public function markPaid(string $id, array $params = [], array $options = []): array
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
-        return $this->client->request('POST', '/v1/invoices/' . rawurlencode($id) . '/mark_paid', ['idempotent' => true], $options);
+        return $this->client->request('POST', '/v1/invoices/' . rawurlencode($id) . '/mark_paid', ['body' => $params, 'idempotent' => true], $options);
     }
 
     /**
@@ -629,6 +638,7 @@ final class Invoices
      *     payment_status: 'paid'|'partial'|'unpaid'|null,
      *     amount_due: float|int|null,
      *     amount_paid: float|int|null,
+     *     paid_on: string|null,
      *     related: array<string, mixed>|null,
      *     payment?: array{date: string|null, payment_form: string|null, currency: string, exchange_rate: float|int|null, amount: float|int, operation_number: string|null, documents: list<array<string, mixed>>}|null,
      *     payroll?: array{type: 'O'|'E', calculation: 'fiscalisto'|'external', periodicity: string, period: array<string, mixed>, days: float|int, references: array<string, mixed>|null, employer: array<string, mixed>, employee: array<string, mixed>, perceptions: list<array<string, mixed>>, deductions: list<array<string, mixed>>, other_payments: list<array<string, mixed>>, separation?: array<string, mixed>, retirement?: array<string, mixed>, disabilities?: list<array<string, mixed>>, totals: array<string, mixed>},
