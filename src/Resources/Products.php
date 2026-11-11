@@ -51,6 +51,7 @@ final class Products
      *     portal_visible?: bool,
      *     min_order_qty?: float|int|null,
      *     order_step?: float|int|null,
+     *     category?: string|null,
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
@@ -64,6 +65,7 @@ final class Products
      *     unit_key: string,
      *     unit_name: string|null,
      *     sku: string|null,
+     *     category: string|null,
      *     unit_price: float|int,
      *     open_price: bool,
      *     taxability: string,
@@ -95,7 +97,7 @@ final class Products
     /**
      * Listar productos
      *
-     * Los productos del emisor, los más recientes primero. Filtre por sku o product_key.
+     * Los productos del emisor, los más recientes primero. Filtre por sku, product_key o category.
      *
      * GET /v1/products
      *
@@ -105,9 +107,10 @@ final class Products
      *     issuer?: string,
      *     sku?: string,
      *     product_key?: string,
+     *     category?: string,
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'product', issuer: string, name: string|null, description: string, product_key: string, unit_key: string, unit_name: string|null, sku: string|null, unit_price: float|int, open_price: bool, taxability: string, iva: string, ieps: float|int|null, ieps_factor: string|null, iva_retention: float|int, isr_retention: float|int, local_taxes: list<array<string, mixed>>, track_stock: bool, cost: float|int|null, barcode: string|null, min_stock: float|int|null, portal_visible: bool, min_order_qty: float|int|null, order_step: float|int|null, created_at: string, updated_at: string|null}>
+     * @return Collection<array{id: string, livemode: bool, object: 'product', issuer: string, name: string|null, description: string, product_key: string, unit_key: string, unit_name: string|null, sku: string|null, category: string|null, unit_price: float|int, open_price: bool, taxability: string, iva: string, ieps: float|int|null, ieps_factor: string|null, iva_retention: float|int, isr_retention: float|int, local_taxes: list<array<string, mixed>>, track_stock: bool, cost: float|int|null, barcode: string|null, min_stock: float|int|null, portal_visible: bool, min_order_qty: float|int|null, order_step: float|int|null, created_at: string, updated_at: string|null}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/productos/list-products
      */
@@ -137,6 +140,7 @@ final class Products
      *     unit_key: string,
      *     unit_name: string|null,
      *     sku: string|null,
+     *     category: string|null,
      *     unit_price: float|int,
      *     open_price: bool,
      *     taxability: string,
@@ -196,6 +200,7 @@ final class Products
      *     portal_visible?: bool,
      *     min_order_qty?: float|int|null,
      *     order_step?: float|int|null,
+     *     category?: string|null,
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
@@ -209,6 +214,7 @@ final class Products
      *     unit_key: string,
      *     unit_name: string|null,
      *     sku: string|null,
+     *     category: string|null,
      *     unit_price: float|int,
      *     open_price: bool,
      *     taxability: string,
