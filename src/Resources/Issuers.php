@@ -279,6 +279,125 @@ final class Issuers
     }
 
     /**
+     * Ver el diseño del PDF
+     *
+     * Cómo se ven los documentos del emisor: su nombre comercial, el estilo y el color del PDF y
+     * su logo. Es lo mismo que Ajustes › Marca y documentos en la app.
+     *
+     * GET /v1/issuers/{id}/branding
+     *
+     * @param string $id
+     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @return array{
+     *     object: 'issuer_branding',
+     *     issuer: string,
+     *     livemode: bool,
+     *     trade_name: string|null,
+     *     pdf_style: 'clasico'|'moderno'|'compacto'|'minimalista'|null,
+     *     pdf_color: string|null,
+     *     logo_url: string|null,
+     * }
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/emisores/get-issuer-branding
+     */
+    public function getBranding(string $id, array $options = []): array
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('GET', '/v1/issuers/' . rawurlencode($id) . '/branding', [], $options);
+    }
+
+    /**
+     * Cambiar el diseño del PDF
+     *
+     * Cambia el nombre comercial, el estilo (clasico, moderno, compacto o minimalista) y el color
+     * del PDF de las facturas, notas, pagos, recibos y cotizaciones del emisor, y de sus correos.
+     * Lo que no mande se queda como está; null vuelve al de omisión. Se ve en el siguiente PDF que
+     * pida, también de lo ya timbrado. Una sucursal puede tener el suyo (POST /v1/branches/{id}).
+     *
+     * POST /v1/issuers/{id}/branding
+     *
+     * @param string $id
+     * @param array{
+     *     trade_name?: string|null,
+     *     pdf_style?: 'clasico'|'moderno'|'compacto'|'minimalista'|null,
+     *     pdf_color?: string|null,
+     * } $params
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
+     * @return array{
+     *     object: 'issuer_branding',
+     *     issuer: string,
+     *     livemode: bool,
+     *     trade_name: string|null,
+     *     pdf_style: 'clasico'|'moderno'|'compacto'|'minimalista'|null,
+     *     pdf_color: string|null,
+     *     logo_url: string|null,
+     * }
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/emisores/update-issuer-branding
+     */
+    public function updateBranding(string $id, array $params = [], array $options = []): array
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('POST', '/v1/issuers/' . rawurlencode($id) . '/branding', ['body' => $params, 'idempotent' => true], $options);
+    }
+
+    /**
+     * Subir el logo
+     *
+     * El logo del emisor (PNG o JPG de hasta 1 MB, en base64): va en sus PDF, sus correos y la
+     * página de la factura que ve su cliente. Reemplaza el anterior.
+     *
+     * POST /v1/issuers/{id}/logo
+     *
+     * @param string $id
+     * @param array{file: string} $params
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
+     * @return array{
+     *     object: 'issuer_branding',
+     *     issuer: string,
+     *     livemode: bool,
+     *     trade_name: string|null,
+     *     pdf_style: 'clasico'|'moderno'|'compacto'|'minimalista'|null,
+     *     pdf_color: string|null,
+     *     logo_url: string|null,
+     * }
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/emisores/upload-issuer-logo
+     */
+    public function uploadLogo(string $id, array $params, array $options = []): array
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('POST', '/v1/issuers/' . rawurlencode($id) . '/logo', ['body' => $params, 'idempotent' => true], $options);
+    }
+
+    /**
+     * Quitar el logo
+     *
+     * Sus PDF y correos van sin logo, con su nombre.
+     *
+     * DELETE /v1/issuers/{id}/logo
+     *
+     * @param string $id
+     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @return array{
+     *     object: 'issuer_branding',
+     *     issuer: string,
+     *     livemode: bool,
+     *     trade_name: string|null,
+     *     pdf_style: 'clasico'|'moderno'|'compacto'|'minimalista'|null,
+     *     pdf_color: string|null,
+     *     logo_url: string|null,
+     * }
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/emisores/delete-issuer-logo
+     */
+    public function deleteLogo(string $id, array $options = []): array
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('DELETE', '/v1/issuers/' . rawurlencode($id) . '/logo', [], $options);
+    }
+
+    /**
      * Firmar el contrato con el PAC
      *
      * Una sola vez por RFC antes de timbrar en producción: firma el contrato de servicio del PAC

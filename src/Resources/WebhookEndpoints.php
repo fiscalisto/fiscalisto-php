@@ -238,4 +238,26 @@ final class WebhookEndpoints
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
         return $this->client->request('POST', '/v1/webhook_endpoints/' . rawurlencode($id) . '/test', ['body' => $params, 'idempotent' => true], $options);
     }
+
+    /**
+     * Listar entregas
+     *
+     * Qué pasó con cada evento en este webhook, el más reciente primero: una fila por evento con
+     * su último intento, cuántos lleva y cuándo va el siguiente reintento. Con succeeded=false ve
+     * los que su servidor no recibió, para reenviarlos con POST /v1/events/{id}/resend.
+     *
+     * GET /v1/webhook_endpoints/{id}/deliveries
+     *
+     * @param string $id
+     * @param array{limit?: int, starting_after?: string, succeeded?: bool} $params
+     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @return Collection<array{object: 'webhook_delivery', id: string, webhook_endpoint: string, event: string, event_type: string|null, succeeded: bool, status: int|null, error: string|null, duration_ms: int, attempts: int, resent: bool, test: bool, created_at: string, next_retry_at: string|null}>
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/webhooks/list-webhook-deliveries
+     */
+    public function listDeliveries(string $id, array $params = [], array $options = []): Collection
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->list('/v1/webhook_endpoints/' . rawurlencode($id) . '/deliveries', $params, $options);
+    }
 }

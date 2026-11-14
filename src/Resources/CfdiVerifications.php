@@ -52,6 +52,7 @@ final class CfdiVerifications
      *     issuer_efos: bool|null,
      *     sat: array{code: string, state: string, cancellable: string|null, cancellation_status: string|null, efos_validation: string|null},
      *     xml: array{version: string|null, type: string|null, issued_at: string|null, stamped_at: string|null, issuer_name: string|null, receiver_name: string|null, currency: string|null}|null,
+     *     seals: array{valid: bool, issuer_seal_valid: bool, certificate: array<string, mixed>|null, stamp: array<string, mixed>|null, problems: list<array<string, mixed>>, original_string: string|null}|null,
      *     issuer_sat_lists: array{object: 'sat_list_check', tax_id: string, name: string|null, listed: bool, risk: 'high'|'medium'|'none'|'unknown', verified: bool, lists: list<array<string, mixed>>, lists_updated_at: string|null, lists_unavailable: list<string>}|null,
      *     receiver_sat_lists: array{object: 'sat_list_check', tax_id: string, name: string|null, listed: bool, risk: 'high'|'medium'|'none'|'unknown', verified: bool, lists: list<array<string, mixed>>, lists_updated_at: string|null, lists_unavailable: list<string>}|null,
      *     checked_at: string,
