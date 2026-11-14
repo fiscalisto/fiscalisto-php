@@ -134,6 +134,9 @@ abstract class FiscalistoApi extends Core
     /** Listas del SAT. */
     public readonly Resources\SatLists $satLists;
 
+    /** Verificar comprobantes. */
+    public readonly Resources\CfdiVerifications $cfdiVerifications;
+
     /** Descargas del SAT. */
     public readonly Resources\SatDownloads $satDownloads;
 
@@ -224,6 +227,7 @@ abstract class FiscalistoApi extends Core
         $this->stockAdjustments = new Resources\StockAdjustments($this);
         $this->satCatalogs = new Resources\SatCatalogs($this);
         $this->satLists = new Resources\SatLists($this);
+        $this->cfdiVerifications = new Resources\CfdiVerifications($this);
         $this->satDownloads = new Resources\SatDownloads($this);
         $this->satInvoices = new Resources\SatInvoices($this);
         $this->satRetentions = new Resources\SatRetentions($this);

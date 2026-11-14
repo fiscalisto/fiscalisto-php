@@ -70,4 +70,27 @@ final class Events
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
         return $this->client->request('GET', '/v1/events/' . rawurlencode($id), [], $options);
     }
+
+    /**
+     * Reenviar un evento
+     *
+     * Manda otra vez, ahora, un evento de los últimos 30 días: a un webhook (endpoint) o a todos
+     * los encendidos que escuchan ese tipo. Es un intento aparte, firmado con el mismo webhook-id:
+     * no cambia los reintentos automáticos, y si llega, ya no se reintenta. Úselo después de
+     * arreglar su servidor, con GET /v1/events?delivery_success=false.
+     *
+     * POST /v1/events/{id}/resend
+     *
+     * @param string $id
+     * @param array{endpoint?: string} $params
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
+     * @return array{object: 'event_resend', event: string, deliveries: int}
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/eventos/resend-event
+     */
+    public function resend(string $id, array $params = [], array $options = []): array
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('POST', '/v1/events/' . rawurlencode($id) . '/resend', ['body' => $params, 'idempotent' => true], $options);
+    }
 }
