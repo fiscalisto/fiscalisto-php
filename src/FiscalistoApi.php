@@ -137,6 +137,21 @@ abstract class FiscalistoApi extends Core
     /** Verificar comprobantes. */
     public readonly Resources\CfdiVerifications $cfdiVerifications;
 
+    /** Equipo. */
+    public readonly Resources\Members $members;
+
+    /** Equipo. */
+    public readonly Resources\Invitations $invitations;
+
+    /** Equipo. */
+    public readonly Resources\Roles $roles;
+
+    /** Equipo. */
+    public readonly Resources\Permissions $permissions;
+
+    /** Exportaciones. */
+    public readonly Resources\Exports $exports;
+
     /** Descargas del SAT. */
     public readonly Resources\SatDownloads $satDownloads;
 
@@ -228,6 +243,11 @@ abstract class FiscalistoApi extends Core
         $this->satCatalogs = new Resources\SatCatalogs($this);
         $this->satLists = new Resources\SatLists($this);
         $this->cfdiVerifications = new Resources\CfdiVerifications($this);
+        $this->members = new Resources\Members($this);
+        $this->invitations = new Resources\Invitations($this);
+        $this->roles = new Resources\Roles($this);
+        $this->permissions = new Resources\Permissions($this);
+        $this->exports = new Resources\Exports($this);
         $this->satDownloads = new Resources\SatDownloads($this);
         $this->satInvoices = new Resources\SatInvoices($this);
         $this->satRetentions = new Resources\SatRetentions($this);

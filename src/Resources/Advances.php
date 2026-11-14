@@ -164,6 +164,7 @@ final class Advances
      *     send_email?: bool,
      *     email_cc?: string|null,
      *     metadata?: array<string, mixed>,
+     *     async?: bool,
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{

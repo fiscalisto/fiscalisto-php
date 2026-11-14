@@ -99,6 +99,18 @@ final class ErrorCode
     /** Viáticos y gastos no lo permite en ese momento: el mensaje dice por qué (un gasto con errores al enviarla, un reembolso antes de aprobarla, aprobar lo que usted mismo envió). */
     public const EXPENSE_REPORT_INVALID = 'expense_report_invalid';
 
+    /** Ninguna factura del emisor coincide con el periodo y los filtros de POST /v1/exports: no se generó nada. */
+    public const EXPORT_EMPTY = 'export_empty';
+
+    /** Los archivos de una exportación se guardan 30 días. Pídala otra vez con POST /v1/exports. */
+    public const EXPORT_EXPIRED = 'export_expired';
+
+    /** Ya hay una exportación del mismo formato generándose en la empresa. Espere a que termine (GET /v1/exports) y pida la siguiente. */
+    public const EXPORT_IN_PROGRESS = 'export_in_progress';
+
+    /** La exportación aún se genera (status processing) o falló (failed). Consulte GET /v1/exports/{id}; si falló, pídala otra vez. */
+    public const EXPORT_NOT_READY = 'export_not_ready';
+
     /** En producción, inventario avanzado, portal de proveedores, pedidos de venta y comprobación de gastos siguen el plan de la empresa, como en la app: vienen con Operaciones (se agrega a Negocio; incluida en Corporativo). En modo de pruebas están todos. */
     public const FEATURE_NOT_IN_PLAN = 'feature_not_in_plan';
 
@@ -111,7 +123,7 @@ final class ErrorCode
     /** Esa Idempotency-Key ya se usó en las últimas 24 horas con otra solicitud (otra ruta u otro cuerpo). Use una nueva para cada operación distinta. */
     public const IDEMPOTENCY_KEY_REUSED = 'idempotency_key_reused';
 
-    /** La cuenta no tiene timbres de producción: para timbrar, revisar RFC en las listas, consultar constancias, pedir descargas o traer declaraciones, opinión o buzón del SAT. Compre un paquete en Desarrolladores › Timbres. En pruebas nunca pasa. Para enterarse antes, escuche balance.low o active la recarga automática. */
+    /** La cuenta no tiene timbres de producción: para timbrar, revisar RFC en las listas, consultar constancias, pedir descargas o traer declaraciones, opinión o buzón del SAT. Compre un paquete en Desarrolladores › Timbres y pagos. En pruebas nunca pasa. Para enterarse antes, escuche balance.low o active la recarga automática. */
     public const INSUFFICIENT_BALANCE = 'insufficient_balance';
 
     /** Algo falló de nuestro lado. Repita la solicitud con la misma Idempotency-Key: nunca se timbra dos veces. Si sigue, escríbanos con el request_id. */
@@ -152,6 +164,9 @@ final class ErrorCode
 
     /** Ese RFC ya es un emisor de la cuenta en este modo. */
     public const ISSUER_EXISTS = 'issuer_exists';
+
+    /** El emisor no tiene equipo: el equipo es el de una empresa, en sus emisores propios (type own) y con una llave fk_live_. Un emisor conectado o uno de pruebas no tiene miembros. */
+    public const ISSUER_HAS_NO_TEAM = 'issuer_has_no_team';
 
     /** El emisor es una empresa de la app conectada a la cuenta (source empresa): con la API solo se usa su Portal de proveedores. */
     public const ISSUER_LINKED_EMPRESA = 'issuer_linked_empresa';
@@ -317,6 +332,18 @@ final class ErrorCode
 
     /** La factura del proveedor no admite eso en su estado (por ejemplo, programar una que no está aprobada, una fecha de pago pasada o marcar pagada una ya pagada), o el SAT la reporta cancelada. El mensaje dice por qué. */
     public const SUPPLIER_INVOICE_INVALID = 'supplier_invoice_invalid';
+
+    /** El cambio da, quita o toca un permiso delicado (equipo, credenciales, seguridad o plan), o nombra a un propietario: pide confirmar la identidad de quien lo hace, y eso se hace en la app, en Ajustes › Miembros o Ajustes › Roles. */
+    public const TEAM_CHANGE_REQUIRES_APP = 'team_change_requires_app';
+
+    /** El cambio no se puede: la persona ya es miembro, quedaría la empresa sin propietario, ya hay un rol con ese nombre, el rol lo tiene alguien, o se mandaron demasiadas invitaciones hoy. El mensaje dice cuál. */
+    public const TEAM_INVALID = 'team_invalid';
+
+    /** La llave actúa como la persona que la creó, con su acceso en la empresa: le falta el permiso para esto, o lo que pide daría más de lo que ella tiene, o ya no es miembro. */
+    public const TEAM_PERMISSION_DENIED = 'team_permission_denied';
+
+    /** El plan de la empresa ya tiene todos sus usuarios (miembros más invitaciones pendientes). Cambie de plan en Ajustes › Plan y pagos o quite a alguien. */
+    public const TEAM_SEAT_LIMIT = 'team_seat_limit';
 
     /** El reloj se está adelantando en otra solicitud (409, con Retry-After). Espere a test_clock.ready y repita. */
     public const TEST_CLOCK_ADVANCING = 'test_clock_advancing';
