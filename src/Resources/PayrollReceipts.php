@@ -35,6 +35,7 @@ final class PayrollReceipts
      *     employee: string,
      *     period: array{start: string, end: string, payment_date?: string},
      *     days?: float|int,
+     *     replaces?: string,
      *     send_email?: bool,
      *     metadata?: array<string, mixed>,
      *     confirmation_token?: string,
@@ -105,6 +106,7 @@ final class PayrollReceipts
      *     employee: string,
      *     period: array{start: string, end: string, payment_date?: string},
      *     days?: float|int,
+     *     replaces?: string,
      *     send_email?: bool,
      *     metadata?: array<string, mixed>,
      * } $params
