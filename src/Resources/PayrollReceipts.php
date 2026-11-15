@@ -73,7 +73,7 @@ final class PayrollReceipts
      *     payment?: array{date: string|null, payment_form: string|null, currency: string, exchange_rate: float|int|null, amount: float|int, operation_number: string|null, documents: list<array<string, mixed>>}|null,
      *     payroll?: array{type: 'O'|'E', calculation: 'fiscalisto'|'external', periodicity: string, period: array<string, mixed>, days: float|int, references: array<string, mixed>|null, employer: array<string, mixed>, employee: array<string, mixed>, perceptions: list<array<string, mixed>>, deductions: list<array<string, mixed>>, other_payments: list<array<string, mixed>>, separation?: array<string, mixed>, retirement?: array<string, mixed>, disabilities?: list<array<string, mixed>>, totals: array<string, mixed>},
      *     global?: array<string, mixed>,
-     *     cancellation: array{status: string|null, motive: string|null, substitution: string|null, canceled_at: string|null}|null,
+     *     cancellation: array{status: string|null, motive: string|null, substitution: string|null, canceled_at: string|null, next_attempt_at: string|null, error: string|null}|null,
      *     email: array{to: string|null, cc: string|null, sent_at: string|null, status: 'sent'|'delayed'|'delivered'|'opened'|'bounced'|'complained', recipients: list<array<string, mixed>>}|null,
      *     error: array{message: string, sat_code: string|null, raw: string}|null,
      *     recurring_invoice: string|null,
@@ -81,7 +81,7 @@ final class PayrollReceipts
      *     metadata: array<string, mixed>,
      *     warnings?: list<string>,
      *     email_error?: string,
-     *     substitutes?: array{invoice: string, canceled: bool, cancel_error?: string},
+     *     substitutes?: array{invoice: string, canceled: bool, cancel_error?: string, cancellation: array<string, mixed>|null},
      *     advance_application?: array{advance: string|null, advance_uuid: string, method: 'egreso'|'remanente', status: 'done'|'credit_note_pending', credit_note: string|null, credit_note_error?: string},
      * }
      * @throws FiscalistoException
@@ -203,7 +203,7 @@ final class PayrollReceipts
      *     payment?: array{date: string|null, payment_form: string|null, currency: string, exchange_rate: float|int|null, amount: float|int, operation_number: string|null, documents: list<array<string, mixed>>}|null,
      *     payroll?: array{type: 'O'|'E', calculation: 'fiscalisto'|'external', periodicity: string, period: array<string, mixed>, days: float|int, references: array<string, mixed>|null, employer: array<string, mixed>, employee: array<string, mixed>, perceptions: list<array<string, mixed>>, deductions: list<array<string, mixed>>, other_payments: list<array<string, mixed>>, separation?: array<string, mixed>, retirement?: array<string, mixed>, disabilities?: list<array<string, mixed>>, totals: array<string, mixed>},
      *     global?: array<string, mixed>,
-     *     cancellation: array{status: string|null, motive: string|null, substitution: string|null, canceled_at: string|null}|null,
+     *     cancellation: array{status: string|null, motive: string|null, substitution: string|null, canceled_at: string|null, next_attempt_at: string|null, error: string|null}|null,
      *     email: array{to: string|null, cc: string|null, sent_at: string|null, status: 'sent'|'delayed'|'delivered'|'opened'|'bounced'|'complained', recipients: list<array<string, mixed>>}|null,
      *     error: array{message: string, sat_code: string|null, raw: string}|null,
      *     recurring_invoice: string|null,
@@ -211,7 +211,7 @@ final class PayrollReceipts
      *     metadata: array<string, mixed>,
      *     warnings?: list<string>,
      *     email_error?: string,
-     *     substitutes?: array{invoice: string, canceled: bool, cancel_error?: string},
+     *     substitutes?: array{invoice: string, canceled: bool, cancel_error?: string, cancellation: array<string, mixed>|null},
      *     advance_application?: array{advance: string|null, advance_uuid: string, method: 'egreso'|'remanente', status: 'done'|'credit_note_pending', credit_note: string|null, credit_note_error?: string},
      * }
      * @throws FiscalistoException
