@@ -84,6 +84,8 @@ final class Customers
      *     price_list?: string|null,
      *     discount_percent?: float|int|null,
      *     ieps_taxpayer?: bool,
+     *     credit_days?: int|null,
+     *     payment_terms?: string|null,
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
@@ -99,6 +101,8 @@ final class Customers
      *     use: string|null,
      *     foreign: array{country: string, tax_id: string|null}|null,
      *     ieps_taxpayer: bool,
+     *     credit_days: int|null,
+     *     payment_terms: string|null,
      *     group: string|null,
      *     price_list: string|null,
      *     discount_percent: float|int|null,
@@ -123,7 +127,7 @@ final class Customers
      *
      * @param array{limit?: int, starting_after?: string, issuer?: string, tax_id?: string} $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'customer', issuer: string, tax_id: string, legal_name: string, tax_system: string, zip: string, email: string|null, use: string|null, foreign: array<string, mixed>|null, ieps_taxpayer: bool, group: string|null, price_list: string|null, discount_percent: float|int|null, created_at: string, updated_at: string|null}>
+     * @return Collection<array{id: string, livemode: bool, object: 'customer', issuer: string, tax_id: string, legal_name: string, tax_system: string, zip: string, email: string|null, use: string|null, foreign: array<string, mixed>|null, ieps_taxpayer: bool, credit_days: int|null, payment_terms: string|null, group: string|null, price_list: string|null, discount_percent: float|int|null, created_at: string, updated_at: string|null}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/clientes/list-customers
      */
@@ -155,6 +159,8 @@ final class Customers
      *     use: string|null,
      *     foreign: array{country: string, tax_id: string|null}|null,
      *     ieps_taxpayer: bool,
+     *     credit_days: int|null,
+     *     payment_terms: string|null,
      *     group: string|null,
      *     price_list: string|null,
      *     discount_percent: float|int|null,
@@ -190,6 +196,8 @@ final class Customers
      *     price_list?: string|null,
      *     discount_percent?: float|int|null,
      *     ieps_taxpayer?: bool,
+     *     credit_days?: int|null,
+     *     payment_terms?: string|null,
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
@@ -205,6 +213,8 @@ final class Customers
      *     use: string|null,
      *     foreign: array{country: string, tax_id: string|null}|null,
      *     ieps_taxpayer: bool,
+     *     credit_days: int|null,
+     *     payment_terms: string|null,
      *     group: string|null,
      *     price_list: string|null,
      *     discount_percent: float|int|null,
