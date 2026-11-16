@@ -98,6 +98,9 @@ abstract class FiscalistoApi extends Core
     /** Listas de precios. */
     public readonly Resources\Prices $prices;
 
+    /** Asistencia. */
+    public readonly Resources\Attendance $attendance;
+
     /** Viáticos y gastos. */
     public readonly Resources\ExpensePeople $expensePeople;
 
@@ -239,6 +242,7 @@ abstract class FiscalistoApi extends Core
         $this->priceLists = new Resources\PriceLists($this);
         $this->customerGroups = new Resources\CustomerGroups($this);
         $this->prices = new Resources\Prices($this);
+        $this->attendance = new Resources\Attendance($this);
         $this->expensePeople = new Resources\ExpensePeople($this);
         $this->expenseReports = new Resources\ExpenseReports($this);
         $this->expensePolicy = new Resources\ExpensePolicy($this);
