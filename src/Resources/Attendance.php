@@ -36,7 +36,8 @@ final class Attendance
      *     issuer: string,
      *     from: string,
      *     to: string,
-     *     employees: list<array{employee: string, name: string, number: string|null, place: string|null, worked_minutes: int, scheduled_minutes: int, absences: int, disability_days: int, vacation_days: int, late_count: int, late_minutes: int, incomplete_days: int, flagged_marks: int, overtime_double_minutes: int, overtime_triple_minutes: int, rest_days_worked: int, holidays_worked: int, weeks_confirmed: int, weeks_disputed: list<array<string, mixed>>, days: list<array<string, mixed>>|null, marks: list<array<string, mixed>>|null}>,
+     *     overtime_approval: bool,
+     *     employees: list<array{employee: string, name: string, number: string|null, place: string|null, worked_minutes: int, scheduled_minutes: int, absences: int, disability_days: int, vacation_days: int, late_count: int, late_minutes: int, incomplete_days: int, flagged_marks: int, overtime_double_minutes: int, overtime_triple_minutes: int, overtime_minutes: int, unapproved_overtime_minutes: int, rest_days_worked: int, holidays_worked: int, weeks_confirmed: int, weeks_disputed: list<array<string, mixed>>, days: list<array<string, mixed>>|null, marks: list<array<string, mixed>>|null}>,
      * }
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/asistencia/get-attendance
@@ -125,5 +126,33 @@ final class Attendance
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
         return $this->client->request('POST', '/v1/attendance/marks/' . rawurlencode($id) . '/void', ['body' => $params, 'idempotent' => true], $options);
+    }
+
+    /**
+     * Autorizar horas extra
+     *
+     * Hasta cuántos minutos de horas extra de un día de un empleado cuentan para la nómina, antes
+     * o después de ese día (minutes null quita la autorización). Con la regla «Las horas extra
+     * necesitan autorización» encendida, lo demás queda en el registro como sin autorizar.
+     *
+     * POST /v1/attendance/overtime
+     *
+     * @param array{employee: string, date: string, minutes: int|null, comment?: string} $params
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
+     * @return array{
+     *     object: 'attendance_overtime',
+     *     livemode: bool,
+     *     employee: string,
+     *     date: string,
+     *     minutes: int|null,
+     *     comment: string|null,
+     * }
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/asistencia/approve-attendance-overtime
+     */
+    public function approveOvertime(array $params, array $options = []): array
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('POST', '/v1/attendance/overtime', ['body' => $params, 'idempotent' => true], $options);
     }
 }
