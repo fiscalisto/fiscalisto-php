@@ -738,6 +738,8 @@ final class Issuers
      *     portal_theme: 'auto'|'light'|'dark',
      *     portal_accent: string|null,
      *     portal_radius: int|null,
+     *     retention_mode: 'keep_total'|'subtract',
+     *     global_concepts: 'ticket'|'summary',
      * }
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/autofactura/get-self-invoicing
@@ -768,6 +770,8 @@ final class Issuers
      *     portal_theme?: 'auto'|'light'|'dark',
      *     portal_accent?: string|null,
      *     portal_radius?: int|null,
+     *     retention_mode?: 'keep_total'|'subtract',
+     *     global_concepts?: 'ticket'|'summary',
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
@@ -786,6 +790,8 @@ final class Issuers
      *     portal_theme: 'auto'|'light'|'dark',
      *     portal_accent: string|null,
      *     portal_radius: int|null,
+     *     retention_mode: 'keep_total'|'subtract',
+     *     global_concepts: 'ticket'|'summary',
      * }
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/autofactura/update-self-invoicing

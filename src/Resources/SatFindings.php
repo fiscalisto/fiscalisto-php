@@ -39,7 +39,7 @@ final class SatFindings
      * @param array{timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     object: 'list',
-     *     data: list<array{id: string, livemode: bool, object: 'sat_finding', issuer: string, code: string, severity: 'critical'|'warning'|'info', title: string, explanation: string|null, invoices: int, counterparties: int, amount: float|int, last_date: string|null}>,
+     *     data: list<array{id: string, livemode: bool, object: 'sat_finding', issuer: string, code: string, severity: 'critical'|'warning'|'info', title: string, explanation: string|null, next_step: string, invoices: int, counterparties: int, amount: float|int, last_date: string|null}>,
      *     has_more: bool,
      *     url: string,
      * }
