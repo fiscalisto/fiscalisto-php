@@ -239,12 +239,15 @@ final class Accounting
      * El ZIP del mes para el Buzón Tributario: el catálogo (CT) y la balanza (BN, o BC si es
      * complementaria), cada uno en su ZIP con el nombre que espera el SAT, en el formato 1.3 del
      * Anexo 24. Con journal_request, también las pólizas (PL), que se entregan cuando el SAT las
-     * pide.
+     * pide. Con month AAAA-13, la balanza de comprobación ajustada al cierre del ejercicio (regla
+     * 2.8.1.6 RMF): solo la balanza, con los saldos finales de diciembre como saldos iniciales y,
+     * con closing_entry, la póliza de cierre.
      *
      * GET /v1/accounting/electronic_accounting
      *
      * @param array{
      *     month: string,
+     *     closing_entry?: 'true'|'false',
      *     type?: 'normal'|'complementary',
      *     modified_on?: string,
      *     journal_request?: 'AF'|'FC'|'DE'|'CO',
