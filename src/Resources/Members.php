@@ -128,20 +128,24 @@ final class Members
     /**
      * Quitar a un miembro
      *
-     * La persona deja de entrar a la empresa y sus invitaciones se cancelan. Siempre queda al
-     * menos un propietario; quitar a alguien con permisos delicados se hace en la app.
+     * La persona deja de entrar a la empresa y sus invitaciones se cancelan; lo que hizo se queda
+     * con su nombre. Lo que le esperaba (pasos de aprobación que la nombran, aprobaciones
+     * pendientes, avisos, ausencias, viáticos que aprueba) pasa a `transfer_to` o, sin él, a
+     * cualquiera con el permiso. Siempre queda al menos un propietario; quitar a alguien con
+     * permisos delicados se hace en la app.
      *
      * DELETE /v1/members/{id}
      *
      * @param string $id
+     * @param array{transfer_to?: string} $params
      * @param array{timeout?: float|int, max_retries?: int} $options
      * @return array{id: string, object: string, deleted: true}
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/equipo/delete-member
      */
-    public function delete(string $id, array $options = []): array
+    public function delete(string $id, array $params = [], array $options = []): array
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
-        return $this->client->request('DELETE', '/v1/members/' . rawurlencode($id), [], $options);
+        return $this->client->request('DELETE', '/v1/members/' . rawurlencode($id), ['query' => $params], $options);
     }
 }
