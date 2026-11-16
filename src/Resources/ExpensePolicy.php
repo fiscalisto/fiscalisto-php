@@ -38,6 +38,7 @@ final class ExpensePolicy
      *     note_over_limit: bool,
      *     notify_approvers: bool,
      *     notify_people: bool,
+     *     receipt_formats: list<'image'|'pdf'>,
      * }
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/viaticos-y-gastos/get-expense-policy
@@ -64,6 +65,7 @@ final class ExpensePolicy
      *     note_over_limit?: bool,
      *     notify_approvers?: bool,
      *     notify_people?: bool,
+     *     receipt_formats?: list<'image'|'pdf'>,
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
@@ -76,6 +78,7 @@ final class ExpensePolicy
      *     note_over_limit: bool,
      *     notify_approvers: bool,
      *     notify_people: bool,
+     *     receipt_formats: list<'image'|'pdf'>,
      * }
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/viaticos-y-gastos/update-expense-policy
