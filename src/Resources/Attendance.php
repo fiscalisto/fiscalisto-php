@@ -37,7 +37,8 @@ final class Attendance
      *     from: string,
      *     to: string,
      *     overtime_approval: bool,
-     *     employees: list<array{employee: string, name: string, number: string|null, place: string|null, worked_minutes: int, scheduled_minutes: int, absences: int, disability_days: int, vacation_days: int, late_count: int, late_minutes: int, incomplete_days: int, flagged_marks: int, overtime_double_minutes: int, overtime_triple_minutes: int, overtime_minutes: int, unapproved_overtime_minutes: int, rest_days_worked: int, holidays_worked: int, weeks_confirmed: int, weeks_disputed: list<array<string, mixed>>, days: list<array<string, mixed>>|null, marks: list<array<string, mixed>>|null}>,
+     *     overtime_policy: 'approval'|'all'|'none',
+     *     employees: list<array{employee: string, name: string, number: string|null, place: string|null, worked_minutes: int, scheduled_minutes: int, absences: int, disability_days: int, vacation_days: int, late_count: int, late_minutes: int, incomplete_days: int, flagged_marks: int, overtime_double_minutes: int, overtime_triple_minutes: int, overtime_minutes: int, unapproved_overtime_minutes: int, rejected_overtime_minutes: int, rest_days_worked: int, holidays_worked: int, weeks_confirmed: int, weeks_disputed: list<array<string, mixed>>, days: list<array<string, mixed>>|null, marks: list<array<string, mixed>>|null}>,
      * }
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/asistencia/get-attendance
@@ -129,15 +130,22 @@ final class Attendance
     }
 
     /**
-     * Autorizar horas extra
+     * Autorizar o rechazar horas extra
      *
      * Hasta cuántos minutos de horas extra de un día de un empleado cuentan para la nómina, antes
-     * o después de ese día (minutes null quita la autorización). Con la regla «Las horas extra
-     * necesitan autorización» encendida, lo demás queda en el registro como sin autorizar.
+     * o después de ese día, o rechazarlas todas (rejected: true, con comment). minutes null quita
+     * la decisión. Con la regla de horas extra «Necesitan autorización», lo que nadie autorizó
+     * queda en el registro como sin autorizar.
      *
      * POST /v1/attendance/overtime
      *
-     * @param array{employee: string, date: string, minutes: int|null, comment?: string} $params
+     * @param array{
+     *     employee: string,
+     *     date: string,
+     *     minutes: int|null,
+     *     rejected?: bool,
+     *     comment?: string,
+     * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     object: 'attendance_overtime',
@@ -145,6 +153,7 @@ final class Attendance
      *     employee: string,
      *     date: string,
      *     minutes: int|null,
+     *     rejected: bool,
      *     comment: string|null,
      * }
      * @throws FiscalistoException
