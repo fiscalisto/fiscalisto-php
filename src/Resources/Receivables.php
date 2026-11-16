@@ -30,7 +30,7 @@ final class Receivables
      *
      * @param array{limit?: int, starting_after?: string, issuer?: string, customer?: string} $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, object: 'receivable', livemode: bool, issuer: string, customer: array<string, mixed>, currency: string, amount_due: float|int, open_invoices: int, oldest_invoice_date: string}>
+     * @return Collection<array{id: string, object: 'receivable', livemode: bool, issuer: string, customer: array<string, mixed>, currency: string, amount_due: float|int, amount_overdue: float|int, open_invoices: int, oldest_invoice_date: string}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/cuentas-por-cobrar/list-receivables
      */
