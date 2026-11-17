@@ -34,6 +34,7 @@ final class Balance
      *     low_balance_at: int,
      *     auto_recharge: array{timbres: int, at: int, max_per_month: int}|null,
      *     use_plan_timbres: bool,
+     *     plan_timbres: array{plan: string, remaining: int, included: int, resets_on: string}|null,
      *     packs: list<array{type: 'welcome'|'purchase'|'referral', timbres: int, remaining: int, purchased_at: string|null, expires_at: string|null}>,
      * }
      * @throws FiscalistoException
