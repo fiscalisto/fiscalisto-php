@@ -75,7 +75,7 @@ final class SatDeclarations
      *     type?: 'normal'|'complementary',
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'sat_declaration', issuer: string, source: 'monthly'|'annual'|'dyp', year: int, month: int|null, period: string, type: 'normal'|'complementary', complementary_type: string|null, operation_number: string, payment_line: string|null, filed_on: string|null, profit_coefficient: float|int|null, isr_due: float|int|null, vat_due: float|int|null, total_due: float|int|null, sections: list<array<string, mixed>>, receipt: array<string, mixed>|null, summary: array<string, mixed>, files: array<string, mixed>, files_error: string|null, created_at: string|null, updated_at: string|null}>
+     * @return Collection<array{id: string, livemode: bool, object: 'sat_declaration', issuer: string, source: 'monthly'|'annual'|'dyp', year: int, month: int|null, period: string, type: 'normal'|'complementary', complementary_type: string|null, operation_number: string, payment_line: string|null, filed_on: string|null, profit_coefficient: float|int|null, isr_due: float|int|null, vat_due: float|int|null, total_due: float|int|null, sections: list<array<string, mixed>>, receipt: array<string, mixed>|null, summary: array<string, mixed>, payment: array<string, mixed>|null, files: array<string, mixed>, files_error: string|null, created_at: string|null, updated_at: string|null}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/declaraciones-del-sat/list-sat-declarations
      */
@@ -145,7 +145,8 @@ final class SatDeclarations
      *     sections: list<array{tax: string, fields: list<array<string, mixed>>}>,
      *     receipt: array{concepts: list<array<string, mixed>>, total: float|int|null, payment_line: string|null, valid_until: string|null}|null,
      *     summary: array{obligations: list<array<string, mixed>>, total_to_pay: float|int|null},
-     *     files: array{pdf: bool, receipt: bool, financial_statements: bool},
+     *     payment: array{status: 'paid'|'unpaid'|'overdue'|'nothing_to_pay'|'unchecked', paid_on: string|null, amount_paid: float|int|null, bank: string|null, checked_at: string|null, payments: list<array<string, mixed>>}|null,
+     *     files: array{pdf: bool, receipt: bool, payment_record: bool, financial_statements: bool},
      *     files_error: string|null,
      *     created_at: string|null,
      *     updated_at: string|null,
@@ -195,6 +196,27 @@ final class SatDeclarations
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
         return $this->client->request('GET', '/v1/sat_declarations/' . rawurlencode($id) . '/receipt', ['as' => 'bytes'], $options);
+    }
+
+    /**
+     * Descargar el registro del pago de una declaración
+     *
+     * La «Información registrada de pagos de contribuciones federales» de una declaración mensual
+     * pagada, como la da el SAT: el banco, el día, el importe, el número de operación del banco y
+     * la llave de pago. Existe cuando payment.status es paid. No usa timbres.
+     *
+     * GET /v1/sat_declarations/{id}/payment_record
+     *
+     * @param string $id
+     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @return string Los bytes del PDF.
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/declaraciones-del-sat/get-sat-declaration-payment-record
+     */
+    public function paymentRecord(string $id, array $options = []): string
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('GET', '/v1/sat_declarations/' . rawurlencode($id) . '/payment_record', ['as' => 'bytes'], $options);
     }
 
     /**
