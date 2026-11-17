@@ -115,6 +115,36 @@ final class SatDeclarations
     }
 
     /**
+     * Ver la precarga de la anual de una persona física
+     *
+     * Lo que el SAT precargará en la declaración anual de un emisor persona física, de sus
+     * visores: los sueldos o asimilados y el ISR que le retuvieron, por patrón, y las deducciones
+     * personales que toma de sus facturas, con las que podrían deducirse y no toma, y por qué. Se
+     * lee con la e.firma en cada consulta (POST /v1/sat_declarations/refresh), del ejercicio
+     * anterior y del actual; no usa timbres. Un emisor persona moral recibe parameter_invalid.
+     *
+     * GET /v1/sat_declarations/annual_preload
+     *
+     * @param array{issuer?: string, year?: int} $params
+     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @return array{
+     *     object: 'sat_annual_preload',
+     *     livemode: bool,
+     *     issuer: string,
+     *     year: int,
+     *     payroll: array{updated_on: string|null, read_at: string, concepts: list<array<string, mixed>>, employers: list<array<string, mixed>>}|null,
+     *     personal_deductions: array{updated_at: string|null, read_at: string, total_taken: float|int, total_possible: float|int, taken: list<array<string, mixed>>, possible: list<array<string, mixed>>, invoices: list<array<string, mixed>>}|null,
+     * }
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/declaraciones-del-sat/get-sat-annual-preload
+     */
+    public function annualPreload(array $params = [], array $options = []): array
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('GET', '/v1/sat_declarations/annual_preload', ['query' => $params], $options);
+    }
+
+    /**
      * Ver una declaración del SAT
      *
      * Una declaración presentada al SAT, con sus cifras en summary y si ya están su PDF y su
