@@ -126,6 +126,9 @@ abstract class FiscalistoApi extends Core
     public readonly Resources\SatFindingCounterparties $satFindingCounterparties;
 
     /** Cumplimiento SAT. */
+    public readonly Resources\CompanyReport $companyReport;
+
+    /** Cumplimiento SAT. */
     public readonly Resources\MaterialitySuppliers $materialitySuppliers;
 
     /** Cumplimiento SAT. */
@@ -251,6 +254,7 @@ abstract class FiscalistoApi extends Core
         $this->satMailboxMessages = new Resources\SatMailboxMessages($this);
         $this->satFindings = new Resources\SatFindings($this);
         $this->satFindingCounterparties = new Resources\SatFindingCounterparties($this);
+        $this->companyReport = new Resources\CompanyReport($this);
         $this->materialitySuppliers = new Resources\MaterialitySuppliers($this);
         $this->materialityInvoices = new Resources\MaterialityInvoices($this);
         $this->warehouses = new Resources\Warehouses($this);
