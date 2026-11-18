@@ -739,6 +739,7 @@ final class Issuers
      *     portal_accent: string|null,
      *     portal_radius: int|null,
      *     retention_mode: 'keep_total'|'subtract',
+     *     invoice_series: string|null,
      *     global_concepts: 'ticket'|'summary',
      * }
      * @throws FiscalistoException
@@ -771,6 +772,7 @@ final class Issuers
      *     portal_accent?: string|null,
      *     portal_radius?: int|null,
      *     retention_mode?: 'keep_total'|'subtract',
+     *     invoice_series?: string|null,
      *     global_concepts?: 'ticket'|'summary',
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
@@ -791,6 +793,7 @@ final class Issuers
      *     portal_accent: string|null,
      *     portal_radius: int|null,
      *     retention_mode: 'keep_total'|'subtract',
+     *     invoice_series: string|null,
      *     global_concepts: 'ticket'|'summary',
      * }
      * @throws FiscalistoException
