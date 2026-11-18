@@ -48,6 +48,7 @@ final class Retentions
      *     retirement_plan?: array{financial_system: bool, contributions_last_year?: float|int|null, real_interest: float|int, early_withdrawals: bool, early_withdrawn?: float|int|null, exempt_withdrawn?: float|int|null, excess_withdrawn?: float|int|null, withdrawals: bool, withdrawn?: float|int|null, reference?: string|null, contributions?: list<array{type: 'a'|'b'|'c', amount: float|int, trustee_rfc?: string|null}>},
      *     mortgage_interest?: array{financial_institution: bool, outstanding_balance: float|int, deductible_proportion?: float|int|null, nominal_accrued?: float|int|null, nominal_accrued_paid?: float|int|null, real_deductible?: float|int|null, contract?: string|null},
      *     financial_derivatives?: array{gain: float|int, loss: float|int},
+     *     replaces?: string,
      *     send_email?: bool,
      *     email?: string,
      *     metadata?: array<string, mixed>,
@@ -88,6 +89,7 @@ final class Retentions
      *     metadata: array<string, mixed>,
      *     warnings?: list<string>,
      *     email_error?: string,
+     *     replaced?: array{uuid: string, canceled: bool, error: string|null},
      * }
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/retenciones/create-retention
@@ -114,7 +116,7 @@ final class Retentions
      *     year?: string,
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'retention', issuer: string, status: 'processing'|'valid'|'rejected'|'canceled', uuid: string|null, folio: int|null, internal_folio: string|null, date: string|null, code: string, description: string|null, recipient: array<string, mixed>, period: array<string, mixed>, totals: array<string, mixed>, taxes: list<array<string, mixed>>, dividends?: array<string, mixed>, interest?: array<string, mixed>, foreign_payment?: array<string, mixed>, distributable_remainder?: array<string, mixed>, trust_lease?: array<string, mixed>, share_sale?: array<string, mixed>, prize?: array<string, mixed>, trust?: array<string, mixed>, retirement_plan?: array<string, mixed>, mortgage_interest?: array<string, mixed>, financial_derivatives?: array<string, mixed>, platform?: array<string, mixed>, cancellation: array<string, mixed>|null, email: array<string, mixed>|null, error: array<string, mixed>|null, created_at: string|null, metadata: array<string, mixed>, warnings?: list<string>, email_error?: string}>
+     * @return Collection<array{id: string, livemode: bool, object: 'retention', issuer: string, status: 'processing'|'valid'|'rejected'|'canceled', uuid: string|null, folio: int|null, internal_folio: string|null, date: string|null, code: string, description: string|null, recipient: array<string, mixed>, period: array<string, mixed>, totals: array<string, mixed>, taxes: list<array<string, mixed>>, dividends?: array<string, mixed>, interest?: array<string, mixed>, foreign_payment?: array<string, mixed>, distributable_remainder?: array<string, mixed>, trust_lease?: array<string, mixed>, share_sale?: array<string, mixed>, prize?: array<string, mixed>, trust?: array<string, mixed>, retirement_plan?: array<string, mixed>, mortgage_interest?: array<string, mixed>, financial_derivatives?: array<string, mixed>, platform?: array<string, mixed>, cancellation: array<string, mixed>|null, email: array<string, mixed>|null, error: array<string, mixed>|null, created_at: string|null, metadata: array<string, mixed>, warnings?: list<string>, email_error?: string, replaced?: array<string, mixed>}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/retenciones/list-retentions
      */
@@ -170,6 +172,7 @@ final class Retentions
      *     metadata: array<string, mixed>,
      *     warnings?: list<string>,
      *     email_error?: string,
+     *     replaced?: array{uuid: string, canceled: bool, error: string|null},
      * }
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/retenciones/get-retention
@@ -266,6 +269,7 @@ final class Retentions
      *     metadata: array<string, mixed>,
      *     warnings?: list<string>,
      *     email_error?: string,
+     *     replaced?: array{uuid: string, canceled: bool, error: string|null},
      * }
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/retenciones/send-retention
@@ -321,6 +325,7 @@ final class Retentions
      *     metadata: array<string, mixed>,
      *     warnings?: list<string>,
      *     email_error?: string,
+     *     replaced?: array{uuid: string, canceled: bool, error: string|null},
      * }
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/retenciones/cancel-retention
