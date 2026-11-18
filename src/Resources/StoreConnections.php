@@ -35,11 +35,14 @@ final class StoreConnections
      *
      * @param array{
      *     issuer?: string,
-     *     platform: 'shopify'|'mercadolibre'|'amazon'|'tiendanube'|'woocommerce',
+     *     platform: 'shopify'|'mercadolibre'|'amazon'|'tiendanube'|'woocommerce'|'mercadopago'|'conekta'|'openpay',
      *     shop?: string,
      *     client_id?: string,
      *     client_secret?: string,
      *     access_token?: string,
+     *     private_key?: string,
+     *     merchant_id?: string,
+     *     sandbox?: bool,
      *     site?: string,
      *     consumer_key?: string,
      *     consumer_secret?: string,
@@ -52,7 +55,7 @@ final class StoreConnections
      *     livemode: bool,
      *     object: 'store_connection',
      *     issuer: string,
-     *     platform: 'shopify'|'mercadolibre'|'amazon'|'tiendanube'|'woocommerce',
+     *     platform: 'shopify'|'mercadolibre'|'amazon'|'tiendanube'|'woocommerce'|'mercadopago'|'conekta'|'openpay',
      *     shop: string|null,
      *     name: string|null,
      *     status: 'pending'|'active'|'disconnected',
@@ -81,7 +84,7 @@ final class StoreConnections
      *
      * @param array{limit?: int, starting_after?: string, issuer?: string} $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'store_connection', issuer: string, platform: 'shopify'|'mercadolibre'|'amazon'|'tiendanube'|'woocommerce', shop: string|null, name: string|null, status: 'pending'|'active'|'disconnected', authorize_url: string|null, settings: array<string, mixed>, orders_count: int, last_order_at: string|null, last_error: array<string, mixed>|null, created_at: string|null}>
+     * @return Collection<array{id: string, livemode: bool, object: 'store_connection', issuer: string, platform: 'shopify'|'mercadolibre'|'amazon'|'tiendanube'|'woocommerce'|'mercadopago'|'conekta'|'openpay', shop: string|null, name: string|null, status: 'pending'|'active'|'disconnected', authorize_url: string|null, settings: array<string, mixed>, orders_count: int, last_order_at: string|null, last_error: array<string, mixed>|null, created_at: string|null}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/tiendas-en-linea/list-store-connections
      */
@@ -106,7 +109,7 @@ final class StoreConnections
      *     livemode: bool,
      *     object: 'store_connection',
      *     issuer: string,
-     *     platform: 'shopify'|'mercadolibre'|'amazon'|'tiendanube'|'woocommerce',
+     *     platform: 'shopify'|'mercadolibre'|'amazon'|'tiendanube'|'woocommerce'|'mercadopago'|'conekta'|'openpay',
      *     shop: string|null,
      *     name: string|null,
      *     status: 'pending'|'active'|'disconnected',
@@ -143,7 +146,7 @@ final class StoreConnections
      *     livemode: bool,
      *     object: 'store_connection',
      *     issuer: string,
-     *     platform: 'shopify'|'mercadolibre'|'amazon'|'tiendanube'|'woocommerce',
+     *     platform: 'shopify'|'mercadolibre'|'amazon'|'tiendanube'|'woocommerce'|'mercadopago'|'conekta'|'openpay',
      *     shop: string|null,
      *     name: string|null,
      *     status: 'pending'|'active'|'disconnected',
@@ -178,7 +181,7 @@ final class StoreConnections
      *     livemode: bool,
      *     object: 'store_connection',
      *     issuer: string,
-     *     platform: 'shopify'|'mercadolibre'|'amazon'|'tiendanube'|'woocommerce',
+     *     platform: 'shopify'|'mercadolibre'|'amazon'|'tiendanube'|'woocommerce'|'mercadopago'|'conekta'|'openpay',
      *     shop: string|null,
      *     name: string|null,
      *     status: 'pending'|'active'|'disconnected',
