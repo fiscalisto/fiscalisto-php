@@ -175,7 +175,10 @@ final class Accounting
      * Los CFDI que forman lo facturado (invoiced) de una cifra del cruce de un mes, con los mismos
      * cálculos de Impuestos: cada factura PUE o nota de crédito en su mes y cada factura PPD por
      * lo que se pagó en el mes, con lo que aporta. La suma de cfdi más adjustment es invoiced.
-     * Sirve para ver por qué una cifra differs. Gratis: no consulta al SAT.
+     * Sirve para ver por qué una cifra differs: con una diferencia, explanation trae los CFDI cuya
+     * combinación la suma (cancelados después, PPD sin cobro en el mes, de los días vecinos de
+     * otro mes, notas de crédito, cobros de PPD, repetidos o no declarados) y las posibles causas.
+     * Gratis: no consulta al SAT.
      *
      * GET /v1/accounting/cross_checks/cfdi
      *
@@ -199,6 +202,7 @@ final class Accounting
      *     operation_number: string|null,
      *     cfdi: list<array{uuid: string|null, type: 'invoice'|'credit_note'|'payment'|'withholding_certificate', date: string|null, tax_id: string|null, name: string|null, amount: float|int}>,
      *     adjustment: float|int,
+     *     explanation: array{difference: float|int, exact: array<string, mixed>|null, ambiguous: bool, causes: list<array<string, mixed>>}|null,
      * }
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/contabilidad/get-cross-check-cfdi

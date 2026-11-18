@@ -282,6 +282,9 @@ final class ErrorCode
     /** La constancia de retenciones no cumple una regla del SAT. No se usó ningún timbre. */
     public const RETENTION_INVALID = 'retention_invalid';
 
+    /** Solo quien emitió la constancia puede cancelarla; esta la recibió el emisor. */
+    public const RETENTION_NOT_ISSUED = 'retention_not_issued';
+
     /** La acción es para constancias timbradas. */
     public const RETENTION_NOT_STAMPED = 'retention_not_stamped';
 

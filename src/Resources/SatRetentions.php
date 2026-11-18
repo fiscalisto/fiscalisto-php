@@ -127,4 +127,47 @@ final class SatRetentions
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
         return $this->client->request('GET', '/v1/sat_retentions/' . rawurlencode($id) . '/pdf', ['as' => 'bytes'], $options);
     }
+
+    /**
+     * Cancelar una constancia de retenciones emitida
+     *
+     * Una que el emisor emitió (direction issued), también si la timbró desde otro sistema con el
+     * mismo PAC y solo llegó del SAT. Se cancela en el momento (no espera aceptación) y no usa
+     * timbres. Una que timbró otro PAC se cancela en el portal del SAT: contesta
+     * cancellation_failed y lo explica. Con motive 01, substitution es la constancia que la
+     * sustituye (su srt_… o su UUID).
+     *
+     * POST /v1/sat_retentions/{id}/cancel
+     *
+     * @param string $id
+     * @param array{motive?: '01'|'02'|'03'|'04', substitution?: string} $params
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
+     * @return array{
+     *     id: string,
+     *     livemode: bool,
+     *     object: 'sat_retention',
+     *     issuer: string,
+     *     uuid: string,
+     *     direction: 'received'|'issued',
+     *     date: string,
+     *     internal_folio: string|null,
+     *     code: string|null,
+     *     description: string|null,
+     *     issued_by: array{tax_id: string|null, legal_name: string|null},
+     *     issued_to: array{tax_id: string|null, legal_name: string|null},
+     *     period: array{year: int, month_start: int, month_end: int}|null,
+     *     totals: array{operation: float|int|null, taxed: float|int|null, exempt: float|int|null, withheld: float|int|null},
+     *     withheld_taxes: list<array{base: float|int|null, tax: string|null, amount: float|int|null, payment_type: string|null}>,
+     *     status: 'active'|'canceled',
+     *     read_error: string|null,
+     *     downloaded_at: string|null,
+     * }
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/descargas-del-sat/cancel-sat-retention
+     */
+    public function cancel(string $id, array $params = [], array $options = []): array
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('POST', '/v1/sat_retentions/' . rawurlencode($id) . '/cancel', ['body' => $params, 'idempotent' => true], $options);
+    }
 }
