@@ -494,14 +494,19 @@ final class Issuers
      * Una página en fiscalisto.com donde el dueño del emisor sube su CSD y firma el contrato con
      * el PAC con su e.firma, sin que esos archivos ni sus contraseñas pasen por su plataforma. Con
      * keep_efirma: true la página también le pide autorización para guardar su e.firma cifrada,
-     * para consultar el SAT (descargas, declaraciones, opinión, constancia y buzón). Mande a su
-     * cliente a url; al terminar vuelve a return_url y llega issuer.ready. Cada liga sirve para un
-     * emisor, hasta que vence.
+     * para consultar el SAT (descargas, declaraciones, opinión, constancia y buzón); con
+     * efirma_only: true pide solo la e.firma, sin el CSD. Mande a su cliente a url; al terminar
+     * vuelve a return_url y llega issuer.ready. Cada liga sirve para un emisor, hasta que vence.
      *
      * POST /v1/issuers/{id}/onboarding_links
      *
      * @param string $id
-     * @param array{return_url?: string, expires_in_hours?: int, keep_efirma?: bool} $params
+     * @param array{
+     *     return_url?: string,
+     *     expires_in_hours?: int,
+     *     keep_efirma?: bool,
+     *     efirma_only?: bool,
+     * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     object: 'issuer_onboarding_link',
@@ -510,6 +515,7 @@ final class Issuers
      *     url: string,
      *     return_url: string|null,
      *     keep_efirma: bool,
+     *     efirma_only: bool,
      *     expires_at: string|null,
      *     created_at: string|null,
      * }
