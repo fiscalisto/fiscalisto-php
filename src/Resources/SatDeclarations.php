@@ -26,28 +26,35 @@ final class SatDeclarations
      * provisionales o definitivas (desde 2022), la anual de persona moral (desde 2019) y las del
      * servicio anterior Declaraciones y pagos, con su PDF, su acuse y sus cifras. La primera
      * consulta trae todos los años que el SAT conserva; las siguientes, este año y el anterior.
-     * Solo consulta: nunca presenta ni firma nada. En producción usa 1 timbre por consulta
-     * (regresa si el SAT no contesta) y se puede hacer una vez cada 10 minutos por emisor.
-     * Contesta en menos de un minuto; si queda algo por bajar (status processing), sigue solo en
-     * la siguiente hora sin otro timbre. En pruebas no se le pregunta al SAT: trae declaraciones
-     * de ejemplo al instante.
+     * Solo consulta: nunca presenta ni firma nada. En producción usa 1 timbre por consulta y se
+     * puede hacer una vez cada 10 minutos por emisor. Contesta 202 en cuanto la acepta (status
+     * processing) y consulta al SAT en segundo plano: sat_refresh.completed o sat_refresh.failed
+     * dicen cómo terminó, y GET /v1/sat_refreshes/{id} también. Su timbre se aparta al aceptarla
+     * (sin timbres contesta 402 de inmediato), se usa cuando el SAT contesta y regresa si no
+     * contesta. Si al terminar queda algo por bajar (result.pending), sigue solo en la siguiente
+     * hora sin otro timbre. En pruebas no se le pregunta al SAT: trae declaraciones de ejemplo al
+     * instante (la consulta ya viene completed y también llega sat_refresh.completed).
      *
      * POST /v1/sat_declarations/refresh
      *
      * @param array{issuer?: string} $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
-     *     object: 'sat_declarations_refresh',
+     *     object: 'sat_refresh',
+     *     id: string,
      *     livemode: bool,
      *     issuer: string,
-     *     status: 'completed'|'processing',
-     *     found: int,
-     *     downloaded: int,
-     *     pending: int,
-     *     completes_at: string|null,
-     *     warning: string|null,
+     *     document: 'declarations'|'compliance_opinion'|'tax_status_certificate'|'sat_mailbox',
+     *     status: 'processing'|'completed'|'failed',
+     *     result: array{found: int, downloaded: int, pending: int, warning: string|null, completes_at: string|null}|array{url: string}|null,
+     *     error: string|null,
+     *     charged: bool,
+     *     timbre_held: bool,
+     *     created_at: string,
+     *     completed_at: string|null,
      *     refreshed_at: string,
      *     next_refresh_at: string,
+     *     url: string,
      * }
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/declaraciones-del-sat/refresh-sat-declarations

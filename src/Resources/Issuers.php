@@ -562,10 +562,14 @@ final class Issuers
     /**
      * Pedir la opinión de cumplimiento al SAT
      *
-     * La pide al SAT ahora con la e.firma guardada del emisor (POST /v1/issuers/{id}/efirma con
-     * keep_for_downloads: true). 1 timbre en producción, una vez cada 10 minutos; regresa si el
-     * SAT no contesta. Si el SAT tarda, contesta status processing y el resultado llega a GET
-     * /v1/issuers/{id}/compliance_opinion. En pruebas da una positiva de ejemplo.
+     * La pide al SAT con la e.firma guardada del emisor (POST /v1/issuers/{id}/efirma con
+     * keep_for_downloads: true); llega a GET /v1/issuers/{id}/compliance_opinion. 1 timbre en
+     * producción, una vez cada 10 minutos. Contesta 202 en cuanto la acepta (status processing) y
+     * consulta al SAT en segundo plano: sat_refresh.completed o sat_refresh.failed dicen cómo
+     * terminó, y GET /v1/sat_refreshes/{id} también. Su timbre se aparta al aceptarla (sin timbres
+     * contesta 402 de inmediato), se usa cuando el SAT contesta y regresa si no contesta. En
+     * pruebas da una positiva de ejemplo al instante (la consulta ya viene completed y también
+     * llega sat_refresh.completed).
      *
      * POST /v1/issuers/{id}/compliance_opinion/refresh
      *
@@ -573,12 +577,19 @@ final class Issuers
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     object: 'sat_refresh',
+     *     id: string,
      *     livemode: bool,
      *     issuer: string,
-     *     document: 'compliance_opinion'|'tax_status_certificate'|'sat_mailbox',
-     *     status: 'completed'|'processing',
-     *     refreshed_at: string|null,
-     *     next_refresh_at: string|null,
+     *     document: 'declarations'|'compliance_opinion'|'tax_status_certificate'|'sat_mailbox',
+     *     status: 'processing'|'completed'|'failed',
+     *     result: array{found: int, downloaded: int, pending: int, warning: string|null, completes_at: string|null}|array{url: string}|null,
+     *     error: string|null,
+     *     charged: bool,
+     *     timbre_held: bool,
+     *     created_at: string,
+     *     completed_at: string|null,
+     *     refreshed_at: string,
+     *     next_refresh_at: string,
      *     url: string,
      * }
      * @throws FiscalistoException
@@ -645,9 +656,13 @@ final class Issuers
     /**
      * Generar la constancia de situación fiscal en el SAT
      *
-     * Genera una constancia nueva con la e.firma guardada del emisor. 1 timbre en producción, una
-     * vez cada 10 minutos; regresa si el SAT no contesta. En pruebas hace una con los datos del
-     * emisor.
+     * Genera una constancia nueva con la e.firma guardada del emisor; llega a GET
+     * /v1/issuers/{id}/tax_status_certificate. 1 timbre en producción, una vez cada 10 minutos.
+     * Contesta 202 en cuanto la acepta (status processing) y consulta al SAT en segundo plano:
+     * sat_refresh.completed o sat_refresh.failed dicen cómo terminó, y GET /v1/sat_refreshes/{id}
+     * también. Su timbre se aparta al aceptarla (sin timbres contesta 402 de inmediato), se usa
+     * cuando el SAT contesta y regresa si no contesta. En pruebas hace una con los datos del
+     * emisor al instante.
      *
      * POST /v1/issuers/{id}/tax_status_certificate/refresh
      *
@@ -655,12 +670,19 @@ final class Issuers
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     object: 'sat_refresh',
+     *     id: string,
      *     livemode: bool,
      *     issuer: string,
-     *     document: 'compliance_opinion'|'tax_status_certificate'|'sat_mailbox',
-     *     status: 'completed'|'processing',
-     *     refreshed_at: string|null,
-     *     next_refresh_at: string|null,
+     *     document: 'declarations'|'compliance_opinion'|'tax_status_certificate'|'sat_mailbox',
+     *     status: 'processing'|'completed'|'failed',
+     *     result: array{found: int, downloaded: int, pending: int, warning: string|null, completes_at: string|null}|array{url: string}|null,
+     *     error: string|null,
+     *     charged: bool,
+     *     timbre_held: bool,
+     *     created_at: string,
+     *     completed_at: string|null,
+     *     refreshed_at: string,
+     *     next_refresh_at: string,
      *     url: string,
      * }
      * @throws FiscalistoException
@@ -694,9 +716,14 @@ final class Issuers
     /**
      * Revisar el buzón tributario en el SAT
      *
-     * Lee los avisos del buzón tributario del emisor ahora, con su e.firma guardada; nunca abre
-     * notificaciones (abrirlas firma el acuse y corren los plazos). 1 timbre en producción, una
-     * vez cada 10 minutos. En pruebas deja dos avisos de ejemplo.
+     * Lee los avisos del buzón tributario del emisor con su e.firma guardada; nunca abre
+     * notificaciones (abrirlas firma el acuse y corren los plazos). Llegan a GET
+     * /v1/sat_mailbox_messages. 1 timbre en producción, una vez cada 10 minutos. Contesta 202 en
+     * cuanto la acepta (status processing) y consulta al SAT en segundo plano:
+     * sat_refresh.completed o sat_refresh.failed dicen cómo terminó, y GET /v1/sat_refreshes/{id}
+     * también. Su timbre se aparta al aceptarla (sin timbres contesta 402 de inmediato), se usa
+     * cuando el SAT contesta y regresa si no contesta. En pruebas deja dos avisos de ejemplo al
+     * instante.
      *
      * POST /v1/issuers/{id}/sat_mailbox/refresh
      *
@@ -704,12 +731,19 @@ final class Issuers
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     object: 'sat_refresh',
+     *     id: string,
      *     livemode: bool,
      *     issuer: string,
-     *     document: 'compliance_opinion'|'tax_status_certificate'|'sat_mailbox',
-     *     status: 'completed'|'processing',
-     *     refreshed_at: string|null,
-     *     next_refresh_at: string|null,
+     *     document: 'declarations'|'compliance_opinion'|'tax_status_certificate'|'sat_mailbox',
+     *     status: 'processing'|'completed'|'failed',
+     *     result: array{found: int, downloaded: int, pending: int, warning: string|null, completes_at: string|null}|array{url: string}|null,
+     *     error: string|null,
+     *     charged: bool,
+     *     timbre_held: bool,
+     *     created_at: string,
+     *     completed_at: string|null,
+     *     refreshed_at: string,
+     *     next_refresh_at: string,
      *     url: string,
      * }
      * @throws FiscalistoException
