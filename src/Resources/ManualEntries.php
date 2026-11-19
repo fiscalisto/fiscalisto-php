@@ -194,4 +194,60 @@ final class ManualEntries
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
         return $this->client->request('DELETE', '/v1/accounting/manual_entries/' . rawurlencode($id), [], $options);
     }
+
+    /**
+     * Importar pólizas de otro sistema
+     *
+     * Hasta 3,000 pólizas de una vez (las de CONTPAQi, COI o una hoja de cálculo), todas o
+     * ninguna: cada una con las reglas de POST /v1/accounting/manual_entries, y el error dice cuál
+     * (param entries[i].…). Entran como kind other. Una con el mismo number, fecha, tipo y total
+     * que una ya importada se salta (duplicates). DELETE /v1/accounting/manual_entry_imports/{id}
+     * quita las de una importación.
+     *
+     * POST /v1/accounting/manual_entry_imports
+     *
+     * @param array{
+     *     issuer?: string,
+     *     entries: list<array{date: string, journal_type?: 'journal'|'income'|'expense', number?: string|null, description: string, lines: list<array{account: string, debit?: float|int, credit?: float|int}>}>,
+     * } $params
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
+     * @return array{
+     *     id: string|null,
+     *     object: 'manual_entry_import',
+     *     livemode: bool,
+     *     issuer: string,
+     *     imported: int,
+     *     duplicates: int,
+     *     from: string,
+     *     to: string,
+     *     manual_entries: list<string>,
+     * }
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/contabilidad/import-manual-entries
+     */
+    public function importEntries(array $params, array $options = []): array
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('POST', '/v1/accounting/manual_entry_imports', ['body' => $params, 'idempotent' => true], $options);
+    }
+
+    /**
+     * Deshacer una importación de pólizas
+     *
+     * Borra todas las pólizas que trajo esa importación (mji_…). No se puede si alguna es de un
+     * mes cerrado (period_closed).
+     *
+     * DELETE /v1/accounting/manual_entry_imports/{id}
+     *
+     * @param string $id
+     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @return array{id: string, object: string, deleted: true}
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/contabilidad/undo-manual-entries-import
+     */
+    public function undoImport(string $id, array $options = []): array
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('DELETE', '/v1/accounting/manual_entry_imports/' . rawurlencode($id), [], $options);
+    }
 }

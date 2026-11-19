@@ -201,6 +201,9 @@ abstract class FiscalistoApi extends Core
     public readonly Resources\ManualEntries $manualEntries;
 
     /** Contabilidad. */
+    public readonly Resources\OpeningBalances $openingBalances;
+
+    /** Contabilidad. */
     public readonly Resources\FixedAssets $fixedAssets;
 
     /** Contabilidad. */
@@ -297,6 +300,7 @@ abstract class FiscalistoApi extends Core
         $this->tickets = new Resources\Tickets($this);
         $this->accounting = new Resources\Accounting($this);
         $this->manualEntries = new Resources\ManualEntries($this);
+        $this->openingBalances = new Resources\OpeningBalances($this);
         $this->fixedAssets = new Resources\FixedAssets($this);
         $this->closedPeriod = new Resources\ClosedPeriod($this);
         $this->bankMovements = new Resources\BankMovements($this);
