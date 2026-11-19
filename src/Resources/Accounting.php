@@ -24,16 +24,17 @@ final class Accounting
      *
      * Las pólizas de diario del mes, con sus cuentas y código agrupador del SAT: una por cada CFDI
      * de ingreso o egreso vigente, emitido o recibido (los recibidos con la categoría de su
-     * gasto); una por cada pago de un complemento; una por cada recibo de nómina, y una con la
-     * depreciación de los activos fijos. Un PUE se registra cobrado o pagado según su forma de
-     * pago. En pesos; un CFDI en otra moneda sin tipo de cambio no se registra. No incluye
-     * movimientos de banco sin CFDI ni provisiones.
+     * gasto); una por cada pago de un complemento; una por cada recibo de nómina; una con la
+     * depreciación de los activos fijos; una por cada venta o baja de un activo, y las capturadas
+     * a mano (POST /v1/accounting/manual_entries) con las reversiones de sus provisiones. Un PUE
+     * se registra cobrado o pagado según su forma de pago. En pesos; un CFDI en otra moneda sin
+     * tipo de cambio no se registra. No incluye movimientos de banco sin CFDI.
      *
      * GET /v1/accounting/journal_entries
      *
      * @param array{month: string, limit?: int, starting_after?: string, issuer?: string} $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'journal_entry', issuer: string, type: 'invoice'|'payment_received'|'payment_made'|'payroll'|'employee_expenses'|'depreciation', date: string, description: string, invoice: string|null, uuid: string|null, tax_id: string|null, total: float|int, currency: string, exchange_rate: float|int|null, lines: list<array<string, mixed>>}>
+     * @return Collection<array{id: string, livemode: bool, object: 'journal_entry', issuer: string, type: 'invoice'|'payment_received'|'payment_made'|'payroll'|'employee_expenses'|'depreciation'|'manual'|'asset_disposal', manual_entry: string|null, date: string, description: string, invoice: string|null, uuid: string|null, tax_id: string|null, total: float|int, currency: string, exchange_rate: float|int|null, lines: list<array<string, mixed>>}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/contabilidad/list-journal-entries
      */
@@ -235,6 +236,33 @@ final class Accounting
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
         return $this->client->request('GET', '/v1/accounting/accounts', ['query' => $params], $options);
+    }
+
+    /**
+     * Agregar una cuenta al catálogo
+     *
+     * Una cuenta propia del emisor, para sus pólizas a mano: su número (que no se repite), su
+     * nombre y una subcuenta del código agrupador del SAT. Entra al catálogo de la contabilidad
+     * electrónica.
+     *
+     * POST /v1/accounting/accounts
+     *
+     * @param array{number: string, name: string, grouping_code: string, issuer?: string} $params
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
+     * @return array{
+     *     object: 'ledger_account',
+     *     number: string,
+     *     name: string,
+     *     grouping_code: string,
+     *     nature: 'debit'|'credit',
+     * }
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/contabilidad/create-ledger-account
+     */
+    public function createAccount(array $params, array $options = []): array
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('POST', '/v1/accounting/accounts', ['body' => $params, 'idempotent' => true], $options);
     }
 
     /**

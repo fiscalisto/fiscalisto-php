@@ -191,6 +191,12 @@ abstract class FiscalistoApi extends Core
     /** Contabilidad. */
     public readonly Resources\Accounting $accounting;
 
+    /** Contabilidad. */
+    public readonly Resources\ManualEntries $manualEntries;
+
+    /** Contabilidad. */
+    public readonly Resources\FixedAssets $fixedAssets;
+
     /** Tiendas en línea. */
     public readonly Resources\StoreConnections $storeConnections;
 
@@ -276,6 +282,8 @@ abstract class FiscalistoApi extends Core
         $this->satDeclarations = new Resources\SatDeclarations($this);
         $this->tickets = new Resources\Tickets($this);
         $this->accounting = new Resources\Accounting($this);
+        $this->manualEntries = new Resources\ManualEntries($this);
+        $this->fixedAssets = new Resources\FixedAssets($this);
         $this->storeConnections = new Resources\StoreConnections($this);
         $this->recurringInvoices = new Resources\RecurringInvoices($this);
         $this->quotes = new Resources\Quotes($this);

@@ -12,11 +12,23 @@ namespace Fiscalisto;
  */
 final class ErrorCode
 {
+    /** Esa cuenta no está en el catálogo del emisor: véalo con GET /v1/accounting/accounts o agréguela con POST /v1/accounting/accounts. */
+    public const ACCOUNT_MISSING = 'account_missing';
+
     /** Suspendimos la API de la empresa (todas sus llaves, o solo las de producción) por un uso que rompe los términos del servicio. El mensaje dice por qué; escríbanos a soporte@fiscalisto.com para reactivarla. */
     public const ACCOUNT_SUSPENDED = 'account_suspended';
 
     /** No existe esa versión de la API (en Fiscalisto-Version o api_version). El mensaje dice cuáles hay; vea Versiones. */
     public const API_VERSION_INVALID = 'api_version_invalid';
+
+    /** El activo fijo ya se vendió o se dio de baja: deshaga esa baja con DELETE /v1/accounting/fixed_assets/{id}/disposal si fue un error. */
+    public const ASSET_ALREADY_DISPOSED = 'asset_already_disposed';
+
+    /** El activo llegó con su CFDI y no se borra: véndalo o dele de baja con POST /v1/accounting/fixed_assets/{id}/dispose. */
+    public const ASSET_FROM_CFDI = 'asset_from_cfdi';
+
+    /** El activo fijo no está dado de baja: no hay baja que deshacer. */
+    public const ASSET_NOT_DISPOSED = 'asset_not_disposed';
 
     /** Asistencia no lo permite: el mensaje dice por qué (una hora en el futuro o de hace más de 400 días, un empleado con fecha de baja, un periodo de más de 92 días, una marca ya quitada). */
     public const ATTENDANCE_INVALID = 'attendance_invalid';
@@ -95,6 +107,9 @@ final class ErrorCode
 
     /** La cuenta llegó al máximo de webhooks en este modo. */
     public const ENDPOINT_LIMIT = 'endpoint_limit';
+
+    /** La póliza no cuadra o un renglón está mal: los cargos tienen que sumar lo mismo que los abonos, y cada renglón lleva un cargo o un abono, no los dos. El mensaje dice las sumas. */
+    public const ENTRY_UNBALANCED = 'entry_unbalanced';
 
     /** Un campo de expand[] no existe en la respuesta, no es el id de otro objeto, o se pidieron demasiados (hasta 10 campos, 4 niveles). Vea Expandir objetos. */
     public const EXPAND_INVALID = 'expand_invalid';
