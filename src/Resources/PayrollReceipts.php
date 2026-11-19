@@ -22,12 +22,13 @@ final class PayrollReceipts
      * Timbrar un recibo de nómina
      *
      * Nómina ordinaria (Nómina 1.2): Fiscalisto calcula sueldo, ISR con subsidio al empleo e IMSS
-     * del empleado y el periodo, como la app, y nada más: aguinaldo, PTU, finiquitos, bonos, horas
-     * extra, Infonavit o préstamos los calcula su sistema y se timbran con POST
-     * /v1/payroll_receipts/external (pedirlos aquí contesta payroll_calculation_unsupported).
-     * Revise antes el recibo con POST /v1/payroll_receipts/preview y mande su confirmation_token:
-     * así solo se timbra el recibo que revisó (si cambió, 409 payroll_calculation_changed). Queda
-     * como factura tipo N (GET /v1/invoices/{id}). El emisor necesita employer_registration.
+     * del empleado y el periodo, como la app, y nada más: el aguinaldo, la PTU y los finiquitos
+     * los calcula POST /v1/payroll_receipts/extraordinary; bonos, horas extra, Infonavit o
+     * préstamos los calcula su sistema y se timbran con POST /v1/payroll_receipts/external
+     * (pedirlos aquí contesta payroll_calculation_unsupported). Revise antes el recibo con POST
+     * /v1/payroll_receipts/preview y mande su confirmation_token: así solo se timbra el recibo que
+     * revisó (si cambió, 409 payroll_calculation_changed). Queda como factura tipo N (GET
+     * /v1/invoices/{id}). El emisor necesita employer_registration.
      *
      * POST /v1/payroll_receipts
      *
@@ -141,6 +142,143 @@ final class PayrollReceipts
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
         return $this->client->request('POST', '/v1/payroll_receipts/preview', ['body' => $params, 'idempotent' => true], $options);
+    }
+
+    /**
+     * Timbrar un aguinaldo, PTU o finiquito
+     *
+     * Nómina extraordinaria (TipoNomina E) que calcula Fiscalisto, como la app en Nómina ›
+     * Aguinaldo, PTU y finiquitos: el aguinaldo (los días al año del empleado, al menos 15, en
+     * proporción a los trabajados, 30 UMA exentas), la PTU (la parte que le toca, 15 UMA exentas)
+     * o el finiquito al último día trabajado (end_date): aguinaldo, vacaciones y prima vacacional
+     * proporcionales, menos lo que ya se le pagó en el año, y con exit_reason dismissal la
+     * indemnización de 3 meses, opcionalmente 20 días por año, y la prima de antigüedad (90 UMA
+     * exentas por año de servicio). El ISR de un aguinaldo o PTU, con el cálculo que retenga menos
+     * (art. 96 LISR o 174 del Reglamento) salvo que pida uno. Uno por empleado, tipo y año (el
+     * finiquito, por fecha de baja): pedirlo otra vez devuelve el mismo; cancelado, se emite de
+     * nuevo. Revíselo antes con POST /v1/payroll_receipts/extraordinary/preview y mande su
+     * confirmation_token. Queda como factura tipo N.
+     *
+     * POST /v1/payroll_receipts/extraordinary
+     *
+     * @param array{
+     *     employee: string,
+     *     kind: 'aguinaldo'|'ptu'|'finiquito',
+     *     payment_date: string,
+     *     year?: int,
+     *     days_worked?: float|int,
+     *     ptu_amount?: float|int,
+     *     isr_method?: 'lower'|'art96'|'art174',
+     *     exit_reason?: 'resignation'|'dismissal',
+     *     twenty_days_per_year?: bool,
+     *     vacation_days_taken?: float|int,
+     *     send_email?: bool,
+     *     metadata?: array<string, mixed>,
+     *     confirmation_token?: string,
+     * } $params
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
+     * @return array{
+     *     id: string,
+     *     livemode: bool,
+     *     object: 'invoice',
+     *     issuer: string,
+     *     branch: string|null,
+     *     cost_center: string|null,
+     *     type: 'I'|'E'|'P'|'T'|'N',
+     *     status: 'processing'|'pending'|'valid'|'rejected'|'canceled',
+     *     uuid: string|null,
+     *     series: string|null,
+     *     folio: string|null,
+     *     date: string|null,
+     *     customer: array{tax_id: string|null, legal_name: string|null, tax_system?: string, zip?: string, foreign?: array<string, mixed>},
+     *     use: string|null,
+     *     payment_form: string|null,
+     *     payment_method: string|null,
+     *     payment_terms: string|null,
+     *     notes: string|null,
+     *     currency: string,
+     *     exchange_rate: float|int|null,
+     *     items: list<array<string, mixed>>,
+     *     subtotal: float|int|null,
+     *     discount: float|int|null,
+     *     taxes: array{iva: float|int|null, ieps: float|null, iva_withheld: float|null, isr_withheld: float|null, local_transferred: float|null, local_withheld: float|null}|null,
+     *     total: float|int|null,
+     *     payment_status: 'paid'|'partial'|'unpaid'|null,
+     *     amount_due: float|int|null,
+     *     amount_paid: float|int|null,
+     *     paid_on: string|null,
+     *     due_date: string|null,
+     *     related: array<string, mixed>|null,
+     *     payment?: array{date: string|null, payment_form: string|null, currency: string, exchange_rate: float|int|null, amount: float|int, operation_number: string|null, documents: list<array<string, mixed>>}|null,
+     *     payroll?: array{type: 'O'|'E', calculation: 'fiscalisto'|'external', periodicity: string, period: array<string, mixed>, days: float|int, references: array<string, mixed>|null, employer: array<string, mixed>, employee: array<string, mixed>, perceptions: list<array<string, mixed>>, deductions: list<array<string, mixed>>, other_payments: list<array<string, mixed>>, separation?: array<string, mixed>, retirement?: array<string, mixed>, disabilities?: list<array<string, mixed>>, imss_days?: array<string, mixed>, totals: array<string, mixed>},
+     *     global?: array<string, mixed>,
+     *     cancellation: array{status: string|null, motive: string|null, substitution: string|null, canceled_at: string|null, next_attempt_at: string|null, error: string|null}|null,
+     *     email: array{to: string|null, cc: string|null, sent_at: string|null, status: 'sent'|'delayed'|'delivered'|'opened'|'bounced'|'complained', recipients: list<array<string, mixed>>}|null,
+     *     error: array{message: string, sat_code: string|null, raw: string}|null,
+     *     recurring_invoice: string|null,
+     *     created_at: string|null,
+     *     metadata: array<string, mixed>,
+     *     warnings?: list<string>,
+     *     email_error?: string,
+     *     substitutes?: array{invoice: string, canceled: bool, cancel_error?: string, cancellation: array<string, mixed>|null},
+     *     advance_application?: array{advance: string|null, advance_uuid: string, method: 'egreso'|'remanente', status: 'done'|'credit_note_pending', credit_note: string|null, credit_note_error?: string},
+     * }
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/nomina/create-extraordinary-payroll-receipt
+     */
+    public function createExtraordinary(array $params, array $options = []): array
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('POST', '/v1/payroll_receipts/extraordinary', ['body' => $params, 'idempotent' => true], $options);
+    }
+
+    /**
+     * Calcular un aguinaldo, PTU o finiquito sin timbrar
+     *
+     * El recibo extraordinario como se timbraría (lo que paga, su parte exenta, el ISR con los dos
+     * cálculos y el neto), sin timbrar ni usar timbres, con el confirmation_token que lo timbra
+     * tal cual.
+     *
+     * POST /v1/payroll_receipts/extraordinary/preview
+     *
+     * @param array{
+     *     employee: string,
+     *     kind: 'aguinaldo'|'ptu'|'finiquito',
+     *     payment_date: string,
+     *     year?: int,
+     *     days_worked?: float|int,
+     *     ptu_amount?: float|int,
+     *     isr_method?: 'lower'|'art96'|'art174',
+     *     exit_reason?: 'resignation'|'dismissal',
+     *     twenty_days_per_year?: bool,
+     *     vacation_days_taken?: float|int,
+     *     send_email?: bool,
+     *     metadata?: array<string, mixed>,
+     * } $params
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
+     * @return array{
+     *     object: 'payroll_receipt_preview',
+     *     calculation: 'extraordinary',
+     *     confirmation_token: string,
+     *     employee: string,
+     *     kind: 'aguinaldo'|'ptu'|'finiquito',
+     *     period: array{start: string, end: string, payment_date: string},
+     *     contribution_base_salary: float|int,
+     *     lines: list<array{concept: string, detail: string, gross: float|int, exempt: float|int}>,
+     *     perceptions: list<array{type: string, key: string, concept: string, taxed: float|int, exempt: float|int, overtime?: list<array<string, mixed>>, stock_options?: array<string, mixed>}>,
+     *     deductions: list<array{type: string, key: string, concept: string, amount: float|int}>,
+     *     other_payments: list<array{type: string, key: string, concept: string, amount: float|int, subsidy_caused?: float|int, subsidy_applied?: float|int, balance_compensation?: array<string, mixed>}>,
+     *     separation: array{total_paid: float|int, years_of_service: int, last_monthly_salary: float|int, accumulable_income: float|int, non_accumulable_income: float|int}|null,
+     *     isr: array{amount: float|int, art96?: float|int, art174?: float|int, method?: 'art96'|'art174'},
+     *     totals: array{salaries: float|int, taxed: float|int, exempt: float|int, separation: float|int, retirement: float|int, perceptions: float|int, other_deductions: float|int, taxes_withheld: float|int, deductions: float|int, other_payments: float|int, subtotal: float|int, net: float|int},
+     * }
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/nomina/preview-extraordinary-payroll-receipt
+     */
+    public function previewExtraordinary(array $params, array $options = []): array
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('POST', '/v1/payroll_receipts/extraordinary/preview', ['body' => $params, 'idempotent' => true], $options);
     }
 
     /**

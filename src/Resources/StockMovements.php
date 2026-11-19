@@ -33,12 +33,12 @@ final class StockMovements
      *     issuer?: string,
      *     product?: string,
      *     warehouse?: string,
-     *     type?: 'sale'|'purchase'|'customer_return'|'supplier_return'|'adjustment'|'count'|'transfer_out'|'transfer_in'|'initial'|'cost'|'reversal',
+     *     type?: 'sale'|'purchase'|'customer_return'|'supplier_return'|'adjustment'|'count'|'transfer_out'|'transfer_in'|'production_consumption'|'production_output'|'initial'|'cost'|'reversal',
      *     date_gte?: string,
      *     date_lte?: string,
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'stock_movement', issuer: string, product: string, warehouse: string, type: 'sale'|'purchase'|'customer_return'|'supplier_return'|'adjustment'|'count'|'transfer_out'|'transfer_in'|'initial'|'cost'|'reversal', quantity: float|int, unit_cost: float|int, value: float|int, lot: string|null, source: array<string, mixed>, reason: string|null, date: string|null, reversed: bool, created_at: string|null}>
+     * @return Collection<array{id: string, livemode: bool, object: 'stock_movement', issuer: string, product: string, warehouse: string, type: 'sale'|'purchase'|'customer_return'|'supplier_return'|'adjustment'|'count'|'transfer_out'|'transfer_in'|'production_consumption'|'production_output'|'initial'|'cost'|'reversal', quantity: float|int, unit_cost: float|int, value: float|int, lot: string|null, source: array<string, mixed>, reason: string|null, date: string|null, reversed: bool, created_at: string|null}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/inventario/list-stock-movements
      */
@@ -64,7 +64,7 @@ final class StockMovements
      *     issuer: string,
      *     product: string,
      *     warehouse: string,
-     *     type: 'sale'|'purchase'|'customer_return'|'supplier_return'|'adjustment'|'count'|'transfer_out'|'transfer_in'|'initial'|'cost'|'reversal',
+     *     type: 'sale'|'purchase'|'customer_return'|'supplier_return'|'adjustment'|'count'|'transfer_out'|'transfer_in'|'production_consumption'|'production_output'|'initial'|'cost'|'reversal',
      *     quantity: float|int,
      *     unit_cost: float|int,
      *     value: float|int,

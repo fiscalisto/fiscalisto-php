@@ -143,6 +143,9 @@ abstract class FiscalistoApi extends Core
     /** Inventario. */
     public readonly Resources\StockAdjustments $stockAdjustments;
 
+    /** Inventario. */
+    public readonly Resources\ProductionOrders $productionOrders;
+
     /** Catálogos del SAT. */
     public readonly Resources\SatCatalogs $satCatalogs;
 
@@ -266,6 +269,7 @@ abstract class FiscalistoApi extends Core
         $this->warehouses = new Resources\Warehouses($this);
         $this->stockMovements = new Resources\StockMovements($this);
         $this->stockAdjustments = new Resources\StockAdjustments($this);
+        $this->productionOrders = new Resources\ProductionOrders($this);
         $this->satCatalogs = new Resources\SatCatalogs($this);
         $this->satLists = new Resources\SatLists($this);
         $this->cfdiVerifications = new Resources\CfdiVerifications($this);
