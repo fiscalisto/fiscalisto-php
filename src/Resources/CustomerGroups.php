@@ -37,6 +37,10 @@ final class CustomerGroups
      *     credit_days?: int|null,
      *     min_order?: float|int|null,
      *     portal_ordering?: bool,
+     *     portal_changes?: 'none'|'until_confirmed'|'until_delivered',
+     *     delivery_days?: list<int>|null,
+     *     cutoff_hour?: int|null,
+     *     prep_days?: int,
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
@@ -51,6 +55,10 @@ final class CustomerGroups
      *     credit_days: int|null,
      *     min_order: float|int|null,
      *     portal_ordering: bool,
+     *     portal_changes: 'none'|'until_confirmed'|'until_delivered',
+     *     delivery_days: list<int>|null,
+     *     cutoff_hour: int|null,
+     *     prep_days: int,
      *     customers: int,
      *     created_at: string|null,
      * }
@@ -72,7 +80,7 @@ final class CustomerGroups
      *
      * @param array{limit?: int, starting_after?: string, issuer?: string} $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'customer_group', issuer: string, name: string, color: string, price_list: string|null, discount_percent: float|int, credit_days: int|null, min_order: float|int|null, portal_ordering: bool, customers: int, created_at: string|null}>
+     * @return Collection<array{id: string, livemode: bool, object: 'customer_group', issuer: string, name: string, color: string, price_list: string|null, discount_percent: float|int, credit_days: int|null, min_order: float|int|null, portal_ordering: bool, portal_changes: 'none'|'until_confirmed'|'until_delivered', delivery_days: list<int>|null, cutoff_hour: int|null, prep_days: int, customers: int, created_at: string|null}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/listas-de-precios/list-customer-groups
      */
@@ -103,6 +111,10 @@ final class CustomerGroups
      *     credit_days: int|null,
      *     min_order: float|int|null,
      *     portal_ordering: bool,
+     *     portal_changes: 'none'|'until_confirmed'|'until_delivered',
+     *     delivery_days: list<int>|null,
+     *     cutoff_hour: int|null,
+     *     prep_days: int,
      *     customers: int,
      *     created_at: string|null,
      * }
@@ -131,6 +143,10 @@ final class CustomerGroups
      *     credit_days?: int|null,
      *     min_order?: float|int|null,
      *     portal_ordering?: bool,
+     *     portal_changes?: 'none'|'until_confirmed'|'until_delivered',
+     *     delivery_days?: list<int>|null,
+     *     cutoff_hour?: int|null,
+     *     prep_days?: int,
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
@@ -145,6 +161,10 @@ final class CustomerGroups
      *     credit_days: int|null,
      *     min_order: float|int|null,
      *     portal_ordering: bool,
+     *     portal_changes: 'none'|'until_confirmed'|'until_delivered',
+     *     delivery_days: list<int>|null,
+     *     cutoff_hour: int|null,
+     *     prep_days: int,
      *     customers: int,
      *     created_at: string|null,
      * }
