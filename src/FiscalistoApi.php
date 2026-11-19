@@ -213,6 +213,12 @@ abstract class FiscalistoApi extends Core
     public readonly Resources\FxRevaluations $fxRevaluations;
 
     /** Contabilidad. */
+    public readonly Resources\CostOfSales $costOfSales;
+
+    /** Contabilidad. */
+    public readonly Resources\TaxDeterminations $taxDeterminations;
+
+    /** Contabilidad. */
     public readonly Resources\BankMovements $bankMovements;
 
     /** Tiendas en línea. */
@@ -307,6 +313,8 @@ abstract class FiscalistoApi extends Core
         $this->fixedAssets = new Resources\FixedAssets($this);
         $this->closedPeriod = new Resources\ClosedPeriod($this);
         $this->fxRevaluations = new Resources\FxRevaluations($this);
+        $this->costOfSales = new Resources\CostOfSales($this);
+        $this->taxDeterminations = new Resources\TaxDeterminations($this);
         $this->bankMovements = new Resources\BankMovements($this);
         $this->storeConnections = new Resources\StoreConnections($this);
         $this->recurringInvoices = new Resources\RecurringInvoices($this);
