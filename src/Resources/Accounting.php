@@ -74,6 +74,35 @@ final class Accounting
     }
 
     /**
+     * Ver el auxiliar de cuentas
+     *
+     * El libro mayor de un periodo de hasta 12 meses: el saldo inicial de cada cuenta, cada cargo
+     * y abono con su póliza (journal_entry, el mismo id de journal_entries), su CFDI y el saldo
+     * que deja, y el saldo final. Solo las cuentas que se movieron, o la que pida con account
+     * aunque no tenga movimientos. Una cuenta que no está en el catálogo contesta account_missing.
+     *
+     * GET /v1/accounting/general_ledger
+     *
+     * @param array{from_month: string, to_month?: string, account?: string, issuer?: string} $params
+     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @return array{
+     *     object: 'general_ledger',
+     *     livemode: bool,
+     *     issuer: string,
+     *     from_month: string,
+     *     to_month: string,
+     *     accounts: list<array{object: 'ledger_account', number: string, name: string, grouping_code: string, nature: 'debit'|'credit', opening_balance: float|int, debit: float|int, credit: float|int, closing_balance: float|int, movements: list<array<string, mixed>>}>,
+     * }
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/contabilidad/get-general-ledger
+     */
+    public function generalLedger(array $params, array $options = []): array
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('GET', '/v1/accounting/general_ledger', ['query' => $params], $options);
+    }
+
+    /**
      * Ver los estados financieros
      *
      * El estado de resultados (del mes y del año hasta ese mes) y el balance general al cierre del
