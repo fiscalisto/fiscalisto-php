@@ -86,6 +86,7 @@ final class Invoices
      *     payment_form: string|null,
      *     payment_method: string|null,
      *     payment_terms: string|null,
+     *     notes: string|null,
      *     currency: string,
      *     exchange_rate: float|int|null,
      *     items: list<array<string, mixed>>,
@@ -142,7 +143,7 @@ final class Invoices
      *     cost_center?: string,
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'invoice', issuer: string, branch: string|null, cost_center: string|null, type: 'I'|'E'|'P'|'T'|'N', status: 'processing'|'pending'|'valid'|'rejected'|'canceled', uuid: string|null, series: string|null, folio: string|null, date: string|null, customer: array<string, mixed>, use: string|null, payment_form: string|null, payment_method: string|null, payment_terms: string|null, currency: string, exchange_rate: float|int|null, items: list<array<string, mixed>>, subtotal: float|int|null, discount: float|int|null, taxes: array<string, mixed>|null, total: float|int|null, payment_status: 'paid'|'partial'|'unpaid'|null, amount_due: float|int|null, amount_paid: float|int|null, paid_on: string|null, due_date: string|null, related: array<string, mixed>|null, payment?: array<string, mixed>|null, payroll?: array<string, mixed>, global?: array<string, mixed>, cancellation: array<string, mixed>|null, email: array<string, mixed>|null, error: array<string, mixed>|null, recurring_invoice: string|null, created_at: string|null, metadata: array<string, mixed>, warnings?: list<string>, email_error?: string, substitutes?: array<string, mixed>, advance_application?: array<string, mixed>}>
+     * @return Collection<array{id: string, livemode: bool, object: 'invoice', issuer: string, branch: string|null, cost_center: string|null, type: 'I'|'E'|'P'|'T'|'N', status: 'processing'|'pending'|'valid'|'rejected'|'canceled', uuid: string|null, series: string|null, folio: string|null, date: string|null, customer: array<string, mixed>, use: string|null, payment_form: string|null, payment_method: string|null, payment_terms: string|null, notes: string|null, currency: string, exchange_rate: float|int|null, items: list<array<string, mixed>>, subtotal: float|int|null, discount: float|int|null, taxes: array<string, mixed>|null, total: float|int|null, payment_status: 'paid'|'partial'|'unpaid'|null, amount_due: float|int|null, amount_paid: float|int|null, paid_on: string|null, due_date: string|null, related: array<string, mixed>|null, payment?: array<string, mixed>|null, payroll?: array<string, mixed>, global?: array<string, mixed>, cancellation: array<string, mixed>|null, email: array<string, mixed>|null, error: array<string, mixed>|null, recurring_invoice: string|null, created_at: string|null, metadata: array<string, mixed>, warnings?: list<string>, email_error?: string, substitutes?: array<string, mixed>, advance_application?: array<string, mixed>}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/facturas/list-invoices
      */
@@ -262,6 +263,7 @@ final class Invoices
      *     payment_form: string|null,
      *     payment_method: string|null,
      *     payment_terms: string|null,
+     *     notes: string|null,
      *     currency: string,
      *     exchange_rate: float|int|null,
      *     items: list<array<string, mixed>>,
@@ -302,12 +304,14 @@ final class Invoices
      * Actualizar una factura
      *
      * Lo que se puede cambiar de una factura timbrada sin tocar el CFDI: su centro de costo
-     * (cost_center, o null para quitárselo). Los complementos de pago y los traslados no llevan.
+     * (cost_center, o null para quitárselo; los complementos de pago y los traslados no llevan) y
+     * la nota para el cliente del PDF (notes, o null para quitarla; el XML no cambia y el
+     * siguiente PDF y correo ya la llevan).
      *
      * POST /v1/invoices/{id}
      *
      * @param string $id
-     * @param array{cost_center?: string|null} $params
+     * @param array{cost_center?: string|null, notes?: string|null} $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     id: string,
@@ -327,6 +331,7 @@ final class Invoices
      *     payment_form: string|null,
      *     payment_method: string|null,
      *     payment_terms: string|null,
+     *     notes: string|null,
      *     currency: string,
      *     exchange_rate: float|int|null,
      *     items: list<array<string, mixed>>,
@@ -455,6 +460,7 @@ final class Invoices
      *     payment_form: string|null,
      *     payment_method: string|null,
      *     payment_terms: string|null,
+     *     notes: string|null,
      *     currency: string,
      *     exchange_rate: float|int|null,
      *     items: list<array<string, mixed>>,
@@ -522,6 +528,7 @@ final class Invoices
      *     payment_form: string|null,
      *     payment_method: string|null,
      *     payment_terms: string|null,
+     *     notes: string|null,
      *     currency: string,
      *     exchange_rate: float|int|null,
      *     items: list<array<string, mixed>>,
@@ -623,6 +630,7 @@ final class Invoices
      *     payment_form: string|null,
      *     payment_method: string|null,
      *     payment_terms: string|null,
+     *     notes: string|null,
      *     currency: string,
      *     exchange_rate: float|int|null,
      *     items: list<array<string, mixed>>,
@@ -689,6 +697,7 @@ final class Invoices
      *     payment_form: string|null,
      *     payment_method: string|null,
      *     payment_terms: string|null,
+     *     notes: string|null,
      *     currency: string,
      *     exchange_rate: float|int|null,
      *     items: list<array<string, mixed>>,
@@ -754,6 +763,7 @@ final class Invoices
      *     payment_form: string|null,
      *     payment_method: string|null,
      *     payment_terms: string|null,
+     *     notes: string|null,
      *     currency: string,
      *     exchange_rate: float|int|null,
      *     items: list<array<string, mixed>>,

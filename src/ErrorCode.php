@@ -114,7 +114,7 @@ final class ErrorCode
     /** La exportación aún se genera (status processing) o falló (failed). Consulte GET /v1/exports/{id}; si falló, pídala otra vez. */
     public const EXPORT_NOT_READY = 'export_not_ready';
 
-    /** En producción, inventario avanzado, portal de proveedores, pedidos de venta y comprobación de gastos siguen el plan de la empresa, como en la app: vienen con Operaciones (se agrega a Negocio; incluida en Corporativo). En modo de pruebas están todos. */
+    /** En producción, inventario avanzado, portal de proveedores, pedidos de venta y comprobación de gastos siguen el plan de la empresa, como en la app: vienen con Operaciones (se agrega a cualquier plan de pago; incluida en Corporativo). En modo de pruebas están todos. */
     public const FEATURE_NOT_IN_PLAN = 'feature_not_in_plan';
 
     /** Idempotency-Key es de 1 a 255 caracteres ASCII, sin acentos ni ñ: el id de su pedido o un UUID. */

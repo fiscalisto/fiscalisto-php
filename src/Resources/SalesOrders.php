@@ -499,6 +499,7 @@ final class SalesOrders
      *     payment_form: string|null,
      *     payment_method: string|null,
      *     payment_terms: string|null,
+     *     notes: string|null,
      *     currency: string,
      *     exchange_rate: float|int|null,
      *     items: list<array<string, mixed>>,
