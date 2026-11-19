@@ -44,6 +44,7 @@ final class SatDeclarations
      *     found: int,
      *     downloaded: int,
      *     pending: int,
+     *     completes_at: string|null,
      *     warning: string|null,
      *     refreshed_at: string,
      *     next_refresh_at: string,
@@ -75,7 +76,7 @@ final class SatDeclarations
      *     type?: 'normal'|'complementary',
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'sat_declaration', issuer: string, source: 'monthly'|'annual'|'dyp', year: int, month: int|null, period: string, type: 'normal'|'complementary', complementary_type: string|null, operation_number: string, payment_line: string|null, filed_on: string|null, profit_coefficient: float|int|null, isr_due: float|int|null, vat_due: float|int|null, total_due: float|int|null, sections: list<array<string, mixed>>, receipt: array<string, mixed>|null, summary: array<string, mixed>, payment: array<string, mixed>|null, files: array<string, mixed>, files_error: string|null, created_at: string|null, updated_at: string|null}>
+     * @return Collection<array{id: string, livemode: bool, object: 'sat_declaration', issuer: string, source: 'monthly'|'annual'|'dyp', year: int, month: int|null, period: string, type: 'normal'|'complementary', complementary_type: string|null, operation_number: string, payment_line: string|null, filed_on: string|null, profit_coefficient: float|int|null, isr_due: float|int|null, vat_due: float|int|null, total_due: float|int|null, sections: list<array<string, mixed>>, receipt: array<string, mixed>|null, summary: array<string, mixed>, figures_status: 'read'|'pending'|'unavailable', figures_expected_at: string|null, payment: array<string, mixed>|null, files: array<string, mixed>, files_error: string|null, created_at: string|null, updated_at: string|null}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/declaraciones-del-sat/list-sat-declarations
      */
@@ -175,6 +176,8 @@ final class SatDeclarations
      *     sections: list<array{tax: string, fields: list<array<string, mixed>>}>,
      *     receipt: array{concepts: list<array<string, mixed>>, total: float|int|null, payment_line: string|null, valid_until: string|null}|null,
      *     summary: array{obligations: list<array<string, mixed>>, total_to_pay: float|int|null},
+     *     figures_status: 'read'|'pending'|'unavailable',
+     *     figures_expected_at: string|null,
      *     payment: array{status: 'paid'|'unpaid'|'overdue'|'nothing_to_pay'|'unchecked', paid_on: string|null, amount_paid: float|int|null, bank: string|null, checked_at: string|null, payments: list<array<string, mixed>>}|null,
      *     files: array{pdf: bool, receipt: bool, payment_record: bool, financial_statements: bool},
      *     files_error: string|null,
