@@ -739,6 +739,7 @@ final class Issuers
      *     portal_accent: string|null,
      *     portal_radius: int|null,
      *     portal_style: array{layout: 'checkout'|'compact'|'card', density: 'comfortable'|'compact', header: 'logo'|'name'|'name_rfc'|'logo_name', logo_size: 's'|'m'|'l', logo_shape: 'square'|'rounded'|'circle', font: string, heading_font: string|null, heading_size: 's'|'m'|'l', borders: 'none'|'subtle'|'strong', shadow: 'none'|'soft'|'strong', ways: array<string, mixed>, email_required: bool, show_deadline: bool, back: array<string, mixed>|null, css: string, colors: array<string, mixed>, texts: array<string, mixed>},
+     *     invoice_concepts: array{mode: 'itemized'|'single', customer_choice: bool, description: string, product_key: string|null, unit_key: string|null},
      *     retention_mode: 'keep_total'|'subtract',
      *     invoice_series: string|null,
      *     global_concepts: 'ticket'|'summary',
@@ -775,6 +776,7 @@ final class Issuers
      *     portal_style?: array{layout?: 'checkout'|'compact'|'card', density?: 'comfortable'|'compact', header?: 'logo'|'name'|'name_rfc'|'logo_name', logo_size?: 's'|'m'|'l', logo_shape?: 'square'|'rounded'|'circle', colors?: array{background?: string|null, card?: string|null, text?: string|null, button_text?: string|null}, font?: 'system'|'inter'|'manrope'|'dm-sans'|'work-sans'|'nunito'|'space-grotesk'|'montserrat'|'lora'|'merriweather'|'playfair-display'|'cormorant-garamond', heading_font?: 'system'|'cormorant-garamond'|null, heading_size?: 's'|'l', borders?: 'none'|'subtle'|'strong', shadow?: 'none'|'soft'|'strong', texts?: array{title?: array<string, mixed>|null, message?: array<string, mixed>|null, code_hint?: array<string, mixed>|null, step_ticket?: array<string, mixed>|null, step_data?: array<string, mixed>|null, step_invoice?: array<string, mixed>|null, find_button?: array<string, mixed>|null, how_question?: array<string, mixed>|null, submit?: array<string, mixed>|null, success_title?: array<string, mixed>|null, success_message?: array<string, mixed>|null}, ways?: array{constancia?: bool, qr?: bool, cif?: bool, recall?: bool, abroad?: bool}, email_required?: bool, show_deadline?: bool, back?: array{label: string, url: string}|null, css?: string}|null,
      *     retention_mode?: 'keep_total'|'subtract',
      *     invoice_series?: string|null,
+     *     invoice_concepts?: array{mode?: 'itemized'|'single', customer_choice?: bool, description?: string, product_key?: string|null, unit_key?: string|null}|null,
      *     global_concepts?: 'ticket'|'summary',
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
@@ -795,6 +797,7 @@ final class Issuers
      *     portal_accent: string|null,
      *     portal_radius: int|null,
      *     portal_style: array{layout: 'checkout'|'compact'|'card', density: 'comfortable'|'compact', header: 'logo'|'name'|'name_rfc'|'logo_name', logo_size: 's'|'m'|'l', logo_shape: 'square'|'rounded'|'circle', font: string, heading_font: string|null, heading_size: 's'|'m'|'l', borders: 'none'|'subtle'|'strong', shadow: 'none'|'soft'|'strong', ways: array<string, mixed>, email_required: bool, show_deadline: bool, back: array<string, mixed>|null, css: string, colors: array<string, mixed>, texts: array<string, mixed>},
+     *     invoice_concepts: array{mode: 'itemized'|'single', customer_choice: bool, description: string, product_key: string|null, unit_key: string|null},
      *     retention_mode: 'keep_total'|'subtract',
      *     invoice_series: string|null,
      *     global_concepts: 'ticket'|'summary',
