@@ -39,6 +39,7 @@ final class ManualEntries
      *     reverse_next_month?: bool,
      *     uuid?: string|null,
      *     uuid_tax_id?: string|null,
+     *     repeat_until?: string|null,
      *     lines: list<array{account: string, debit?: float|int, credit?: float|int}>,
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
@@ -53,6 +54,7 @@ final class ManualEntries
      *     journal_type: 'journal'|'income'|'expense',
      *     reverse_next_month: bool,
      *     reverses_on: string|null,
+     *     repeat_until: string|null,
      *     uuid: string|null,
      *     uuid_tax_id: string|null,
      *     total: float|int,
@@ -84,7 +86,7 @@ final class ManualEntries
      *     issuer?: string,
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'manual_journal_entry', issuer: string, date: string, description: string, kind: 'adjustment'|'accrual'|'reclassification'|'other', journal_type: 'journal'|'income'|'expense', reverse_next_month: bool, reverses_on: string|null, uuid: string|null, uuid_tax_id: string|null, total: float|int, lines: list<array<string, mixed>>, created_at: string|null, updated_at: string|null}>
+     * @return Collection<array{id: string, livemode: bool, object: 'manual_journal_entry', issuer: string, date: string, description: string, kind: 'adjustment'|'accrual'|'reclassification'|'other', journal_type: 'journal'|'income'|'expense', reverse_next_month: bool, reverses_on: string|null, repeat_until: string|null, uuid: string|null, uuid_tax_id: string|null, total: float|int, lines: list<array<string, mixed>>, created_at: string|null, updated_at: string|null}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/contabilidad/list-manual-entries
      */
@@ -114,6 +116,7 @@ final class ManualEntries
      *     journal_type: 'journal'|'income'|'expense',
      *     reverse_next_month: bool,
      *     reverses_on: string|null,
+     *     repeat_until: string|null,
      *     uuid: string|null,
      *     uuid_tax_id: string|null,
      *     total: float|int,
@@ -146,6 +149,7 @@ final class ManualEntries
      *     reverse_next_month?: bool,
      *     uuid?: string|null,
      *     uuid_tax_id?: string|null,
+     *     repeat_until?: string|null,
      *     lines: list<array{account: string, debit?: float|int, credit?: float|int}>,
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
@@ -160,6 +164,7 @@ final class ManualEntries
      *     journal_type: 'journal'|'income'|'expense',
      *     reverse_next_month: bool,
      *     reverses_on: string|null,
+     *     repeat_until: string|null,
      *     uuid: string|null,
      *     uuid_tax_id: string|null,
      *     total: float|int,
