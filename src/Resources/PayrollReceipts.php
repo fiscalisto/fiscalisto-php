@@ -102,6 +102,53 @@ final class PayrollReceipts
     }
 
     /**
+     * Neto a bruto
+     *
+     * El salario diario y el SDI cuyo recibo ordinario de un periodo completo paga el neto que
+     * pide, con el ISR y el IMSS de hoy, como «Calcular desde el neto» en cada empleado de la app.
+     * Con employee toma su periodicidad y prestaciones; sin él, las que mande o las de la ley. Sin
+     * faltas, incidencias ni descuentos como Infonavit o préstamos. No guarda nada: para usarlo,
+     * actualice al empleado.
+     *
+     * POST /v1/payroll/net_to_gross
+     *
+     * @param array{
+     *     net: float|int,
+     *     employee?: string,
+     *     periodicity?: '02'|'03'|'04'|'05',
+     *     border_zone?: bool,
+     *     start_date?: string,
+     *     aguinaldo_days?: int,
+     *     vacation_premium?: float|int,
+     *     pantry_vouchers?: float|int,
+     *     savings_fund_rate?: float|int,
+     * } $params
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
+     * @return array{
+     *     object: 'net_to_gross',
+     *     employee: string|null,
+     *     periodicity: string,
+     *     net_requested: float|int,
+     *     daily_salary: float|int,
+     *     integrated_daily_salary: float|int,
+     *     period: array{start: string, end: string},
+     *     days: float|int,
+     *     perceptions: float|int,
+     *     deductions: float|int,
+     *     taxes_withheld: float|int,
+     *     other_payments: float|int,
+     *     net: float|int,
+     * }
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/nomina/net-to-gross
+     */
+    public function netToGross(array $params, array $options = []): array
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('POST', '/v1/payroll/net_to_gross', ['body' => $params, 'idempotent' => true], $options);
+    }
+
+    /**
      * Calcular un recibo sin timbrar
      *
      * El recibo como se timbraría (percepciones con sus incidencias, ISR con el subsidio para el
