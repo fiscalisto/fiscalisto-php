@@ -146,6 +146,15 @@ abstract class FiscalistoApi extends Core
     /** Cumplimiento SAT. */
     public readonly Resources\MaterialityInvoices $materialityInvoices;
 
+    /** Cumplimiento SAT. */
+    public readonly Resources\SatReviews $satReviews;
+
+    /** Cumplimiento SAT. */
+    public readonly Resources\SatRiskCheck $satRiskCheck;
+
+    /** Cumplimiento SAT. */
+    public readonly Resources\TaxDiscrepancy $taxDiscrepancy;
+
     /** Inventario. */
     public readonly Resources\Warehouses $warehouses;
 
@@ -315,6 +324,9 @@ abstract class FiscalistoApi extends Core
         $this->companyReport = new Resources\CompanyReport($this);
         $this->materialitySuppliers = new Resources\MaterialitySuppliers($this);
         $this->materialityInvoices = new Resources\MaterialityInvoices($this);
+        $this->satReviews = new Resources\SatReviews($this);
+        $this->satRiskCheck = new Resources\SatRiskCheck($this);
+        $this->taxDiscrepancy = new Resources\TaxDiscrepancy($this);
         $this->warehouses = new Resources\Warehouses($this);
         $this->stockMovements = new Resources\StockMovements($this);
         $this->stockAdjustments = new Resources\StockAdjustments($this);

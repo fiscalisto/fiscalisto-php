@@ -18,6 +18,18 @@ final class ErrorCode
     /** Suspendimos la API de la empresa (todas sus llaves, o solo las de producción) por un uso que rompe los términos del servicio. El mensaje dice por qué; escríbanos a soporte@fiscalisto.com para reactivarla. */
     public const ACCOUNT_SUSPENDED = 'account_suspended';
 
+    /** La respuesta armada se guarda 30 días. Pídala otra vez con POST /v1/sat_reviews/{id}/answer. */
+    public const ANSWER_EXPIRED = 'answer_expired';
+
+    /** Esta revisión del SAT aún no tiene respuesta armada. Pídala con POST /v1/sat_reviews/{id}/answer. */
+    public const ANSWER_MISSING = 'answer_missing';
+
+    /** La respuesta aún se arma (answer.status processing) o falló (failed). Consulte GET /v1/sat_reviews/{id}; si falló, pídala otra vez con POST /v1/sat_reviews/{id}/answer. */
+    public const ANSWER_NOT_READY = 'answer_not_ready';
+
+    /** Ya se está armando la respuesta de esta revisión del SAT. Espere a que answer.status sea completed (GET /v1/sat_reviews/{id}). */
+    public const ANSWER_RUNNING = 'answer_running';
+
     /** No existe esa versión de la API (en Fiscalisto-Version o api_version). El mensaje dice cuáles hay; vea Versiones. */
     public const API_VERSION_INVALID = 'api_version_invalid';
 
