@@ -246,6 +246,12 @@ abstract class FiscalistoApi extends Core
     public readonly Resources\InflationAccounts $inflationAccounts;
 
     /** Contabilidad. */
+    public readonly Resources\DepreciationReconciliations $depreciationReconciliations;
+
+    /** Contabilidad. */
+    public readonly Resources\BookDepreciationRates $bookDepreciationRates;
+
+    /** Contabilidad. */
     public readonly Resources\CostCenterResults $costCenterResults;
 
     /** Contabilidad. */
@@ -363,6 +369,8 @@ abstract class FiscalistoApi extends Core
         $this->budgets = new Resources\Budgets($this);
         $this->inflationAdjustments = new Resources\InflationAdjustments($this);
         $this->inflationAccounts = new Resources\InflationAccounts($this);
+        $this->depreciationReconciliations = new Resources\DepreciationReconciliations($this);
+        $this->bookDepreciationRates = new Resources\BookDepreciationRates($this);
         $this->costCenterResults = new Resources\CostCenterResults($this);
         $this->payrollProvisions = new Resources\PayrollProvisions($this);
         $this->taxDeterminations = new Resources\TaxDeterminations($this);
