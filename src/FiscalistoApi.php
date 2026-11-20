@@ -218,6 +218,18 @@ abstract class FiscalistoApi extends Core
     /** Portal de proveedores. */
     public readonly Resources\SupplierInvoices $supplierInvoices;
 
+    /** Pagos a proveedores. */
+    public readonly Resources\PayableInvoices $payableInvoices;
+
+    /** Pagos a proveedores. */
+    public readonly Resources\Payouts $payouts;
+
+    /** Pagos a proveedores. */
+    public readonly Resources\PayeeAccounts $payeeAccounts;
+
+    /** Pagos a proveedores. */
+    public readonly Resources\PayoutMandates $payoutMandates;
+
     /** Declaraciones del SAT. */
     public readonly Resources\SatDeclarations $satDeclarations;
 
@@ -390,6 +402,10 @@ abstract class FiscalistoApi extends Core
         $this->satRetentions = new Resources\SatRetentions($this);
         $this->portalSuppliers = new Resources\PortalSuppliers($this);
         $this->supplierInvoices = new Resources\SupplierInvoices($this);
+        $this->payableInvoices = new Resources\PayableInvoices($this);
+        $this->payouts = new Resources\Payouts($this);
+        $this->payeeAccounts = new Resources\PayeeAccounts($this);
+        $this->payoutMandates = new Resources\PayoutMandates($this);
         $this->satDeclarations = new Resources\SatDeclarations($this);
         $this->satRefreshes = new Resources\SatRefreshes($this);
         $this->tickets = new Resources\Tickets($this);
