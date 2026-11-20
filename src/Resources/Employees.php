@@ -77,6 +77,8 @@ final class Employees
      *     end_date: string|null,
      *     daily_salary: float|int,
      *     integrated_daily_salary: float|int,
+     *     variable_integrated_daily_salary: float|int,
+     *     variable_salary_from: string|null,
      *     contract_type: string,
      *     workday_type: string,
      *     regime_type: string,
@@ -117,7 +119,7 @@ final class Employees
      *
      * @param array{limit?: int, starting_after?: string, issuer?: string} $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'employee', issuer: string, number: string, name: string, tax_id: string, curp: string, social_security_number: string, zip: string, email: string|null, start_date: string, end_date: string|null, daily_salary: float|int, integrated_daily_salary: float|int, contract_type: string, workday_type: string, regime_type: string, periodicity: string, risk_class: string, state: string, border_zone: bool, unionized: bool, department: string|null, position: string|null, clabe: string|null, given_names: string|null, first_surname: string|null, second_surname: string|null, imss_worker_type: string, imss_salary_type: string, imss_reduced_week: string, family_medicine_unit: string|null, exit_reason: string|null, warnings: list<string>, created_at: string}>
+     * @return Collection<array{id: string, livemode: bool, object: 'employee', issuer: string, number: string, name: string, tax_id: string, curp: string, social_security_number: string, zip: string, email: string|null, start_date: string, end_date: string|null, daily_salary: float|int, integrated_daily_salary: float|int, variable_integrated_daily_salary: float|int, variable_salary_from: string|null, contract_type: string, workday_type: string, regime_type: string, periodicity: string, risk_class: string, state: string, border_zone: bool, unionized: bool, department: string|null, position: string|null, clabe: string|null, given_names: string|null, first_surname: string|null, second_surname: string|null, imss_worker_type: string, imss_salary_type: string, imss_reduced_week: string, family_medicine_unit: string|null, exit_reason: string|null, warnings: list<string>, created_at: string}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/nomina/list-employees
      */
@@ -152,6 +154,8 @@ final class Employees
      *     end_date: string|null,
      *     daily_salary: float|int,
      *     integrated_daily_salary: float|int,
+     *     variable_integrated_daily_salary: float|int,
+     *     variable_salary_from: string|null,
      *     contract_type: string,
      *     workday_type: string,
      *     regime_type: string,
@@ -239,6 +243,8 @@ final class Employees
      *     end_date: string|null,
      *     daily_salary: float|int,
      *     integrated_daily_salary: float|int,
+     *     variable_integrated_daily_salary: float|int,
+     *     variable_salary_from: string|null,
      *     contract_type: string,
      *     workday_type: string,
      *     regime_type: string,
