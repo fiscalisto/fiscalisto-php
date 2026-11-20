@@ -205,4 +205,81 @@ final class Branches
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
         return $this->client->request('DELETE', '/v1/branches/' . rawurlencode($id), [], $options);
     }
+
+    /**
+     * Subir el logo de la sucursal
+     *
+     * El logo de la sucursal (PNG o JPG de hasta 1 MB, en base64): va en lo que factura desde ella
+     * y en el portal de autofactura de los tickets que la nombran. Reemplaza el anterior; sin logo
+     * propio usa el del emisor.
+     *
+     * POST /v1/branches/{id}/logo
+     *
+     * @param string $id
+     * @param array{file: string} $params
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
+     * @return array{
+     *     id: string,
+     *     livemode: bool,
+     *     object: 'branch',
+     *     issuer: string,
+     *     name: string,
+     *     zip: string,
+     *     address: array{street: string|null, exterior: string|null, interior: string|null, neighborhood: string|null, city: string|null, state: string|null},
+     *     phone: string|null,
+     *     email: string|null,
+     *     series: array{invoice: string|null, credit_note: string|null, payment: string|null, transfer: string|null},
+     *     trade_name: string|null,
+     *     logo_url: string|null,
+     *     pdf_color: string|null,
+     *     pdf_style: 'clasico'|'moderno'|'compacto'|'minimalista'|null,
+     *     archived: bool,
+     *     created_at: string|null,
+     *     updated_at: string|null,
+     * }
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/sucursales/upload-branch-logo
+     */
+    public function uploadLogo(string $id, array $params, array $options = []): array
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('POST', '/v1/branches/' . rawurlencode($id) . '/logo', ['body' => $params, 'idempotent' => true], $options);
+    }
+
+    /**
+     * Quitar el logo de la sucursal
+     *
+     * Lo que factura y sus tickets vuelven al logo del emisor. Sin logo contesta 404.
+     *
+     * DELETE /v1/branches/{id}/logo
+     *
+     * @param string $id
+     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @return array{
+     *     id: string,
+     *     livemode: bool,
+     *     object: 'branch',
+     *     issuer: string,
+     *     name: string,
+     *     zip: string,
+     *     address: array{street: string|null, exterior: string|null, interior: string|null, neighborhood: string|null, city: string|null, state: string|null},
+     *     phone: string|null,
+     *     email: string|null,
+     *     series: array{invoice: string|null, credit_note: string|null, payment: string|null, transfer: string|null},
+     *     trade_name: string|null,
+     *     logo_url: string|null,
+     *     pdf_color: string|null,
+     *     pdf_style: 'clasico'|'moderno'|'compacto'|'minimalista'|null,
+     *     archived: bool,
+     *     created_at: string|null,
+     *     updated_at: string|null,
+     * }
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/sucursales/delete-branch-logo
+     */
+    public function deleteLogo(string $id, array $options = []): array
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('DELETE', '/v1/branches/' . rawurlencode($id) . '/logo', [], $options);
+    }
 }

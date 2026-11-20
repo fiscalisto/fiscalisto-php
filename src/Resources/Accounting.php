@@ -34,7 +34,7 @@ final class Accounting
      *
      * @param array{month: string, limit?: int, starting_after?: string, issuer?: string} $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'journal_entry', issuer: string, type: 'invoice'|'payment_received'|'payment_made'|'payroll'|'employee_expenses'|'depreciation'|'manual'|'asset_disposal', manual_entry: string|null, date: string, description: string, invoice: string|null, uuid: string|null, tax_id: string|null, total: float|int, currency: string, exchange_rate: float|int|null, lines: list<array<string, mixed>>}>
+     * @return Collection<array{id: string, livemode: bool, object: 'journal_entry', issuer: string, type: 'invoice'|'payment_received'|'payment_made'|'payroll'|'employee_expenses'|'depreciation'|'manual'|'asset_disposal'|'bank_identification', manual_entry: string|null, date: string, description: string, invoice: string|null, uuid: string|null, tax_id: string|null, total: float|int, currency: string, exchange_rate: float|int|null, lines: list<array<string, mixed>>}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/contabilidad/list-journal-entries
      */

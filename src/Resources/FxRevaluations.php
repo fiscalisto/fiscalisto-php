@@ -38,6 +38,7 @@ final class FxRevaluations
      *     date: string,
      *     currencies: list<array{currency: string, receivable: float|int, payable: float|int, closing_rate: float|int|null, closing_rate_date: string|null}>,
      *     documents: list<array{uuid: string, direction: 'issued'|'received', tax_id: string, name: string, series_folio: string|null, date: string, currency: string, balance: float|int, booked_rate: float|int}>,
+     *     bank_accounts: list<array{name: string, currency: string, statement_balance: float|int|null, statement_date: string|null, book_balance: float|int}>,
      *     manual_entry: string|null,
      * }
      * @throws FiscalistoException
@@ -72,6 +73,7 @@ final class FxRevaluations
      *     date: string,
      *     currencies: list<array{currency: string, receivable: float|int, payable: float|int, closing_rate: float|int|null, closing_rate_date: string|null}>,
      *     documents: list<array{uuid: string, direction: 'issued'|'received', tax_id: string, name: string, series_folio: string|null, date: string, currency: string, balance: float|int, booked_rate: float|int}>,
+     *     bank_accounts: list<array{name: string, currency: string, statement_balance: float|int|null, statement_date: string|null, book_balance: float|int}>,
      *     manual_entry: string|null,
      * }
      * @throws FiscalistoException
@@ -102,6 +104,7 @@ final class FxRevaluations
      *     date: string,
      *     currencies: list<array{currency: string, receivable: float|int, payable: float|int, closing_rate: float|int|null, closing_rate_date: string|null}>,
      *     documents: list<array{uuid: string, direction: 'issued'|'received', tax_id: string, name: string, series_folio: string|null, date: string, currency: string, balance: float|int, booked_rate: float|int}>,
+     *     bank_accounts: list<array{name: string, currency: string, statement_balance: float|int|null, statement_date: string|null, book_balance: float|int}>,
      *     manual_entry: string|null,
      * }
      * @throws FiscalistoException
