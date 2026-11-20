@@ -72,6 +72,9 @@ abstract class FiscalistoApi extends Core
     public readonly Resources\PayrollBatches $payrollBatches;
 
     /** Nómina. */
+    public readonly Resources\PayrollApprovals $payrollApprovals;
+
+    /** Nómina. */
     public readonly Resources\PayrollBankFiles $payrollBankFiles;
 
     /** Nómina. */
@@ -332,6 +335,7 @@ abstract class FiscalistoApi extends Core
         $this->vacationRequests = new Resources\VacationRequests($this);
         $this->payrollReceipts = new Resources\PayrollReceipts($this);
         $this->payrollBatches = new Resources\PayrollBatches($this);
+        $this->payrollApprovals = new Resources\PayrollApprovals($this);
         $this->payrollBankFiles = new Resources\PayrollBankFiles($this);
         $this->imssMovements = new Resources\ImssMovements($this);
         $this->imssFiles = new Resources\ImssFiles($this);

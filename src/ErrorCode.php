@@ -255,6 +255,9 @@ final class ErrorCode
     /** Mandó un campo o un parámetro de la URL que no existe (casi siempre un nombre mal escrito, como legalName en vez de legal_name, o ?statuss= en vez de ?status=). Nunca se ignora en silencio. */
     public const PARAMETER_UNKNOWN = 'parameter_unknown';
 
+    /** El emisor pide aprobar la prenómina antes de timbrar, y este recibo no está en la prenómina aprobada del periodo con estos importes y fecha de pago (no se ha pedido, espera aprobación, se rechazó o el recibo cambió). No se timbró: pídala con POST /v1/payroll_approvals y espere a que una persona la apruebe en la app. */
+    public const PAYROLL_APPROVAL_REQUIRED = 'payroll_approval_required';
+
     /** Mandó el confirmation_token de una vista previa, pero el recibo que se calcularía ahora es otro (se timbró otro recibo del empleado ese mes, cambió su salario o se actualizaron las tablas). No se timbró: pida la vista previa otra vez y mande su token nuevo. */
     public const PAYROLL_CALCULATION_CHANGED = 'payroll_calculation_changed';
 

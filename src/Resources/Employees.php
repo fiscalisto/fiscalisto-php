@@ -174,7 +174,7 @@ final class Employees
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/nomina/create-employee-raise
      */
-    public function raise(array $params = [], array $options = []): array
+    public function giveRaise(array $params = [], array $options = []): array
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
         return $this->client->request('POST', '/v1/employee_raises', ['body' => $params, 'idempotent' => true], $options);
