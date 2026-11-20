@@ -348,6 +348,9 @@ final class ErrorCode
     /** No se pudo crear el entorno de prueba: falta su nombre o la cuenta ya tiene 25 (borre uno que ya no use). */
     public const SANDBOX_INVALID = 'sandbox_invalid';
 
+    /** Solo se marca como pagada una factura de ingreso recibida y vigente: una PPD que siga por pagar, o una PUE para anotar de dónde salió el dinero. El mensaje dice por qué esta no. */
+    public const SAT_INVOICE_NOT_MARKABLE = 'sat_invoice_not_markable';
+
     /** Las declaraciones de ese emisor se consultaron en el SAT hace menos de 10 minutos (cada consulta entra al SAT con su e.firma). Retry-After dice cuántos segundos faltan; lo que ya trajo está en GET /v1/sat_declarations. */
     public const SAT_REFRESH_TOO_SOON = 'sat_refresh_too_soon';
 
