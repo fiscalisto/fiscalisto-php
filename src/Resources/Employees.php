@@ -138,6 +138,49 @@ final class Employees
     }
 
     /**
+     * Aumento de sueldo
+     *
+     * Un aumento para varios empleados a la vez, como «Aumento de sueldo» en Nómina › Empleados de
+     * la app: percent (porcentaje), amount (pesos más por día) o daily_salary (un salario nuevo).
+     * Cada empleado conserva su factor de integración (SDI ÷ salario), y el SDI nuevo queda como
+     * modificación de salario con fecha effective_date en Movimientos del IMSS, para presentarla a
+     * más tardar en imss_deadline (5 días hábiles, artículo 34 de la Ley del Seguro Social). Rige
+     * desde hoy o antes; los periodos ya timbrados desde entonces se pagan con el retroactivo de
+     * las incidencias. Si un empleado no puede recibirlo (no es un aumento, queda bajo el salario
+     * mínimo, no trabajaba ese día), contesta 400 y no cambia a nadie; dry_run true dice cómo
+     * quedaría cada uno, con su error, sin guardar.
+     *
+     * POST /v1/employee_raises
+     *
+     * @param array{
+     *     issuer?: string,
+     *     employees?: list<string>,
+     *     percent?: float|int,
+     *     amount?: float|int,
+     *     daily_salary?: float|int,
+     *     effective_date?: string,
+     *     dry_run?: bool,
+     * } $params
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
+     * @return array{
+     *     object: 'employee_raise',
+     *     livemode: bool,
+     *     issuer: string,
+     *     applied: bool,
+     *     effective_date: string,
+     *     imss_deadline: string,
+     *     employees: list<array{employee: string, number: string, name: string, daily_salary_before: float|int, daily_salary: float|int, integrated_daily_salary_before: float|int, integrated_daily_salary: float|int, error: string|null}>,
+     * }
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/nomina/create-employee-raise
+     */
+    public function raise(array $params = [], array $options = []): array
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('POST', '/v1/employee_raises', ['body' => $params, 'idempotent' => true], $options);
+    }
+
+    /**
      * Ver un empleado
      *
      * Un empleado con sus datos y lo que el SAT podría rechazar en warnings.
