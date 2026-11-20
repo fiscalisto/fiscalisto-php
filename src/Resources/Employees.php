@@ -294,4 +294,75 @@ final class Employees
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
         return $this->client->request('DELETE', '/v1/employees/' . rawurlencode($id), [], $options);
     }
+
+    /**
+     * Vacaciones de un empleado
+     *
+     * Los días de vacaciones de cada año de servicio (artículo 76 de la LFT: 12 el primero, dos
+     * más cada año hasta 20 y luego dos más cada cinco), los que tomó (los días de vacaciones de
+     * sus recibos timbrados, restados del año más antiguo que le quede), hasta cuándo dárselos
+     * (seis meses después del aniversario, artículo 81) y cuándo prescriben (un año después,
+     * artículo 516). pending_days son los de años cumplidos que no han prescrito: los que paga el
+     * finiquito.
+     *
+     * GET /v1/employees/{id}/vacations
+     *
+     * @param string $id
+     * @param array{as_of?: string} $params
+     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @return array{
+     *     object: 'employee_vacations',
+     *     livemode: bool,
+     *     employee: string,
+     *     as_of: string,
+     *     pending_days: float|int,
+     *     current_year: array{year: int, completes_on: string, days: float|int, taken_in_advance: float|int, accrued_days: float|int},
+     *     years: list<array{year: int, owed_from: string, days: float|int, taken_days: float|int, remaining_days: float|int, grant_by: string, prescribes_on: string, status: 'taken'|'pending'|'late'|'prescribed'}>,
+     *     opening: array{date: string, pending_days: float|int, taken_days: float|int}|null,
+     *     taken: list<array{date: string, days: float|int}>,
+     * }
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/nomina/get-employee-vacations
+     */
+    public function vacations(string $id, array $params = [], array $options = []): array
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('GET', '/v1/employees/' . rawurlencode($id) . '/vacations', ['query' => $params], $options);
+    }
+
+    /**
+     * Saldo de vacaciones antes de Fiscalisto
+     *
+     * Guarda lo que el empleado tenía en un día según sus registros: los días que le quedaban de
+     * años cumplidos y los que ya había tomado del año en curso. Los recibos timbrados antes de
+     * ese día no se cuentan. opening_date null lo quita.
+     *
+     * POST /v1/employees/{id}/vacations
+     *
+     * @param string $id
+     * @param array{
+     *     opening_date: string|null,
+     *     opening_pending_days?: float|int,
+     *     opening_taken_days?: float|int,
+     * } $params
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
+     * @return array{
+     *     object: 'employee_vacations',
+     *     livemode: bool,
+     *     employee: string,
+     *     as_of: string,
+     *     pending_days: float|int,
+     *     current_year: array{year: int, completes_on: string, days: float|int, taken_in_advance: float|int, accrued_days: float|int},
+     *     years: list<array{year: int, owed_from: string, days: float|int, taken_days: float|int, remaining_days: float|int, grant_by: string, prescribes_on: string, status: 'taken'|'pending'|'late'|'prescribed'}>,
+     *     opening: array{date: string, pending_days: float|int, taken_days: float|int}|null,
+     *     taken: list<array{date: string, days: float|int}>,
+     * }
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/nomina/update-employee-vacations
+     */
+    public function updateVacations(string $id, array $params, array $options = []): array
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('POST', '/v1/employees/' . rawurlencode($id) . '/vacations', ['body' => $params, 'idempotent' => true], $options);
+    }
 }

@@ -176,6 +176,7 @@ final class PayrollReceipts
      *     exit_reason?: 'resignation'|'dismissal',
      *     twenty_days_per_year?: bool,
      *     vacation_days_taken?: float|int,
+     *     vacation_days_owed?: float|int,
      *     send_email?: bool,
      *     metadata?: array<string, mixed>,
      *     confirmation_token?: string,
@@ -256,6 +257,7 @@ final class PayrollReceipts
      *     exit_reason?: 'resignation'|'dismissal',
      *     twenty_days_per_year?: bool,
      *     vacation_days_taken?: float|int,
+     *     vacation_days_owed?: float|int,
      *     send_email?: bool,
      *     metadata?: array<string, mixed>,
      * } $params
