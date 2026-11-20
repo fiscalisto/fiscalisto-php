@@ -116,6 +116,9 @@ abstract class FiscalistoApi extends Core
     /** Centros de costo. */
     public readonly Resources\CostCenters $costCenters;
 
+    /** Etiquetas. */
+    public readonly Resources\Tags $tags;
+
     /** Listas de precios. */
     public readonly Resources\PriceLists $priceLists;
 
@@ -371,6 +374,7 @@ abstract class FiscalistoApi extends Core
         $this->branches = new Resources\Branches($this);
         $this->rules = new Resources\Rules($this);
         $this->costCenters = new Resources\CostCenters($this);
+        $this->tags = new Resources\Tags($this);
         $this->priceLists = new Resources\PriceLists($this);
         $this->customerGroups = new Resources\CustomerGroups($this);
         $this->prices = new Resources\Prices($this);
