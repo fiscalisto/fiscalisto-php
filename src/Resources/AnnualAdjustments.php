@@ -38,7 +38,7 @@ final class AnnualAdjustments
      *     year: int,
      *     applies_from: string,
      *     last_payment_date: string|null,
-     *     employees: list<array{employee: string, employee_number: string, employee_name: string, income: float|int, taxable_income: float|int, annual_tax: float|int, employment_subsidy: float|int, tax_due: float|int, tax_withheld: float|int, balance: float|int, excluded: 'started'|'left'|'income'|'files_own'|null, files_own_return: bool, missing_months: list<int>, applied_amount: float|int|null, remaining: float|int|null}>,
+     *     employees: list<array{employee: string, employee_number: string, employee_name: string, income: float|int, taxable_income: float|int, annual_tax: float|int, employment_subsidy: float|int, tax_due: float|int, tax_withheld: float|int, balance: float|int, excluded: 'started'|'left'|'income'|'files_own'|'minimum'|null, files_own_return: bool, missing_months: list<int>, applied_amount: float|int|null, remaining: float|int|null}>,
      * }
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/nomina/get-annual-adjustment
@@ -74,7 +74,7 @@ final class AnnualAdjustments
      *     year: int,
      *     applies_from: string,
      *     last_payment_date: string|null,
-     *     employees: list<array{employee: string, employee_number: string, employee_name: string, income: float|int, taxable_income: float|int, annual_tax: float|int, employment_subsidy: float|int, tax_due: float|int, tax_withheld: float|int, balance: float|int, excluded: 'started'|'left'|'income'|'files_own'|null, files_own_return: bool, missing_months: list<int>, applied_amount: float|int|null, remaining: float|int|null}>,
+     *     employees: list<array{employee: string, employee_number: string, employee_name: string, income: float|int, taxable_income: float|int, annual_tax: float|int, employment_subsidy: float|int, tax_due: float|int, tax_withheld: float|int, balance: float|int, excluded: 'started'|'left'|'income'|'files_own'|'minimum'|null, files_own_return: bool, missing_months: list<int>, applied_amount: float|int|null, remaining: float|int|null}>,
      * }
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/nomina/update-annual-adjustment
