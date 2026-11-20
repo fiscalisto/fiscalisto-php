@@ -410,4 +410,65 @@ final class Employees
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
         return $this->client->request('GET', '/v1/employees/' . rawurlencode($id) . '/vacations/certificate', ['query' => $params, 'as' => 'bytes'], $options);
     }
+
+    /**
+     * Portal del empleado
+     *
+     * El enlace personal del empleado (sin cuenta) para ver, descargar y firmar de recibido sus
+     * recibos de nómina, ver sus vacaciones y pedir días; los celulares ligados y los recibos que
+     * firmó.
+     *
+     * GET /v1/employees/{id}/portal
+     *
+     * @param string $id
+     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @return array{
+     *     object: 'employee_portal',
+     *     livemode: bool,
+     *     employee: string,
+     *     url: string|null,
+     *     enabled_at: string|null,
+     *     phones: int,
+     *     last_seen_at: string|null,
+     *     signed_receipts: list<array{uuid: string, signed_at: string}>,
+     * }
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/nomina/get-employee-portal
+     */
+    public function portal(string $id, array $options = []): array
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('GET', '/v1/employees/' . rawurlencode($id) . '/portal', [], $options);
+    }
+
+    /**
+     * Activar, cambiar o apagar el portal
+     *
+     * enable crea el enlace (o deja el que tiene), renew hace uno nuevo (el anterior deja de
+     * funcionar y sus celulares se desligan) y disable lo apaga. Lo firmado se queda. Con
+     * send_email se lo manda a su correo.
+     *
+     * POST /v1/employees/{id}/portal
+     *
+     * @param string $id
+     * @param array{action: 'enable'|'renew'|'disable', send_email?: bool} $params
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
+     * @return array{
+     *     object: 'employee_portal',
+     *     livemode: bool,
+     *     employee: string,
+     *     url: string|null,
+     *     enabled_at: string|null,
+     *     phones: int,
+     *     last_seen_at: string|null,
+     *     signed_receipts: list<array{uuid: string, signed_at: string}>,
+     * }
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/nomina/update-employee-portal
+     */
+    public function updatePortal(string $id, array $params, array $options = []): array
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('POST', '/v1/employees/' . rawurlencode($id) . '/portal', ['body' => $params, 'idempotent' => true], $options);
+    }
 }

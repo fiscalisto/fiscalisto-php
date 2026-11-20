@@ -63,6 +63,9 @@ abstract class FiscalistoApi extends Core
     public readonly Resources\Employees $employees;
 
     /** Nómina. */
+    public readonly Resources\VacationRequests $vacationRequests;
+
+    /** Nómina. */
     public readonly Resources\PayrollReceipts $payrollReceipts;
 
     /** Nómina. */
@@ -323,6 +326,7 @@ abstract class FiscalistoApi extends Core
         $this->advances = new Resources\Advances($this);
         $this->retentions = new Resources\Retentions($this);
         $this->employees = new Resources\Employees($this);
+        $this->vacationRequests = new Resources\VacationRequests($this);
         $this->payrollReceipts = new Resources\PayrollReceipts($this);
         $this->payrollBatches = new Resources\PayrollBatches($this);
         $this->payrollBankFiles = new Resources\PayrollBankFiles($this);
