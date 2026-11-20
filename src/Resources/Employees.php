@@ -385,4 +385,29 @@ final class Employees
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
         return $this->client->request('POST', '/v1/employees/' . rawurlencode($id) . '/vacations', ['body' => $params, 'idempotent' => true], $options);
     }
+
+    /**
+     * Constancia de vacaciones
+     *
+     * El PDF de la constancia que el artículo 81 de la LFT pide entregar cada año: su antigüedad
+     * al último aniversario, los días de vacaciones que le corresponden (artículo 76) con su prima
+     * vacacional, cuándo disfrutarlos (las fechas que mande, o los seis meses siguientes al
+     * aniversario) y los días pendientes de años anteriores con cuándo prescriben, con espacio
+     * para las firmas. Antes de su primer aniversario dice cuándo lo cumple y cuántos días le
+     * tocarán.
+     *
+     * GET /v1/employees/{id}/vacations/certificate
+     *
+     * @param string $id
+     * @param array{enjoy_from?: string, enjoy_to?: string, as_of?: string} $params
+     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @return string Los bytes del PDF.
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/nomina/get-employee-vacation-certificate
+     */
+    public function vacationCertificate(string $id, array $params = [], array $options = []): string
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('GET', '/v1/employees/' . rawurlencode($id) . '/vacations/certificate', ['query' => $params, 'as' => 'bytes'], $options);
+    }
 }
