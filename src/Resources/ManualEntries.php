@@ -40,7 +40,7 @@ final class ManualEntries
      *     uuid?: string|null,
      *     uuid_tax_id?: string|null,
      *     repeat_until?: string|null,
-     *     lines: list<array{account: string, debit?: float|int, credit?: float|int, cost_center?: string|null}>,
+     *     lines: list<array{account: string, debit?: float|int, credit?: float|int, cost_center?: string|null, currency?: string|null, foreign_amount?: float|int|null, exchange_rate?: float|int|null, cfdi_uuid?: string|null, cfdi_tax_id?: string|null}>,
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
@@ -58,7 +58,7 @@ final class ManualEntries
      *     uuid: string|null,
      *     uuid_tax_id: string|null,
      *     total: float|int,
-     *     lines: list<array{account: string, account_name: string, grouping_code: string, debit: float|int, credit: float|int, cost_center: string|null}>,
+     *     lines: list<array{account: string, account_name: string, grouping_code: string, debit: float|int, credit: float|int, cost_center: string|null, currency: string|null, foreign_amount: float|int|null, exchange_rate: float|int|null, cfdi_uuid: string|null, cfdi_tax_id: string|null}>,
      *     created_at: string|null,
      *     updated_at: string|null,
      * }
@@ -120,7 +120,7 @@ final class ManualEntries
      *     uuid: string|null,
      *     uuid_tax_id: string|null,
      *     total: float|int,
-     *     lines: list<array{account: string, account_name: string, grouping_code: string, debit: float|int, credit: float|int, cost_center: string|null}>,
+     *     lines: list<array{account: string, account_name: string, grouping_code: string, debit: float|int, credit: float|int, cost_center: string|null, currency: string|null, foreign_amount: float|int|null, exchange_rate: float|int|null, cfdi_uuid: string|null, cfdi_tax_id: string|null}>,
      *     created_at: string|null,
      *     updated_at: string|null,
      * }
@@ -150,7 +150,7 @@ final class ManualEntries
      *     uuid?: string|null,
      *     uuid_tax_id?: string|null,
      *     repeat_until?: string|null,
-     *     lines: list<array{account: string, debit?: float|int, credit?: float|int, cost_center?: string|null}>,
+     *     lines: list<array{account: string, debit?: float|int, credit?: float|int, cost_center?: string|null, currency?: string|null, foreign_amount?: float|int|null, exchange_rate?: float|int|null, cfdi_uuid?: string|null, cfdi_tax_id?: string|null}>,
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
@@ -168,7 +168,7 @@ final class ManualEntries
      *     uuid: string|null,
      *     uuid_tax_id: string|null,
      *     total: float|int,
-     *     lines: list<array{account: string, account_name: string, grouping_code: string, debit: float|int, credit: float|int, cost_center: string|null}>,
+     *     lines: list<array{account: string, account_name: string, grouping_code: string, debit: float|int, credit: float|int, cost_center: string|null, currency: string|null, foreign_amount: float|int|null, exchange_rate: float|int|null, cfdi_uuid: string|null, cfdi_tax_id: string|null}>,
      *     created_at: string|null,
      *     updated_at: string|null,
      * }
@@ -213,7 +213,7 @@ final class ManualEntries
      *
      * @param array{
      *     issuer?: string,
-     *     entries: list<array{date: string, journal_type?: 'journal'|'income'|'expense', number?: string|null, description: string, lines: list<array{account: string, debit?: float|int, credit?: float|int, cost_center?: string|null}>}>,
+     *     entries: list<array{date: string, journal_type?: 'journal'|'income'|'expense', number?: string|null, description: string, lines: list<array{account: string, debit?: float|int, credit?: float|int, cost_center?: string|null, currency?: string|null, foreign_amount?: float|int|null, exchange_rate?: float|int|null, cfdi_uuid?: string|null, cfdi_tax_id?: string|null}>}>,
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
