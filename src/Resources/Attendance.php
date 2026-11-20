@@ -38,7 +38,9 @@ final class Attendance
      *     to: string,
      *     overtime_approval: bool,
      *     overtime_policy: 'approval'|'all'|'none',
-     *     employees: list<array{employee: string, name: string, number: string|null, place: string|null, worked_minutes: int, scheduled_minutes: int, absences: int, disability_days: int, vacation_days: int, late_count: int, late_minutes: int, incomplete_days: int, flagged_marks: int, overtime_double_minutes: int, overtime_triple_minutes: int, overtime_minutes: int, unapproved_overtime_minutes: int, rejected_overtime_minutes: int, rest_days_worked: int, holidays_worked: int, weeks_confirmed: int, weeks_disputed: list<array<string, mixed>>, days: list<array<string, mixed>>|null, marks: list<array<string, mixed>>|null}>,
+     *     ordinary_week_hours: int,
+     *     weekly_hours: int|null,
+     *     employees: list<array{employee: string, name: string, number: string|null, place: string|null, worked_minutes: int, scheduled_minutes: int, absences: int, disability_days: int, vacation_days: int, late_count: int, late_minutes: int, incomplete_days: int, flagged_marks: int, overtime_double_minutes: int, overtime_triple_minutes: int, overtime_minutes: int, week_excess_minutes: int, unapproved_overtime_minutes: int, rejected_overtime_minutes: int, rest_days_worked: int, holidays_worked: int, weeks_confirmed: int, weeks_disputed: list<array<string, mixed>>, days: list<array<string, mixed>>|null, marks: list<array<string, mixed>>|null}>,
      * }
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/asistencia/get-attendance

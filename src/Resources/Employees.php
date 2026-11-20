@@ -455,6 +455,30 @@ final class Employees
     }
 
     /**
+     * Constancia de sueldos
+     *
+     * El PDF de lo que se le pagó al empleado en un año, de sus recibos de nómina vigentes por
+     * fecha de pago: cada percepción con su parte gravada y exenta, las deducciones (ISR retenido,
+     * IMSS y otras), los otros pagos con el subsidio para el empleo causado, y el neto. Resume sus
+     * CFDI de nómina, que son el comprobante de lo pagado y retenido (LISR art. 99 fr. III); no
+     * los sustituye. El empleado la baja también desde su portal.
+     *
+     * GET /v1/employees/{id}/pay_statement
+     *
+     * @param string $id
+     * @param array{year: string} $params
+     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @return string Los bytes del PDF.
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/nomina/get-employee-pay-statement
+     */
+    public function payStatement(string $id, array $params, array $options = []): string
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('GET', '/v1/employees/' . rawurlencode($id) . '/pay_statement', ['query' => $params, 'as' => 'bytes'], $options);
+    }
+
+    /**
      * Portal del empleado
      *
      * El enlace personal del empleado (sin cuenta) para ver, descargar y firmar de recibido sus
