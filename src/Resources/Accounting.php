@@ -133,6 +133,137 @@ final class Accounting
     }
 
     /**
+     * Ver el estado de flujos de efectivo
+     *
+     * El estado de flujos de efectivo (NIF B-2, método indirecto) del mes o de enero al mes: la
+     * utilidad, la depreciación y amortización que se suman, el cambio en capital de trabajo, y
+     * las actividades de inversión y de financiamiento, hasta el efectivo al cierre. Cada cuenta
+     * va a su actividad por su código agrupador; difference es 0 cuando la balanza cuadra. Como
+     * Estados financieros › Flujo de efectivo en la app.
+     *
+     * GET /v1/accounting/cash_flow
+     *
+     * @param array{month: string, period?: 'month'|'year_to_date', issuer?: string} $params
+     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @return array{
+     *     object: 'cash_flow',
+     *     livemode: bool,
+     *     issuer: string,
+     *     month: string,
+     *     period: 'month'|'year_to_date',
+     *     net_income: float|int,
+     *     operating: array{non_cash: list<array<string, mixed>>, working_capital: list<array<string, mixed>>, total: float|int},
+     *     investing: array{lines: list<array<string, mixed>>, total: float|int},
+     *     financing: array{lines: list<array<string, mixed>>, total: float|int},
+     *     net_change: float|int,
+     *     cash_beginning: float|int,
+     *     cash_end: float|int,
+     *     difference: float|int,
+     * }
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/contabilidad/get-cash-flow
+     */
+    public function cashFlow(array $params, array $options = []): array
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('GET', '/v1/accounting/cash_flow', ['query' => $params], $options);
+    }
+
+    /**
+     * Ver el estado de cambios en el capital contable
+     *
+     * El estado de cambios en el capital contable (NIF B-4) de enero al mes: cada cuenta de
+     * capital del 1 de enero al cierre, con sus aportaciones, retiros, dividendos y traspasos, y
+     * el resultado del ejercicio. Como Estados financieros › Capital contable en la app.
+     *
+     * GET /v1/accounting/equity_changes
+     *
+     * @param array{month: string, issuer?: string} $params
+     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @return array{
+     *     object: 'equity_changes',
+     *     livemode: bool,
+     *     issuer: string,
+     *     month: string,
+     *     accounts: list<array{grouping_code: string, name: string, beginning: float|int, movements: float|int, ending: float|int}>,
+     *     net_income: float|int,
+     *     beginning: float|int,
+     *     movements: float|int,
+     *     ending: float|int,
+     * }
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/contabilidad/get-equity-changes
+     */
+    public function equityChanges(array $params, array $options = []): array
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('GET', '/v1/accounting/equity_changes', ['query' => $params], $options);
+    }
+
+    /**
+     * Comparar los estados financieros con otro mes
+     *
+     * El estado de resultados (del mes y de enero al mes) y el balance general junto a los del
+     * mismo mes del año anterior (compare_to=previous_year, por omisión) o del mes anterior
+     * (previous_month), con la variación y su porcentaje por grupo de cuentas. Como Estados
+     * financieros › Comparativo en la app.
+     *
+     * GET /v1/accounting/comparative_statements
+     *
+     * @param array{
+     *     month: string,
+     *     compare_to?: 'previous_year'|'previous_month',
+     *     issuer?: string,
+     * } $params
+     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @return array{
+     *     object: 'comparative_statements',
+     *     livemode: bool,
+     *     issuer: string,
+     *     month: string,
+     *     compared_to: string,
+     *     income_statement: array{month: array<string, mixed>, year_to_date: array<string, mixed>},
+     *     balance_sheet: list<array{key: 'assets'|'liabilities'|'equity', name: string, lines: list<array<string, mixed>>, total: array<string, mixed>}>,
+     * }
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/contabilidad/get-comparative-statements
+     */
+    public function comparativeStatements(array $params, array $options = []): array
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('GET', '/v1/accounting/comparative_statements', ['query' => $params], $options);
+    }
+
+    /**
+     * Ver las razones financieras
+     *
+     * Liquidez, prueba ácida, endeudamiento, apalancamiento, márgenes, rendimiento sobre capital y
+     * sobre activo, y días de cobro, de pago y de inventario al cierre del mes, con las cifras de
+     * que salen. Rentabilidad y rotación usan los resultados de enero al mes. Como Estados
+     * financieros › Razones financieras en la app.
+     *
+     * GET /v1/accounting/financial_ratios
+     *
+     * @param array{month: string, issuer?: string} $params
+     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @return array{
+     *     object: 'financial_ratios',
+     *     livemode: bool,
+     *     issuer: string,
+     *     month: string,
+     *     ratios: list<array{key: 'liquidez'|'prueba_acida'|'endeudamiento'|'apalancamiento'|'margen_bruto'|'margen_operacion'|'margen_neto'|'rendimiento_capital'|'rendimiento_activo'|'dias_cobro'|'dias_pago'|'dias_inventario', name: string, value: float|int|null, unit: 'times'|'percent'|'days', description: string}>,
+     *     inputs: array{current_assets: float|int, current_liabilities: float|int, inventory: float|int, receivables: float|int, payables: float|int, total_assets: float|int, total_liabilities: float|int, equity: float|int, revenue_year_to_date: float|int, income_before_taxes_year_to_date: float|int},
+     * }
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/contabilidad/get-financial-ratios
+     */
+    public function financialRatios(array $params, array $options = []): array
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('GET', '/v1/accounting/financial_ratios', ['query' => $params], $options);
+    }
+
+    /**
      * Cruzar lo declarado con lo facturado
      *
      * Cada mes ya vencido del año: el IVA trasladado, acreditable y retenido y los ingresos para
