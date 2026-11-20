@@ -426,6 +426,41 @@ final class Accounting
     }
 
     /**
+     * Ver los estados financieros consolidados
+     *
+     * El estado de resultados y el balance general de varios RFC del espacio del emisor sumados
+     * cuenta por cuenta (comparten el catálogo), menos las eliminaciones del mes (POST
+     * /v1/accounting/consolidation_eliminations), con la hoja de consolidación (el saldo de cada
+     * cuenta en cada RFC, lo eliminado y el consolidado) y lo que los RFC se facturaron entre
+     * ellos sin impuestos. Los libros de cada RFC no cambian. Un emisor con un solo RFC contesta
+     * parameter_invalid en rfcs.
+     *
+     * GET /v1/accounting/consolidated_statements
+     *
+     * @param array{rfcs: string, month: string, issuer?: string} $params
+     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @return array{
+     *     object: 'consolidated_statements',
+     *     livemode: bool,
+     *     issuer: string,
+     *     month: string,
+     *     rfcs: list<string>,
+     *     income_statement: array{month: array<string, mixed>, year_to_date: array<string, mixed>},
+     *     balance_sheet: array{assets: array<string, mixed>, liabilities: array<string, mixed>, equity: array<string, mixed>, net_income_year_to_date: float|int, liabilities_and_equity: float|int, difference: float|int},
+     *     worksheet: list<array{number: string, name: string, grouping_code: string, by_rfc: array<string, mixed>, eliminations: float|int, balance: float|int}>,
+     *     eliminations: list<array{id: string, livemode: bool, object: 'consolidation_elimination', issuer: string, month: string, description: string, rfcs: list<string>, lines: list<array<string, mixed>>, updated_at: string|null}>,
+     *     intercompany: list<array{issuer_rfc: string, receiver_rfc: string, month_amount: float|int, year_to_date_amount: float|int, invoices: int}>,
+     * }
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/contabilidad/get-consolidated-statements
+     */
+    public function consolidatedStatements(array $params, array $options = []): array
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('GET', '/v1/accounting/consolidated_statements', ['query' => $params], $options);
+    }
+
+    /**
      * Descargar la contabilidad electrónica
      *
      * El ZIP del mes para el Buzón Tributario: el catálogo (CT) y la balanza (BN, o BC si es

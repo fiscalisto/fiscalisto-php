@@ -258,6 +258,9 @@ abstract class FiscalistoApi extends Core
     public readonly Resources\AccountRenumberings $accountRenumberings;
 
     /** Contabilidad. */
+    public readonly Resources\ConsolidationEliminations $consolidationEliminations;
+
+    /** Contabilidad. */
     public readonly Resources\EntryTemplates $entryTemplates;
 
     /** Contabilidad. */
@@ -382,6 +385,7 @@ abstract class FiscalistoApi extends Core
         $this->bookDepreciationRates = new Resources\BookDepreciationRates($this);
         $this->chartTemplates = new Resources\ChartTemplates($this);
         $this->accountRenumberings = new Resources\AccountRenumberings($this);
+        $this->consolidationEliminations = new Resources\ConsolidationEliminations($this);
         $this->entryTemplates = new Resources\EntryTemplates($this);
         $this->costCenterResults = new Resources\CostCenterResults($this);
         $this->payrollProvisions = new Resources\PayrollProvisions($this);
