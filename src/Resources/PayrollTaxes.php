@@ -63,6 +63,7 @@ final class PayrollTaxes
      *     issuer?: string,
      *     excluded_perception_types?: list<string>,
      *     state_options?: array<string, mixed>,
+     *     due_days?: array<string, mixed>,
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
@@ -71,6 +72,7 @@ final class PayrollTaxes
      *     issuer: string,
      *     excluded_perception_types: list<string>|null,
      *     state_options: array<string, mixed>,
+     *     due_days: array<string, mixed>,
      * }
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/nomina/update-payroll-tax-settings
