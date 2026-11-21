@@ -273,6 +273,9 @@ abstract class FiscalistoApi extends Core
     public readonly Resources\FixedAssets $fixedAssets;
 
     /** Contabilidad. */
+    public readonly Resources\AccountingSettings $accountingSettings;
+
+    /** Contabilidad. */
     public readonly Resources\ClosedPeriod $closedPeriod;
 
     /** Contabilidad. */
@@ -441,6 +444,7 @@ abstract class FiscalistoApi extends Core
         $this->automaticEntries = new Resources\AutomaticEntries($this);
         $this->openingBalances = new Resources\OpeningBalances($this);
         $this->fixedAssets = new Resources\FixedAssets($this);
+        $this->accountingSettings = new Resources\AccountingSettings($this);
         $this->closedPeriod = new Resources\ClosedPeriod($this);
         $this->fxRevaluations = new Resources\FxRevaluations($this);
         $this->costOfSales = new Resources\CostOfSales($this);
