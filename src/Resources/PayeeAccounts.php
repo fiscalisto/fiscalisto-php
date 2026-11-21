@@ -31,7 +31,7 @@ final class PayeeAccounts
      * @param array{timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     object: 'list',
-     *     data: list<array{id: string, livemode: bool, object: 'payee_account', issuer: string, supplier_tax_id: string, supplier_name: string|null, clabe: string, bank: string|null, holder_tax_id: string|null, holder_name: string|null, third_party: bool, status: 'verifying'|'pending_approval'|'holder_mismatch'|'failed'|'approved'|'rejected'|'replaced', usable: bool, usable_from: string|null, verified_at: string|null, created_at: string|null}>,
+     *     data: list<array{id: string, livemode: bool, object: 'payee_account', issuer: string, supplier_tax_id: string, supplier_name: string|null, clabe: string, bank: string|null, holder_tax_id: string|null, holder_name: string|null, third_party: bool, verification: 'bank'|'by_hand'|'third_party'|null, verified_by_hand_reason: string|null, status: 'verifying'|'pending_approval'|'holder_mismatch'|'failed'|'approved'|'rejected'|'replaced', usable: bool, usable_from: string|null, verified_at: string|null, created_at: string|null}>,
      *     has_more: bool,
      *     url: string,
      * }
