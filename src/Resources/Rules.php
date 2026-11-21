@@ -32,9 +32,9 @@ final class Rules
      * @param array{
      *     issuer?: string,
      *     name?: string,
-     *     trigger: 'invoice.received'|'invoice.issued'|'invoice.paid'|'invoice.cancelled'|'purchase_order.saved'|'purchase_order.approved'|'purchase_order.sent'|'purchase_order.confirmed'|'purchase_order.received_part'|'purchase_order.received_all'|'purchase_order.invoiced_all'|'purchase_order.price_variance'|'purchase_order.registered',
+     *     trigger: 'invoice.received'|'invoice.issued'|'invoice.paid'|'invoice.cancelled'|'invoice.approved'|'invoice.rejected'|'purchase_order.saved'|'purchase_order.approved'|'purchase_order.rejected'|'purchase_order.sent'|'purchase_order.confirmed'|'purchase_order.received_part'|'purchase_order.received_all'|'purchase_order.invoiced_all'|'purchase_order.price_variance'|'purchase_order.registered',
      *     conditions?: array{match?: 'all'|'any', conditions?: list<array{field: string, operator: 'is'|'not'|'gte'|'lte'|'between'|'contains'|'not_contains'|'starts'|'yes'|'no'|'set'|'unset', values?: list<string>, value?: float|int, to?: float|int, text?: string}>, groups?: list<array{match: 'all'|'any', conditions: list<array<string, mixed>>}>},
-     *     actions: list<array{type: 'tag'|'cost_center'|'stage'|'close'|'notify'|'category', tag?: string|int, category?: 'Renta y arrendamiento'|'Servicios profesionales'|'Nómina y personal'|'Transporte y fletes'|'Combustible'|'Viáticos y viajes'|'Alimentos y representación'|'Telecomunicaciones e internet'|'Energía y agua'|'Software y suscripciones'|'Equipo de cómputo'|'Papelería y oficina'|'Mantenimiento y reparaciones'|'Publicidad y marketing'|'Seguros y fianzas'|'Comisiones bancarias y financieras'|'Impuestos y derechos'|'Compras de mercancía e inventario'|'Materias primas y producción'|'Activo fijo y mobiliario'|'Vehículos'|'Capacitación'|'Donativos'|'Otros gastos', remove_when_unmet?: bool, cost_center?: string, stage?: int, members?: list<string>, note?: string|null}>,
+     *     actions: list<array{type: 'tag'|'cost_center'|'stage'|'close'|'ask_approval'|'notify'|'category', tag?: string|int, category?: 'Renta y arrendamiento'|'Servicios profesionales'|'Nómina y personal'|'Transporte y fletes'|'Combustible'|'Viáticos y viajes'|'Alimentos y representación'|'Telecomunicaciones e internet'|'Energía y agua'|'Software y suscripciones'|'Equipo de cómputo'|'Papelería y oficina'|'Mantenimiento y reparaciones'|'Publicidad y marketing'|'Seguros y fianzas'|'Comisiones bancarias y financieras'|'Impuestos y derechos'|'Compras de mercancía e inventario'|'Materias primas y producción'|'Activo fijo y mobiliario'|'Vehículos'|'Capacitación'|'Donativos'|'Otros gastos', remove_when_unmet?: bool, cost_center?: string, stage?: int, members?: list<string>, note?: string|null}>,
      *     once_per_record?: bool,
      *     stop_after?: bool,
      *     enabled?: bool,
@@ -46,9 +46,9 @@ final class Rules
      *     object: 'rule',
      *     issuer: string,
      *     name: string,
-     *     trigger: 'invoice.received'|'invoice.issued'|'invoice.paid'|'invoice.cancelled'|'purchase_order.saved'|'purchase_order.approved'|'purchase_order.sent'|'purchase_order.confirmed'|'purchase_order.received_part'|'purchase_order.received_all'|'purchase_order.invoiced_all'|'purchase_order.price_variance'|'purchase_order.registered',
+     *     trigger: 'invoice.received'|'invoice.issued'|'invoice.paid'|'invoice.cancelled'|'invoice.approved'|'invoice.rejected'|'purchase_order.saved'|'purchase_order.approved'|'purchase_order.rejected'|'purchase_order.sent'|'purchase_order.confirmed'|'purchase_order.received_part'|'purchase_order.received_all'|'purchase_order.invoiced_all'|'purchase_order.price_variance'|'purchase_order.registered',
      *     conditions: array{match: 'all'|'any', conditions: list<array<string, mixed>>, groups: list<array<string, mixed>>},
-     *     actions: list<array{type: 'tag'|'cost_center'|'category'|'stage'|'close'|'notify', tag?: string, category?: string, remove_when_unmet?: bool, cost_center?: string, stage?: int, members?: list<string>, note?: string|null}>,
+     *     actions: list<array{type: 'tag'|'cost_center'|'category'|'stage'|'close'|'ask_approval'|'notify', tag?: string, category?: string, remove_when_unmet?: bool, cost_center?: string, stage?: int, members?: list<string>, note?: string|null}>,
      *     once_per_record: bool,
      *     stop_after: bool,
      *     enabled: bool,
@@ -74,7 +74,7 @@ final class Rules
      *
      * @param array{limit?: int, starting_after?: string, issuer?: string, trigger?: string} $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'rule', issuer: string, name: string, trigger: 'invoice.received'|'invoice.issued'|'invoice.paid'|'invoice.cancelled'|'purchase_order.saved'|'purchase_order.approved'|'purchase_order.sent'|'purchase_order.confirmed'|'purchase_order.received_part'|'purchase_order.received_all'|'purchase_order.invoiced_all'|'purchase_order.price_variance'|'purchase_order.registered', conditions: array<string, mixed>, actions: list<array<string, mixed>>, once_per_record: bool, stop_after: bool, enabled: bool, position: int, created_at: string|null, updated_at: string|null}>
+     * @return Collection<array{id: string, livemode: bool, object: 'rule', issuer: string, name: string, trigger: 'invoice.received'|'invoice.issued'|'invoice.paid'|'invoice.cancelled'|'invoice.approved'|'invoice.rejected'|'purchase_order.saved'|'purchase_order.approved'|'purchase_order.rejected'|'purchase_order.sent'|'purchase_order.confirmed'|'purchase_order.received_part'|'purchase_order.received_all'|'purchase_order.invoiced_all'|'purchase_order.price_variance'|'purchase_order.registered', conditions: array<string, mixed>, actions: list<array<string, mixed>>, once_per_record: bool, stop_after: bool, enabled: bool, position: int, created_at: string|null, updated_at: string|null}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/reglas/list-rules
      */
@@ -96,7 +96,7 @@ final class Rules
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     object: 'list',
-     *     data: list<array{id: string, livemode: bool, object: 'rule', issuer: string, name: string, trigger: 'invoice.received'|'invoice.issued'|'invoice.paid'|'invoice.cancelled'|'purchase_order.saved'|'purchase_order.approved'|'purchase_order.sent'|'purchase_order.confirmed'|'purchase_order.received_part'|'purchase_order.received_all'|'purchase_order.invoiced_all'|'purchase_order.price_variance'|'purchase_order.registered', conditions: array<string, mixed>, actions: list<array<string, mixed>>, once_per_record: bool, stop_after: bool, enabled: bool, position: int, created_at: string|null, updated_at: string|null}>,
+     *     data: list<array{id: string, livemode: bool, object: 'rule', issuer: string, name: string, trigger: 'invoice.received'|'invoice.issued'|'invoice.paid'|'invoice.cancelled'|'invoice.approved'|'invoice.rejected'|'purchase_order.saved'|'purchase_order.approved'|'purchase_order.rejected'|'purchase_order.sent'|'purchase_order.confirmed'|'purchase_order.received_part'|'purchase_order.received_all'|'purchase_order.invoiced_all'|'purchase_order.price_variance'|'purchase_order.registered', conditions: array<string, mixed>, actions: list<array<string, mixed>>, once_per_record: bool, stop_after: bool, enabled: bool, position: int, created_at: string|null, updated_at: string|null}>,
      *     has_more: bool,
      *     url: string,
      * }
@@ -124,9 +124,9 @@ final class Rules
      *     object: 'rule',
      *     issuer: string,
      *     name: string,
-     *     trigger: 'invoice.received'|'invoice.issued'|'invoice.paid'|'invoice.cancelled'|'purchase_order.saved'|'purchase_order.approved'|'purchase_order.sent'|'purchase_order.confirmed'|'purchase_order.received_part'|'purchase_order.received_all'|'purchase_order.invoiced_all'|'purchase_order.price_variance'|'purchase_order.registered',
+     *     trigger: 'invoice.received'|'invoice.issued'|'invoice.paid'|'invoice.cancelled'|'invoice.approved'|'invoice.rejected'|'purchase_order.saved'|'purchase_order.approved'|'purchase_order.rejected'|'purchase_order.sent'|'purchase_order.confirmed'|'purchase_order.received_part'|'purchase_order.received_all'|'purchase_order.invoiced_all'|'purchase_order.price_variance'|'purchase_order.registered',
      *     conditions: array{match: 'all'|'any', conditions: list<array<string, mixed>>, groups: list<array<string, mixed>>},
-     *     actions: list<array{type: 'tag'|'cost_center'|'category'|'stage'|'close'|'notify', tag?: string, category?: string, remove_when_unmet?: bool, cost_center?: string, stage?: int, members?: list<string>, note?: string|null}>,
+     *     actions: list<array{type: 'tag'|'cost_center'|'category'|'stage'|'close'|'ask_approval'|'notify', tag?: string, category?: string, remove_when_unmet?: bool, cost_center?: string, stage?: int, members?: list<string>, note?: string|null}>,
      *     once_per_record: bool,
      *     stop_after: bool,
      *     enabled: bool,
@@ -154,9 +154,9 @@ final class Rules
      * @param string $id
      * @param array{
      *     name?: string,
-     *     trigger?: 'invoice.received'|'invoice.issued'|'invoice.paid'|'invoice.cancelled'|'purchase_order.saved'|'purchase_order.approved'|'purchase_order.sent'|'purchase_order.confirmed'|'purchase_order.received_part'|'purchase_order.received_all'|'purchase_order.invoiced_all'|'purchase_order.price_variance'|'purchase_order.registered',
+     *     trigger?: 'invoice.received'|'invoice.issued'|'invoice.paid'|'invoice.cancelled'|'invoice.approved'|'invoice.rejected'|'purchase_order.saved'|'purchase_order.approved'|'purchase_order.rejected'|'purchase_order.sent'|'purchase_order.confirmed'|'purchase_order.received_part'|'purchase_order.received_all'|'purchase_order.invoiced_all'|'purchase_order.price_variance'|'purchase_order.registered',
      *     conditions?: array{match?: 'all'|'any', conditions?: list<array{field: string, operator: 'is'|'not'|'gte'|'lte'|'between'|'contains'|'not_contains'|'starts'|'yes'|'no'|'set'|'unset', values?: list<string>, value?: float|int, to?: float|int, text?: string}>, groups?: list<array{match: 'all'|'any', conditions: list<array<string, mixed>>}>},
-     *     actions?: list<array{type: 'tag'|'cost_center'|'stage'|'close'|'notify'|'category', tag?: string|int, category?: 'Renta y arrendamiento'|'Servicios profesionales'|'Nómina y personal'|'Transporte y fletes'|'Combustible'|'Viáticos y viajes'|'Alimentos y representación'|'Telecomunicaciones e internet'|'Energía y agua'|'Software y suscripciones'|'Equipo de cómputo'|'Papelería y oficina'|'Mantenimiento y reparaciones'|'Publicidad y marketing'|'Seguros y fianzas'|'Comisiones bancarias y financieras'|'Impuestos y derechos'|'Compras de mercancía e inventario'|'Materias primas y producción'|'Activo fijo y mobiliario'|'Vehículos'|'Capacitación'|'Donativos'|'Otros gastos', remove_when_unmet?: bool, cost_center?: string, stage?: int, members?: list<string>, note?: string|null}>,
+     *     actions?: list<array{type: 'tag'|'cost_center'|'stage'|'close'|'ask_approval'|'notify'|'category', tag?: string|int, category?: 'Renta y arrendamiento'|'Servicios profesionales'|'Nómina y personal'|'Transporte y fletes'|'Combustible'|'Viáticos y viajes'|'Alimentos y representación'|'Telecomunicaciones e internet'|'Energía y agua'|'Software y suscripciones'|'Equipo de cómputo'|'Papelería y oficina'|'Mantenimiento y reparaciones'|'Publicidad y marketing'|'Seguros y fianzas'|'Comisiones bancarias y financieras'|'Impuestos y derechos'|'Compras de mercancía e inventario'|'Materias primas y producción'|'Activo fijo y mobiliario'|'Vehículos'|'Capacitación'|'Donativos'|'Otros gastos', remove_when_unmet?: bool, cost_center?: string, stage?: int, members?: list<string>, note?: string|null}>,
      *     once_per_record?: bool,
      *     stop_after?: bool,
      *     enabled?: bool,
@@ -168,9 +168,9 @@ final class Rules
      *     object: 'rule',
      *     issuer: string,
      *     name: string,
-     *     trigger: 'invoice.received'|'invoice.issued'|'invoice.paid'|'invoice.cancelled'|'purchase_order.saved'|'purchase_order.approved'|'purchase_order.sent'|'purchase_order.confirmed'|'purchase_order.received_part'|'purchase_order.received_all'|'purchase_order.invoiced_all'|'purchase_order.price_variance'|'purchase_order.registered',
+     *     trigger: 'invoice.received'|'invoice.issued'|'invoice.paid'|'invoice.cancelled'|'invoice.approved'|'invoice.rejected'|'purchase_order.saved'|'purchase_order.approved'|'purchase_order.rejected'|'purchase_order.sent'|'purchase_order.confirmed'|'purchase_order.received_part'|'purchase_order.received_all'|'purchase_order.invoiced_all'|'purchase_order.price_variance'|'purchase_order.registered',
      *     conditions: array{match: 'all'|'any', conditions: list<array<string, mixed>>, groups: list<array<string, mixed>>},
-     *     actions: list<array{type: 'tag'|'cost_center'|'category'|'stage'|'close'|'notify', tag?: string, category?: string, remove_when_unmet?: bool, cost_center?: string, stage?: int, members?: list<string>, note?: string|null}>,
+     *     actions: list<array{type: 'tag'|'cost_center'|'category'|'stage'|'close'|'ask_approval'|'notify', tag?: string, category?: string, remove_when_unmet?: bool, cost_center?: string, stage?: int, members?: list<string>, note?: string|null}>,
      *     once_per_record: bool,
      *     stop_after: bool,
      *     enabled: bool,
@@ -244,7 +244,7 @@ final class Rules
      * @param string $id
      * @param array{limit?: int, starting_after?: string} $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, object: 'rule_run', rule: string, trigger: 'invoice.received'|'invoice.issued'|'invoice.paid'|'invoice.cancelled'|'purchase_order.saved'|'purchase_order.approved'|'purchase_order.sent'|'purchase_order.confirmed'|'purchase_order.received_part'|'purchase_order.received_all'|'purchase_order.invoiced_all'|'purchase_order.price_variance'|'purchase_order.registered', record: string, record_type: 'invoice'|'purchase_order', outcome: 'done'|'nothing'|'failed', did: list<string>, error: string|null, created_at: string}>
+     * @return Collection<array{id: string, object: 'rule_run', rule: string, trigger: 'invoice.received'|'invoice.issued'|'invoice.paid'|'invoice.cancelled'|'invoice.approved'|'invoice.rejected'|'purchase_order.saved'|'purchase_order.approved'|'purchase_order.rejected'|'purchase_order.sent'|'purchase_order.confirmed'|'purchase_order.received_part'|'purchase_order.received_all'|'purchase_order.invoiced_all'|'purchase_order.price_variance'|'purchase_order.registered', record: string, record_type: 'invoice'|'purchase_order', outcome: 'done'|'nothing'|'failed', did: list<string>, error: string|null, created_at: string}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/reglas/list-rule-runs
      */
