@@ -286,6 +286,8 @@ final class RecurringInvoices
      *     email: array{to: string|null, cc: string|null, sent_at: string|null, status: 'sent'|'delayed'|'delivered'|'opened'|'bounced'|'complained', recipients: list<array<string, mixed>>}|null,
      *     error: array{message: string, sat_code: string|null, raw: string}|null,
      *     recurring_invoice: string|null,
+     *     tickets: list<string>,
+     *     origin: array{type: 'app'|'api'|'assistant'|'point_of_sale'|'autofactura'|'invoice_link'|'quote'|'recurring_invoice'|'global_invoice', name: string|null}|null,
      *     created_at: string|null,
      *     metadata: array<string, mixed>,
      *     warnings?: list<string>,

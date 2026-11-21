@@ -107,6 +107,8 @@ final class Invoices
      *     email: array{to: string|null, cc: string|null, sent_at: string|null, status: 'sent'|'delayed'|'delivered'|'opened'|'bounced'|'complained', recipients: list<array<string, mixed>>}|null,
      *     error: array{message: string, sat_code: string|null, raw: string}|null,
      *     recurring_invoice: string|null,
+     *     tickets: list<string>,
+     *     origin: array{type: 'app'|'api'|'assistant'|'point_of_sale'|'autofactura'|'invoice_link'|'quote'|'recurring_invoice'|'global_invoice', name: string|null}|null,
      *     created_at: string|null,
      *     metadata: array<string, mixed>,
      *     warnings?: list<string>,
@@ -143,7 +145,7 @@ final class Invoices
      *     cost_center?: string,
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'invoice', issuer: string, branch: string|null, cost_center: string|null, type: 'I'|'E'|'P'|'T'|'N', status: 'processing'|'pending'|'valid'|'rejected'|'canceled', uuid: string|null, series: string|null, folio: string|null, date: string|null, customer: array<string, mixed>, use: string|null, payment_form: string|null, payment_method: string|null, payment_terms: string|null, notes: string|null, currency: string, exchange_rate: float|int|null, items: list<array<string, mixed>>, subtotal: float|int|null, discount: float|int|null, taxes: array<string, mixed>|null, total: float|int|null, payment_status: 'paid'|'partial'|'unpaid'|null, amount_due: float|int|null, amount_paid: float|int|null, paid_on: string|null, due_date: string|null, related: array<string, mixed>|null, payment?: array<string, mixed>|null, payroll?: array<string, mixed>, global?: array<string, mixed>, cancellation: array<string, mixed>|null, email: array<string, mixed>|null, error: array<string, mixed>|null, recurring_invoice: string|null, created_at: string|null, metadata: array<string, mixed>, warnings?: list<string>, email_error?: string, substitutes?: array<string, mixed>, advance_application?: array<string, mixed>}>
+     * @return Collection<array{id: string, livemode: bool, object: 'invoice', issuer: string, branch: string|null, cost_center: string|null, type: 'I'|'E'|'P'|'T'|'N', status: 'processing'|'pending'|'valid'|'rejected'|'canceled', uuid: string|null, series: string|null, folio: string|null, date: string|null, customer: array<string, mixed>, use: string|null, payment_form: string|null, payment_method: string|null, payment_terms: string|null, notes: string|null, currency: string, exchange_rate: float|int|null, items: list<array<string, mixed>>, subtotal: float|int|null, discount: float|int|null, taxes: array<string, mixed>|null, total: float|int|null, payment_status: 'paid'|'partial'|'unpaid'|null, amount_due: float|int|null, amount_paid: float|int|null, paid_on: string|null, due_date: string|null, related: array<string, mixed>|null, payment?: array<string, mixed>|null, payroll?: array<string, mixed>, global?: array<string, mixed>, cancellation: array<string, mixed>|null, email: array<string, mixed>|null, error: array<string, mixed>|null, recurring_invoice: string|null, tickets: list<string>, origin: array<string, mixed>|null, created_at: string|null, metadata: array<string, mixed>, warnings?: list<string>, email_error?: string, substitutes?: array<string, mixed>, advance_application?: array<string, mixed>}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/facturas/list-invoices
      */
@@ -284,6 +286,8 @@ final class Invoices
      *     email: array{to: string|null, cc: string|null, sent_at: string|null, status: 'sent'|'delayed'|'delivered'|'opened'|'bounced'|'complained', recipients: list<array<string, mixed>>}|null,
      *     error: array{message: string, sat_code: string|null, raw: string}|null,
      *     recurring_invoice: string|null,
+     *     tickets: list<string>,
+     *     origin: array{type: 'app'|'api'|'assistant'|'point_of_sale'|'autofactura'|'invoice_link'|'quote'|'recurring_invoice'|'global_invoice', name: string|null}|null,
      *     created_at: string|null,
      *     metadata: array<string, mixed>,
      *     warnings?: list<string>,
@@ -352,6 +356,8 @@ final class Invoices
      *     email: array{to: string|null, cc: string|null, sent_at: string|null, status: 'sent'|'delayed'|'delivered'|'opened'|'bounced'|'complained', recipients: list<array<string, mixed>>}|null,
      *     error: array{message: string, sat_code: string|null, raw: string}|null,
      *     recurring_invoice: string|null,
+     *     tickets: list<string>,
+     *     origin: array{type: 'app'|'api'|'assistant'|'point_of_sale'|'autofactura'|'invoice_link'|'quote'|'recurring_invoice'|'global_invoice', name: string|null}|null,
      *     created_at: string|null,
      *     metadata: array<string, mixed>,
      *     warnings?: list<string>,
@@ -481,6 +487,8 @@ final class Invoices
      *     email: array{to: string|null, cc: string|null, sent_at: string|null, status: 'sent'|'delayed'|'delivered'|'opened'|'bounced'|'complained', recipients: list<array<string, mixed>>}|null,
      *     error: array{message: string, sat_code: string|null, raw: string}|null,
      *     recurring_invoice: string|null,
+     *     tickets: list<string>,
+     *     origin: array{type: 'app'|'api'|'assistant'|'point_of_sale'|'autofactura'|'invoice_link'|'quote'|'recurring_invoice'|'global_invoice', name: string|null}|null,
      *     created_at: string|null,
      *     metadata: array<string, mixed>,
      *     warnings?: list<string>,
@@ -549,6 +557,8 @@ final class Invoices
      *     email: array{to: string|null, cc: string|null, sent_at: string|null, status: 'sent'|'delayed'|'delivered'|'opened'|'bounced'|'complained', recipients: list<array<string, mixed>>}|null,
      *     error: array{message: string, sat_code: string|null, raw: string}|null,
      *     recurring_invoice: string|null,
+     *     tickets: list<string>,
+     *     origin: array{type: 'app'|'api'|'assistant'|'point_of_sale'|'autofactura'|'invoice_link'|'quote'|'recurring_invoice'|'global_invoice', name: string|null}|null,
      *     created_at: string|null,
      *     metadata: array<string, mixed>,
      *     warnings?: list<string>,
@@ -651,6 +661,8 @@ final class Invoices
      *     email: array{to: string|null, cc: string|null, sent_at: string|null, status: 'sent'|'delayed'|'delivered'|'opened'|'bounced'|'complained', recipients: list<array<string, mixed>>}|null,
      *     error: array{message: string, sat_code: string|null, raw: string}|null,
      *     recurring_invoice: string|null,
+     *     tickets: list<string>,
+     *     origin: array{type: 'app'|'api'|'assistant'|'point_of_sale'|'autofactura'|'invoice_link'|'quote'|'recurring_invoice'|'global_invoice', name: string|null}|null,
      *     created_at: string|null,
      *     metadata: array<string, mixed>,
      *     warnings?: list<string>,
@@ -718,6 +730,8 @@ final class Invoices
      *     email: array{to: string|null, cc: string|null, sent_at: string|null, status: 'sent'|'delayed'|'delivered'|'opened'|'bounced'|'complained', recipients: list<array<string, mixed>>}|null,
      *     error: array{message: string, sat_code: string|null, raw: string}|null,
      *     recurring_invoice: string|null,
+     *     tickets: list<string>,
+     *     origin: array{type: 'app'|'api'|'assistant'|'point_of_sale'|'autofactura'|'invoice_link'|'quote'|'recurring_invoice'|'global_invoice', name: string|null}|null,
      *     created_at: string|null,
      *     metadata: array<string, mixed>,
      *     warnings?: list<string>,
@@ -784,6 +798,8 @@ final class Invoices
      *     email: array{to: string|null, cc: string|null, sent_at: string|null, status: 'sent'|'delayed'|'delivered'|'opened'|'bounced'|'complained', recipients: list<array<string, mixed>>}|null,
      *     error: array{message: string, sat_code: string|null, raw: string}|null,
      *     recurring_invoice: string|null,
+     *     tickets: list<string>,
+     *     origin: array{type: 'app'|'api'|'assistant'|'point_of_sale'|'autofactura'|'invoice_link'|'quote'|'recurring_invoice'|'global_invoice', name: string|null}|null,
      *     created_at: string|null,
      *     metadata: array<string, mixed>,
      *     warnings?: list<string>,
