@@ -35,6 +35,7 @@ final class Payouts
      * @param array{
      *     issuer?: string,
      *     pay_on?: string,
+     *     name?: string|null,
      *     note?: string|null,
      *     exchange_rate?: 'official'|'fixed',
      *     invoices: list<array{uuid: string, amount?: float|int, reason?: string|null}>,
@@ -47,6 +48,7 @@ final class Payouts
      *     issuer: string,
      *     number: int,
      *     status: 'draft'|'pending_approval'|'approved'|'sending'|'paid'|'partially_paid'|'failed'|'canceled',
+     *     name: string|null,
      *     pay_on: string,
      *     exchange_rate: 'official'|'fixed'|null,
      *     total: float|int,
@@ -91,7 +93,7 @@ final class Payouts
      *     pay_on_to?: string,
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'payout', issuer: string, number: int, status: 'draft'|'pending_approval'|'approved'|'sending'|'paid'|'partially_paid'|'failed'|'canceled', pay_on: string, exchange_rate: 'official'|'fixed'|null, total: float|int, currency: 'MXN', note: string|null, source: 'app'|'api'|'assistant'|'rule'|'recurring', payout_mandate: string|null, signatures: array<string, mixed>, app_url: string, transfers: list<array<string, mixed>>, cancel_reason: string|null, created_by_api: bool, created_at: string|null, approved_at: string|null, sent_at: string|null, settled_at: string|null, canceled_at: string|null}>
+     * @return Collection<array{id: string, livemode: bool, object: 'payout', issuer: string, number: int, status: 'draft'|'pending_approval'|'approved'|'sending'|'paid'|'partially_paid'|'failed'|'canceled', name: string|null, pay_on: string, exchange_rate: 'official'|'fixed'|null, total: float|int, currency: 'MXN', note: string|null, source: 'app'|'api'|'assistant'|'rule'|'recurring', payout_mandate: string|null, signatures: array<string, mixed>, app_url: string, transfers: list<array<string, mixed>>, cancel_reason: string|null, created_by_api: bool, created_at: string|null, approved_at: string|null, sent_at: string|null, settled_at: string|null, canceled_at: string|null}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/pagos-a-proveedores/list-payouts
      */
@@ -117,6 +119,7 @@ final class Payouts
      *     issuer: string,
      *     number: int,
      *     status: 'draft'|'pending_approval'|'approved'|'sending'|'paid'|'partially_paid'|'failed'|'canceled',
+     *     name: string|null,
      *     pay_on: string,
      *     exchange_rate: 'official'|'fixed'|null,
      *     total: float|int,
@@ -163,6 +166,7 @@ final class Payouts
      *     issuer: string,
      *     number: int,
      *     status: 'draft'|'pending_approval'|'approved'|'sending'|'paid'|'partially_paid'|'failed'|'canceled',
+     *     name: string|null,
      *     pay_on: string,
      *     exchange_rate: 'official'|'fixed'|null,
      *     total: float|int,
