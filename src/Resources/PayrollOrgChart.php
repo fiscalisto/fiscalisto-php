@@ -29,7 +29,7 @@ final class PayrollOrgChart
      *
      * GET /v1/payroll_org_chart
      *
-     * @param array{issuer?: string} $params
+     * @param array{issuer?: string, as_of?: string} $params
      * @param array{timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     object: 'payroll_org_chart',
@@ -40,7 +40,7 @@ final class PayrollOrgChart
      *     top: list<string>,
      *     employees: list<array{employee: string, number: string, name: string, position: string|null, department: string|null, branch: string|null, manager: string|null, direct_reports: int, total_reports: int}>,
      *     departments: list<array{name: string, parent: string|null, lead: string|null, employees: int, total_employees: int, depth: int}>,
-     *     vacancies: list<array{id: string, title: string, department: string|null, manager: string|null, branch: string|null, opened_on: string}>,
+     *     vacancies: list<array{id: string, title: string, department: string|null, manager: string|null, branch: string|null, opened_on: string, status: 'pending_approval'|'approved'|'rejected'|'filled', salary_min: float|int|null, salary_max: float|int|null, state: string|null, monthly_cost: array<string, mixed>}>,
      * }
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/nomina/get-payroll-org-chart
@@ -78,7 +78,7 @@ final class PayrollOrgChart
      *     top: list<string>,
      *     employees: list<array{employee: string, number: string, name: string, position: string|null, department: string|null, branch: string|null, manager: string|null, direct_reports: int, total_reports: int}>,
      *     departments: list<array{name: string, parent: string|null, lead: string|null, employees: int, total_employees: int, depth: int}>,
-     *     vacancies: list<array{id: string, title: string, department: string|null, manager: string|null, branch: string|null, opened_on: string}>,
+     *     vacancies: list<array{id: string, title: string, department: string|null, manager: string|null, branch: string|null, opened_on: string, status: 'pending_approval'|'approved'|'rejected'|'filled', salary_min: float|int|null, salary_max: float|int|null, state: string|null, monthly_cost: array<string, mixed>}>,
      * }
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/nomina/assign-payroll-org-chart
@@ -115,7 +115,7 @@ final class PayrollOrgChart
      *     top: list<string>,
      *     employees: list<array{employee: string, number: string, name: string, position: string|null, department: string|null, branch: string|null, manager: string|null, direct_reports: int, total_reports: int}>,
      *     departments: list<array{name: string, parent: string|null, lead: string|null, employees: int, total_employees: int, depth: int}>,
-     *     vacancies: list<array{id: string, title: string, department: string|null, manager: string|null, branch: string|null, opened_on: string}>,
+     *     vacancies: list<array{id: string, title: string, department: string|null, manager: string|null, branch: string|null, opened_on: string, status: 'pending_approval'|'approved'|'rejected'|'filled', salary_min: float|int|null, salary_max: float|int|null, state: string|null, monthly_cost: array<string, mixed>}>,
      * }
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/nomina/save-payroll-department
@@ -146,7 +146,7 @@ final class PayrollOrgChart
      *     top: list<string>,
      *     employees: list<array{employee: string, number: string, name: string, position: string|null, department: string|null, branch: string|null, manager: string|null, direct_reports: int, total_reports: int}>,
      *     departments: list<array{name: string, parent: string|null, lead: string|null, employees: int, total_employees: int, depth: int}>,
-     *     vacancies: list<array{id: string, title: string, department: string|null, manager: string|null, branch: string|null, opened_on: string}>,
+     *     vacancies: list<array{id: string, title: string, department: string|null, manager: string|null, branch: string|null, opened_on: string, status: 'pending_approval'|'approved'|'rejected'|'filled', salary_min: float|int|null, salary_max: float|int|null, state: string|null, monthly_cost: array<string, mixed>}>,
      * }
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/nomina/remove-payroll-department
@@ -160,8 +160,12 @@ final class PayrollOrgChart
     /**
      * Abrir una vacante
      *
-     * Un puesto sin persona todavía, bajo un jefe, en un departamento y una sucursal: sale en el
-     * organigrama, pero no cuenta como empleado. Contesta el organigrama.
+     * Un puesto sin persona todavía, bajo un jefe, en un departamento y una sucursal, con el
+     * sueldo mensual que ofrece: sale en el organigrama, pero no cuenta como empleado. Queda en
+     * pending_approval hasta que alguien con el permiso «Aprobar la prenómina» la aprueba en la
+     * app (le llega un aviso); entonces se cubre con POST
+     * /v1/payroll_org_chart/vacancies/{id}/fill. Contesta el organigrama, con lo que costaría al
+     * mes (monthly_cost).
      *
      * POST /v1/payroll_org_chart/vacancies
      *
@@ -172,6 +176,9 @@ final class PayrollOrgChart
      *     manager?: string|null,
      *     branch?: string|null,
      *     opened_on?: string,
+     *     salary_min?: float|int|null,
+     *     salary_max?: float|int|null,
+     *     state?: string|null,
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
@@ -183,7 +190,7 @@ final class PayrollOrgChart
      *     top: list<string>,
      *     employees: list<array{employee: string, number: string, name: string, position: string|null, department: string|null, branch: string|null, manager: string|null, direct_reports: int, total_reports: int}>,
      *     departments: list<array{name: string, parent: string|null, lead: string|null, employees: int, total_employees: int, depth: int}>,
-     *     vacancies: list<array{id: string, title: string, department: string|null, manager: string|null, branch: string|null, opened_on: string}>,
+     *     vacancies: list<array{id: string, title: string, department: string|null, manager: string|null, branch: string|null, opened_on: string, status: 'pending_approval'|'approved'|'rejected'|'filled', salary_min: float|int|null, salary_max: float|int|null, state: string|null, monthly_cost: array<string, mixed>}>,
      * }
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/nomina/create-payroll-vacancy
@@ -197,7 +204,9 @@ final class PayrollOrgChart
     /**
      * Cambiar una vacante
      *
-     * Cambia el puesto, departamento, jefe o sucursal de una vacante (vac_…).
+     * Cambia el puesto, departamento, jefe, sucursal o sueldo de una vacante (vac_…); lo que no
+     * manda queda vacío. Cambiada, vuelve a pending_approval. Una ya cubierta contesta
+     * parameter_invalid.
      *
      * POST /v1/payroll_org_chart/vacancies/{id}
      *
@@ -209,6 +218,9 @@ final class PayrollOrgChart
      *     manager?: string|null,
      *     branch?: string|null,
      *     opened_on?: string,
+     *     salary_min?: float|int|null,
+     *     salary_max?: float|int|null,
+     *     state?: string|null,
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
@@ -220,7 +232,7 @@ final class PayrollOrgChart
      *     top: list<string>,
      *     employees: list<array{employee: string, number: string, name: string, position: string|null, department: string|null, branch: string|null, manager: string|null, direct_reports: int, total_reports: int}>,
      *     departments: list<array{name: string, parent: string|null, lead: string|null, employees: int, total_employees: int, depth: int}>,
-     *     vacancies: list<array{id: string, title: string, department: string|null, manager: string|null, branch: string|null, opened_on: string}>,
+     *     vacancies: list<array{id: string, title: string, department: string|null, manager: string|null, branch: string|null, opened_on: string, status: 'pending_approval'|'approved'|'rejected'|'filled', salary_min: float|int|null, salary_max: float|int|null, state: string|null, monthly_cost: array<string, mixed>}>,
      * }
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/nomina/update-payroll-vacancy
@@ -249,7 +261,7 @@ final class PayrollOrgChart
      *     top: list<string>,
      *     employees: list<array{employee: string, number: string, name: string, position: string|null, department: string|null, branch: string|null, manager: string|null, direct_reports: int, total_reports: int}>,
      *     departments: list<array{name: string, parent: string|null, lead: string|null, employees: int, total_employees: int, depth: int}>,
-     *     vacancies: list<array{id: string, title: string, department: string|null, manager: string|null, branch: string|null, opened_on: string}>,
+     *     vacancies: list<array{id: string, title: string, department: string|null, manager: string|null, branch: string|null, opened_on: string, status: 'pending_approval'|'approved'|'rejected'|'filled', salary_min: float|int|null, salary_max: float|int|null, state: string|null, monthly_cost: array<string, mixed>}>,
      * }
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/nomina/delete-payroll-vacancy
@@ -258,5 +270,38 @@ final class PayrollOrgChart
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
         return $this->client->request('DELETE', '/v1/payroll_org_chart/vacancies/' . rawurlencode($id), [], $options);
+    }
+
+    /**
+     * Cubrir una vacante
+     *
+     * La cubre con un empleado ya dado de alta (POST /v1/employees): queda con el jefe, el
+     * departamento y la sucursal de la vacante, y la vacante sale del organigrama (status filled).
+     * Una que espera aprobación o se rechazó contesta parameter_invalid. Falta su alta en el IMSS
+     * (GET /v1/imss_movements la propone).
+     *
+     * POST /v1/payroll_org_chart/vacancies/{id}/fill
+     *
+     * @param string $id
+     * @param array{employee: string} $params
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
+     * @return array{
+     *     object: 'payroll_org_chart',
+     *     livemode: bool,
+     *     issuer: string,
+     *     as_of: string,
+     *     summary: array{employees: int, managers: int, average_span: float|int, departments: int, branches: int, vacancies: int, without_manager: list<string>, wide_span: list<string>, without_department: list<string>},
+     *     top: list<string>,
+     *     employees: list<array{employee: string, number: string, name: string, position: string|null, department: string|null, branch: string|null, manager: string|null, direct_reports: int, total_reports: int}>,
+     *     departments: list<array{name: string, parent: string|null, lead: string|null, employees: int, total_employees: int, depth: int}>,
+     *     vacancies: list<array{id: string, title: string, department: string|null, manager: string|null, branch: string|null, opened_on: string, status: 'pending_approval'|'approved'|'rejected'|'filled', salary_min: float|int|null, salary_max: float|int|null, state: string|null, monthly_cost: array<string, mixed>}>,
+     * }
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/nomina/fill-payroll-vacancy
+     */
+    public function fillVacancy(string $id, array $params, array $options = []): array
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('POST', '/v1/payroll_org_chart/vacancies/' . rawurlencode($id) . '/fill', ['body' => $params, 'idempotent' => true], $options);
     }
 }
