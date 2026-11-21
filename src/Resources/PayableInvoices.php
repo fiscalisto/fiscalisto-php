@@ -32,7 +32,7 @@ final class PayableInvoices
      * @param array{timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     object: 'list',
-     *     data: list<array{object: 'payable_invoice', uuid: string, sat_invoice: string, supplier_tax_id: string, supplier_name: string|null, series: string|null, folio: string|null, date: string, currency: string, total: float|int, paid: float|int, amount_due: float|int, payment_method: string|null, in_payout: string|null, payment_hold: array<string, mixed>|null, warnings: list<string>, app_url: string}>,
+     *     data: list<array{object: 'payable_invoice', uuid: string, sat_invoice: string, supplier_tax_id: string, supplier_name: string|null, series: string|null, folio: string|null, date: string, currency: string, total: float|int, paid: float|int, amount_due: float|int, payment_method: string|null, withheld: array<string, mixed>|null, early_payment: array<string, mixed>|null, in_payout: string|null, payment_hold: array<string, mixed>|null, warnings: list<string>, app_url: string}>,
      *     has_more: bool,
      *     url: string,
      * }

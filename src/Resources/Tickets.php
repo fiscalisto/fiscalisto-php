@@ -47,7 +47,7 @@ final class Tickets
      *     local_taxes?: list<array{retention: bool, name: string, rate: float|int}>,
      *     buyer?: array{name?: string, email?: string},
      *     branch?: string,
-     *     lines?: list<array{product?: string, description?: string, product_key?: string, unit_key?: string, iva?: '0'|'0.16'|'0.08'|'exento', local_taxes?: list<array{retention: bool, name: string, rate: float|int}>, quantity?: float|int, total: float|int}>,
+     *     lines?: list<array{product?: string, description?: string, product_key?: string, unit_key?: string, iva?: '0'|'0.16'|'0.08'|'exento', local_taxes?: list<array{retention: bool, name: string, rate: float|int}>, detail?: string, quantity?: float|int, total: float|int}>,
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
@@ -64,7 +64,7 @@ final class Tickets
      *     payment_form: string,
      *     description: string,
      *     product_key: string,
-     *     lines: list<array{product: string|null, description: string, product_key: string, unit_key: string, iva: string|null, local_taxes: list<array<string, mixed>>, quantity: float|int, total: float|int}>,
+     *     lines: list<array{product: string|null, description: string, product_key: string, unit_key: string, iva: string|null, local_taxes: list<array<string, mixed>>, detail: string|null, quantity: float|int, total: float|int}>,
      *     sold_at: string,
      *     invoiceable_until: string,
      *     invoice: string|null,
@@ -133,7 +133,7 @@ final class Tickets
      *     payment_form: string,
      *     description: string,
      *     product_key: string,
-     *     lines: list<array{product: string|null, description: string, product_key: string, unit_key: string, iva: string|null, local_taxes: list<array<string, mixed>>, quantity: float|int, total: float|int}>,
+     *     lines: list<array{product: string|null, description: string, product_key: string, unit_key: string, iva: string|null, local_taxes: list<array<string, mixed>>, detail: string|null, quantity: float|int, total: float|int}>,
      *     sold_at: string,
      *     invoiceable_until: string,
      *     invoice: string|null,
@@ -176,7 +176,7 @@ final class Tickets
      *     payment_form: string,
      *     description: string,
      *     product_key: string,
-     *     lines: list<array{product: string|null, description: string, product_key: string, unit_key: string, iva: string|null, local_taxes: list<array<string, mixed>>, quantity: float|int, total: float|int}>,
+     *     lines: list<array{product: string|null, description: string, product_key: string, unit_key: string, iva: string|null, local_taxes: list<array<string, mixed>>, detail: string|null, quantity: float|int, total: float|int}>,
      *     sold_at: string,
      *     invoiceable_until: string,
      *     invoice: string|null,

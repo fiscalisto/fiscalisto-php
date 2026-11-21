@@ -39,7 +39,8 @@ final class Payouts
      *     name?: string|null,
      *     note?: string|null,
      *     exchange_rate?: 'official'|'fixed',
-     *     invoices: list<array{uuid: string, amount?: float|int, reason?: string|null}>,
+     *     invoices?: list<array{uuid: string, amount?: float|int, reason?: string|null}>,
+     *     payments?: list<array{tax_id: string, name?: string|null, amount: float|int, description?: string|null, no_invoice_reason?: string|null}>,
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
@@ -71,7 +72,7 @@ final class Payouts
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/pagos-a-proveedores/create-payout
      */
-    public function create(array $params, array $options = []): array
+    public function create(array $params = [], array $options = []): array
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
         return $this->client->request('POST', '/v1/payouts', ['body' => $params, 'idempotent' => true], $options);
