@@ -304,4 +304,50 @@ final class PayrollOrgChart
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
         return $this->client->request('POST', '/v1/payroll_org_chart/vacancies/' . rawurlencode($id) . '/fill', ['body' => $params, 'idempotent' => true], $options);
     }
+
+    /**
+     * Publicar una vacante
+     *
+     * La pone en la página de empleos del emisor (published true) o la quita (false), con su
+     * descripción, requisitos, tipo de contrato, lugar, sueldo visible, fecha de cierre y el
+     * formulario (jbf_…) que llenan quienes se postulan. Solo una approved se publica; publicarla
+     * enciende la página si estaba apagada. Google la puede mostrar en sus resultados de empleos
+     * (JobPosting). Contesta hiring.
+     *
+     * POST /v1/payroll_org_chart/vacancies/{id}/publish
+     *
+     * @param string $id
+     * @param array{
+     *     published: bool,
+     *     description?: string|null,
+     *     requirements?: list<string>,
+     *     employment_type?: 'full_time'|'part_time'|'fixed_term'|'project'|'internship'|null,
+     *     workplace?: 'on_site'|'hybrid'|'remote'|null,
+     *     show_salary?: bool,
+     *     closes_on?: string|null,
+     *     form?: string|null,
+     * } $params
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
+     * @return array{
+     *     object: 'hiring',
+     *     livemode: bool,
+     *     issuer: string,
+     *     careers_url: string,
+     *     enabled: bool,
+     *     intro: string|null,
+     *     contact_email: string|null,
+     *     stages: list<string>,
+     *     unmet_requirements: 'flag'|'warn',
+     *     default_form: string|null,
+     *     forms: list<array{id: string, object: 'job_form', name: string, questions: list<array<string, mixed>>}>,
+     *     vacancies: list<array{id: string, title: string, department: string|null, status: 'pending_approval'|'approved'|'rejected'|'filled', published: bool, url: string|null, description: string|null, requirements: list<string>, employment_type: 'full_time'|'part_time'|'fixed_term'|'project'|'internship'|null, workplace: 'on_site'|'hybrid'|'remote'|null, show_salary: bool, closes_on: string|null, form: string|null, candidates: list<array<string, mixed>>}>,
+     * }
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/nomina/publish-payroll-vacancy
+     */
+    public function publishVacancy(string $id, array $params, array $options = []): array
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('POST', '/v1/payroll_org_chart/vacancies/' . rawurlencode($id) . '/publish', ['body' => $params, 'idempotent' => true], $options);
+    }
 }
