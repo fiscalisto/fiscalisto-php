@@ -260,4 +260,35 @@ final class WebhookEndpoints
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
         return $this->client->list('/v1/webhook_endpoints/' . rawurlencode($id) . '/deliveries', $params, $options);
     }
+
+    /**
+     * Recuperar eventos fallidos
+     *
+     * Después de que su servidor estuvo caído: le manda otra vez, ahora, todos los eventos desde
+     * since que este webhook escucha y no recibió (los que fallaron todos sus intentos y los que
+     * pasaron mientras estuvo apagado), del más antiguo al más reciente. Hasta 1,000 por llamada;
+     * si quedan más, next_since dice desde dónde volver a llamar. Cada uno es un intento aparte,
+     * firmado con su webhook-id de siempre, para que su servidor descarte los que ya tenía. El
+     * webhook tiene que estar encendido.
+     *
+     * POST /v1/webhook_endpoints/{id}/recover
+     *
+     * @param string $id
+     * @param array{since: string} $params
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
+     * @return array{
+     *     object: 'webhook_recovery',
+     *     endpoint: string,
+     *     since: string,
+     *     events: int,
+     *     next_since: string|null,
+     * }
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/webhooks/recover-webhook-endpoint
+     */
+    public function recover(string $id, array $params, array $options = []): array
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('POST', '/v1/webhook_endpoints/' . rawurlencode($id) . '/recover', ['body' => $params, 'idempotent' => true], $options);
+    }
 }

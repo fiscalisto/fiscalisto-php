@@ -23,6 +23,8 @@ class FiscalistoException extends \RuntimeException
     public readonly ?string $docUrl;
     /** Búsquelo en Desarrolladores › Solicitudes o mándelo a soporte. */
     public readonly ?string $requestId;
+    /** La solicitud en Desarrolladores › Solicitudes, para abrirla en el navegador. */
+    public readonly ?string $requestLogUrl;
     /** El código HTTP (null: la solicitud no llegó). */
     public readonly ?int $status;
     /** @var array<string, mixed> El objeto error tal como llegó. */
@@ -40,6 +42,7 @@ class FiscalistoException extends \RuntimeException
         $this->invoice = $text('invoice');
         $this->docUrl = $text('doc_url');
         $this->requestId = $text('request_id') ?? $requestId;
+        $this->requestLogUrl = $text('request_log_url');
         $this->status = $status;
         parent::__construct($text('message') ?? 'Error de la API de Fiscalisto', $status ?? 0, $previous);
     }
