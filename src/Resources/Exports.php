@@ -137,13 +137,13 @@ final class Exports
      *
      * @param string $id
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return string El XML.
+     * @return string Los bytes del PDF.
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/exportaciones/download-export
      */
     public function download(string $id, array $options = []): string
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
-        return $this->client->request('GET', '/v1/exports/' . rawurlencode($id) . '/download', ['as' => 'text'], $options);
+        return $this->client->request('GET', '/v1/exports/' . rawurlencode($id) . '/download', ['as' => 'bytes'], $options);
     }
 }

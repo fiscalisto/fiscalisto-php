@@ -483,14 +483,40 @@ final class Accounting
      *     issuer?: string,
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return string El XML.
+     * @return string Los bytes del PDF.
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/contabilidad/get-electronic-accounting
      */
     public function electronicAccounting(array $params, array $options = []): string
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
-        return $this->client->request('GET', '/v1/accounting/electronic_accounting', ['query' => $params, 'as' => 'text'], $options);
+        return $this->client->request('GET', '/v1/accounting/electronic_accounting', ['query' => $params, 'as' => 'bytes'], $options);
+    }
+
+    /**
+     * Descargar toda la contabilidad de un periodo
+     *
+     * Un ZIP para llevar los libros a otro sistema, de from_month a to_month (hasta 24 meses): el
+     * catálogo (1-catalogo, Excel con número, nombre, nivel, código agrupador y naturaleza), los
+     * saldos iniciales al primer día de from_month en deudor y acreedor (2-saldos-iniciales), las
+     * pólizas de todo el periodo para CONTPAQi Contabilidad (un TXT) y para Aspel COI (un Excel
+     * por mes), la balanza de comprobación de cada mes (una hoja por mes) y, en
+     * contabilidad-electronica, el catálogo (CT) y la balanza de cada mes (BN) en XML 1.3 del
+     * Anexo 24. LEEME.txt dice el orden en que se importa. Son los mismos libros de
+     * financial_statements y electronic_accounting.
+     *
+     * GET /v1/accounting/books_export
+     *
+     * @param array{from_month: string, to_month?: string, issuer?: string} $params
+     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @return string Los bytes del PDF.
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/contabilidad/get-books-export
+     */
+    public function booksExport(array $params, array $options = []): string
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('GET', '/v1/accounting/books_export', ['query' => $params, 'as' => 'bytes'], $options);
     }
 
     /**
