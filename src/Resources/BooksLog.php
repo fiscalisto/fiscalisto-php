@@ -32,7 +32,7 @@ final class BooksLog
      * GET /v1/accounting/books_log
      *
      * @param array{
-     *     subject?: 'manual_journal_entry'|'opening_balances'|'account'|'chart_of_accounts'|'period_close'|'consolidation_elimination'|'entry_template'|'fixed_asset'|'invoice_account',
+     *     subject?: 'manual_journal_entry'|'opening_balances'|'account'|'chart_of_accounts'|'period_close'|'consolidation_elimination'|'entry_template'|'fixed_asset'|'invoice_account'|'automatic_journal_entry',
      *     from?: string,
      *     to?: string,
      *     limit?: int,
@@ -40,7 +40,7 @@ final class BooksLog
      *     issuer?: string,
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'books_log_entry', issuer: string, created_at: string, subject: 'manual_journal_entry'|'opening_balances'|'account'|'chart_of_accounts'|'period_close'|'consolidation_elimination'|'entry_template'|'fixed_asset'|'invoice_account', subject_id: string|null, action: 'created'|'updated'|'deleted'|'restored'|'imported'|'closed'|'reopened', description: string, actor: array<string, mixed>, before: mixed, after: mixed}>
+     * @return Collection<array{id: string, livemode: bool, object: 'books_log_entry', issuer: string, created_at: string, subject: 'manual_journal_entry'|'opening_balances'|'account'|'chart_of_accounts'|'period_close'|'consolidation_elimination'|'entry_template'|'fixed_asset'|'invoice_account'|'automatic_journal_entry', subject_id: string|null, action: 'created'|'updated'|'deleted'|'restored'|'imported'|'closed'|'reopened', description: string, actor: array<string, mixed>, before: mixed, after: mixed}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/contabilidad/list-books-log
      */
