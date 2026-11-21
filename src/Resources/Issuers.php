@@ -786,6 +786,7 @@ final class Issuers
      *     retention_mode: 'keep_total'|'subtract',
      *     invoice_series: string|null,
      *     customer_notes: bool,
+     *     failure_email: bool,
      *     global_concepts: 'ticket'|'summary',
      * }
      * @throws FiscalistoException
@@ -817,10 +818,11 @@ final class Issuers
      *     portal_theme?: 'auto'|'light'|'dark',
      *     portal_accent?: string|null,
      *     portal_radius?: int|null,
-     *     portal_style?: array{layout?: 'checkout'|'compact'|'card', density?: 'comfortable'|'compact', header?: 'logo'|'name'|'name_rfc'|'logo_name', logo_size?: 's'|'m'|'l', logo_shape?: 'square'|'rounded'|'circle', colors?: array{background?: string|null, card?: string|null, text?: string|null, button_text?: string|null}, font?: 'system'|'inter'|'manrope'|'dm-sans'|'work-sans'|'nunito'|'space-grotesk'|'montserrat'|'lora'|'merriweather'|'playfair-display'|'cormorant-garamond', heading_font?: 'system'|'cormorant-garamond'|null, heading_size?: 's'|'l', borders?: 'none'|'subtle'|'strong', shadow?: 'none'|'soft'|'strong', noun?: 'ticket'|'nota'|'cuenta'|'compra'|'pedido'|'orden'|'reservacion'|'estancia'|'boleto', texts?: array{title?: array<string, mixed>|null, message?: array<string, mixed>|null, code_hint?: array<string, mixed>|null, step_ticket?: array<string, mixed>|null, step_data?: array<string, mixed>|null, step_invoice?: array<string, mixed>|null, find_button?: array<string, mixed>|null, how_question?: array<string, mixed>|null, submit?: array<string, mixed>|null, success_title?: array<string, mixed>|null, success_message?: array<string, mixed>|null, concepts_title?: array<string, mixed>|null, concepts_itemized?: array<string, mixed>|null, concepts_single?: array<string, mixed>|null, concepts_grouped?: array<string, mixed>|null, detail_label?: array<string, mixed>|null}, ways?: array{constancia?: bool, qr?: bool, cif?: bool, recall?: bool, abroad?: bool, norfc?: bool}, email_required?: bool, show_deadline?: bool, back?: array{label: string, url: string}|null, css?: string}|null,
+     *     portal_style?: array{layout?: 'checkout'|'compact'|'card', density?: 'comfortable'|'compact', header?: 'logo'|'name'|'name_rfc'|'logo_name', logo_size?: 's'|'m'|'l', logo_shape?: 'square'|'rounded'|'circle', colors?: array{background?: string|null, card?: string|null, text?: string|null, button_text?: string|null}, font?: 'system'|'inter'|'manrope'|'dm-sans'|'work-sans'|'nunito'|'space-grotesk'|'montserrat'|'lora'|'merriweather'|'playfair-display'|'cormorant-garamond', heading_font?: 'system'|'cormorant-garamond'|null, heading_size?: 's'|'l', borders?: 'none'|'subtle'|'strong', shadow?: 'none'|'soft'|'strong', noun?: 'ticket'|'nota'|'cuenta'|'compra'|'pedido'|'orden'|'reservacion'|'estancia'|'boleto', texts?: array{title?: array<string, mixed>|null, message?: array<string, mixed>|null, code_hint?: array<string, mixed>|null, step_ticket?: array<string, mixed>|null, step_data?: array<string, mixed>|null, step_invoice?: array<string, mixed>|null, find_button?: array<string, mixed>|null, how_question?: array<string, mixed>|null, submit?: array<string, mixed>|null, success_title?: array<string, mixed>|null, success_message?: array<string, mixed>|null, error_help?: array<string, mixed>|null, concepts_title?: array<string, mixed>|null, concepts_itemized?: array<string, mixed>|null, concepts_single?: array<string, mixed>|null, concepts_grouped?: array<string, mixed>|null, detail_label?: array<string, mixed>|null}, ways?: array{constancia?: bool, qr?: bool, cif?: bool, recall?: bool, abroad?: bool, norfc?: bool}, email_required?: bool, show_deadline?: bool, back?: array{label: string, url: string}|null, css?: string}|null,
      *     retention_mode?: 'keep_total'|'subtract',
      *     invoice_series?: string|null,
      *     customer_notes?: bool,
+     *     failure_email?: bool,
      *     invoice_concepts?: array{mode?: 'itemized'|'single'|'grouped', customer_choice?: bool, customer_options?: list<'itemized'|'grouped'>, description?: string, product_key?: string|null, unit_key?: string|null, groups?: list<array{name: string, product_key?: string|null, sat_keys?: list<string>, categories?: list<string>}>, ungrouped?: 'itemized'|'group', ungrouped_name?: string, line_detail?: 'customer'|'always'|'never'}|null,
      *     global_concepts?: 'ticket'|'summary',
      * } $params
@@ -846,6 +848,7 @@ final class Issuers
      *     retention_mode: 'keep_total'|'subtract',
      *     invoice_series: string|null,
      *     customer_notes: bool,
+     *     failure_email: bool,
      *     global_concepts: 'ticket'|'summary',
      * }
      * @throws FiscalistoException
