@@ -28,7 +28,8 @@ final class Payouts
      * llave de acceso. Solo si la empresa lo permite en Pagos › Configurar pagos (si no, 403
      * payouts_api_disabled); lo que no se puede pagar contesta 400 payout_invalid con el motivo.
      * Pide Idempotency-Key: si la respuesta se pierde, repítala con el mismo valor y contesta el
-     * mismo pago, nunca uno nuevo.
+     * mismo pago, nunca uno nuevo. La misma llave con otra solicitud (otras facturas, montos o
+     * día) contesta 409 idempotency_key_reused, aunque hayan pasado más de 24 horas.
      *
      * POST /v1/payouts
      *
@@ -101,6 +102,65 @@ final class Payouts
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
         return $this->client->list('/v1/payouts', $params, $options);
+    }
+
+    /**
+     * Ver si los pagos están en pausa
+     *
+     * Si la empresa pausó todos sus pagos («Pausar todos los pagos»), desde cuándo y por qué.
+     *
+     * GET /v1/payouts/pause
+     *
+     * @param array{issuer?: string} $params
+     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @return array{
+     *     object: 'payouts_pause',
+     *     livemode: bool,
+     *     issuer: string,
+     *     paused: bool,
+     *     paused_at: string|null,
+     *     reason: string|null,
+     *     paused_by_api: bool,
+     * }
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/pagos-a-proveedores/get-payouts-pause
+     */
+    public function getPause(array $params = [], array $options = []): array
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('GET', '/v1/payouts/pause', ['query' => $params], $options);
+    }
+
+    /**
+     * Pausar todos los pagos
+     *
+     * El freno de emergencia de la empresa, para una herramienta de seguridad o el botón de su
+     * ERP: al instante no sale ninguna transferencia (pagos firmados, reintentos ni recurrentes) y
+     * les llega el aviso a los administradores con el motivo. La API nunca reanuda: lo firman en
+     * la app las personas de Quién firma, cada una con su llave de acceso. Solo si la empresa deja
+     * que la API trabaje con sus pagos en Pagos › Configurar pagos (si no, 403
+     * payouts_api_disabled). Pausar lo que ya está en pausa no cambia nada.
+     *
+     * POST /v1/payouts/pause
+     *
+     * @param array{issuer?: string, reason: string} $params
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
+     * @return array{
+     *     object: 'payouts_pause',
+     *     livemode: bool,
+     *     issuer: string,
+     *     paused: bool,
+     *     paused_at: string|null,
+     *     reason: string|null,
+     *     paused_by_api: bool,
+     * }
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/pagos-a-proveedores/pause-payouts
+     */
+    public function pause(array $params, array $options = []): array
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('POST', '/v1/payouts/pause', ['body' => $params, 'idempotent' => true], $options);
     }
 
     /**
