@@ -53,6 +53,7 @@ final class ImssMovements
      *     source: 'automatic'|'manual',
      *     status: 'pending'|'reported',
      *     reported_at: string|null,
+     *     imss_rejection: array{reason: string, rejected_at: string}|null,
      *     problems: list<string>,
      * }
      * @throws FiscalistoException
@@ -80,7 +81,7 @@ final class ImssMovements
      *     status?: 'pending'|'reported',
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'imss_movement', issuer: string, employee: string, employee_number: string, employee_name: string, social_security_number: string, kind: 'alta'|'reingreso'|'modificacion'|'baja', movement_type: '08'|'07'|'02', date: string, integrated_daily_salary: float|int|null, exit_reason: string|null, source: 'automatic'|'manual', status: 'pending'|'reported', reported_at: string|null, problems: list<string>}>
+     * @return Collection<array{id: string, livemode: bool, object: 'imss_movement', issuer: string, employee: string, employee_number: string, employee_name: string, social_security_number: string, kind: 'alta'|'reingreso'|'modificacion'|'baja', movement_type: '08'|'07'|'02', date: string, integrated_daily_salary: float|int|null, exit_reason: string|null, source: 'automatic'|'manual', status: 'pending'|'reported', reported_at: string|null, imss_rejection: array<string, mixed>|null, problems: list<string>}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/nomina/list-imss-movements
      */
@@ -94,23 +95,29 @@ final class ImssMovements
      * Marcar movimientos como presentados
      *
      * Cuando el IMSS ya los recibió (el acuse de IDSE o la importación en SUA): pasan a reported y
-     * ya no cambian ni se borran. Con reported false vuelven a pendientes. Devuelve los
-     * movimientos como quedaron.
+     * ya no cambian ni se borran. Con reported false vuelven a pendientes. Los que el IMSS rechazó
+     * van en rejected con su razón: quedan pending con imss_rejection hasta que los corrija.
+     * Devuelve los movimientos como quedaron.
      *
      * POST /v1/imss_movements/report
      *
-     * @param array{issuer?: string, movements: list<string>, reported?: bool} $params
+     * @param array{
+     *     issuer?: string,
+     *     movements?: list<string>,
+     *     reported?: bool,
+     *     rejected?: list<array{movement: string, reason: string}>,
+     * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     object: 'list',
-     *     data: list<array{id: string, livemode: bool, object: 'imss_movement', issuer: string, employee: string, employee_number: string, employee_name: string, social_security_number: string, kind: 'alta'|'reingreso'|'modificacion'|'baja', movement_type: '08'|'07'|'02', date: string, integrated_daily_salary: float|int|null, exit_reason: string|null, source: 'automatic'|'manual', status: 'pending'|'reported', reported_at: string|null, problems: list<string>}>,
+     *     data: list<array{id: string, livemode: bool, object: 'imss_movement', issuer: string, employee: string, employee_number: string, employee_name: string, social_security_number: string, kind: 'alta'|'reingreso'|'modificacion'|'baja', movement_type: '08'|'07'|'02', date: string, integrated_daily_salary: float|int|null, exit_reason: string|null, source: 'automatic'|'manual', status: 'pending'|'reported', reported_at: string|null, imss_rejection: array<string, mixed>|null, problems: list<string>}>,
      *     has_more: bool,
      *     url: string,
      * }
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/nomina/report-imss-movements
      */
-    public function report(array $params, array $options = []): array
+    public function report(array $params = [], array $options = []): array
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
         return $this->client->request('POST', '/v1/imss_movements/report', ['body' => $params, 'idempotent' => true], $options);
@@ -142,6 +149,7 @@ final class ImssMovements
      *     source: 'automatic'|'manual',
      *     status: 'pending'|'reported',
      *     reported_at: string|null,
+     *     imss_rejection: array{reason: string, rejected_at: string}|null,
      *     problems: list<string>,
      * }
      * @throws FiscalistoException
@@ -185,6 +193,7 @@ final class ImssMovements
      *     source: 'automatic'|'manual',
      *     status: 'pending'|'reported',
      *     reported_at: string|null,
+     *     imss_rejection: array{reason: string, rejected_at: string}|null,
      *     problems: list<string>,
      * }
      * @throws FiscalistoException
