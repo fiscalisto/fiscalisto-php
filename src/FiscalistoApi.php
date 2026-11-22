@@ -134,6 +134,9 @@ abstract class FiscalistoApi extends Core
     /** Reglas. */
     public readonly Resources\Rules $rules;
 
+    /** Reglas. */
+    public readonly Resources\SupplierGroups $supplierGroups;
+
     /** Hallazgos. */
     public readonly Resources\Findings $findings;
 
@@ -410,6 +413,7 @@ abstract class FiscalistoApi extends Core
         $this->taxIds = new Resources\TaxIds($this);
         $this->branches = new Resources\Branches($this);
         $this->rules = new Resources\Rules($this);
+        $this->supplierGroups = new Resources\SupplierGroups($this);
         $this->findings = new Resources\Findings($this);
         $this->costCenters = new Resources\CostCenters($this);
         $this->tags = new Resources\Tags($this);

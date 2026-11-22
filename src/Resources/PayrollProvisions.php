@@ -133,4 +133,44 @@ final class PayrollProvisions
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
         return $this->client->request('DELETE', '/v1/accounting/payroll_provisions/' . rawurlencode($month), ['query' => $params], $options);
     }
+
+    /**
+     * Comparar las cuotas de un mes con el SUA
+     *
+     * Lee la cédula de determinación de cuotas que imprimió el SUA para el mes (la mensual, del
+     * IMSS: cuota fija, excedente, prestaciones en dinero, gastos médicos de pensionados, riesgos
+     * de trabajo, invalidez y vida y guarderías) y la compara trabajador por trabajador, por su
+     * NSS, con lo que Fiscalisto calculó de los recibos timbrados: quién está solo en uno de los
+     * dos y en qué difieren los días, el salario base de cotización o las cuotas (hasta un peso es
+     * redondeo del SUA). Se calcula con la prima de riesgo de la cédula. No guarda nada: si el SUA
+     * tiene razón, mande sus importes a POST /v1/accounting/payroll_provisions/{month}. Como
+     * Cierre del mes › Cuotas patronales del mes › Comparar con el SUA en la app. Una cédula de
+     * otro mes contesta workers vacío y cedula_month con su mes.
+     *
+     * POST /v1/accounting/payroll_provisions/{month}/sua_comparison
+     *
+     * @param string $month
+     * @param array{issuer?: string, file: string} $params
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
+     * @return array{
+     *     object: 'sua_comparison',
+     *     livemode: bool,
+     *     issuer: string,
+     *     month: string,
+     *     cedula_month: string|null,
+     *     employer_registration: string|null,
+     *     other_employer_registration: bool,
+     *     employer_risk_premium: float|int|null,
+     *     unreadable: bool,
+     *     workers: list<array{nss: string|null, name: string|null, sua: array<string, mixed>|null, calculated: array<string, mixed>|null, differs: list<'days'|'sbc'|'amount'|'missing'>}>,
+     *     totals: array{sua: float|int, calculated: float|int},
+     * }
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/contabilidad/compare-sua-cedula
+     */
+    public function compareSua(string $month, array $params, array $options = []): array
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('POST', '/v1/accounting/payroll_provisions/' . rawurlencode($month) . '/sua_comparison', ['body' => $params, 'idempotent' => true], $options);
+    }
 }
