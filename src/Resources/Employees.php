@@ -498,7 +498,7 @@ final class Employees
      *     phones: int,
      *     last_seen_at: string|null,
      *     push_phones: int,
-     *     notices: list<array{kind: 'receipt'|'receipt_canceled'|'vacation_approved'|'vacation_rejected'|'sign_reminder', channel: 'push'|'email'|'off'|'none'|'skipped'|'stale'|null, created_at: string, sent_at: string|null}>,
+     *     notices: list<array{kind: 'receipt'|'receipt_canceled'|'vacation_approved'|'vacation_rejected'|'sign_reminder'|'survey', channel: 'push'|'email'|'off'|'none'|'skipped'|'stale'|null, created_at: string, sent_at: string|null}>,
      *     signed_receipts: list<array{uuid: string, signed_at: string}>,
      * }
      * @throws FiscalistoException
@@ -531,7 +531,7 @@ final class Employees
      *     phones: int,
      *     last_seen_at: string|null,
      *     push_phones: int,
-     *     notices: list<array{kind: 'receipt'|'receipt_canceled'|'vacation_approved'|'vacation_rejected'|'sign_reminder', channel: 'push'|'email'|'off'|'none'|'skipped'|'stale'|null, created_at: string, sent_at: string|null}>,
+     *     notices: list<array{kind: 'receipt'|'receipt_canceled'|'vacation_approved'|'vacation_rejected'|'sign_reminder'|'survey', channel: 'push'|'email'|'off'|'none'|'skipped'|'stale'|null, created_at: string, sent_at: string|null}>,
      *     signed_receipts: list<array{uuid: string, signed_at: string}>,
      * }
      * @throws FiscalistoException
