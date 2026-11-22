@@ -787,6 +787,9 @@ final class Issuers
      *     invoice_series: string|null,
      *     customer_notes: bool,
      *     failure_email: bool,
+     *     split_max: int,
+     *     split_min: float|int,
+     *     split_same: bool,
      *     global_concepts: 'ticket'|'summary',
      * }
      * @throws FiscalistoException
@@ -823,6 +826,9 @@ final class Issuers
      *     invoice_series?: string|null,
      *     customer_notes?: bool,
      *     failure_email?: bool,
+     *     split_max?: int,
+     *     split_min?: float|int,
+     *     split_same?: bool,
      *     invoice_concepts?: array{mode?: 'itemized'|'single'|'grouped', customer_choice?: bool, customer_options?: list<'itemized'|'grouped'>, description?: string, product_key?: string|null, unit_key?: string|null, groups?: list<array{name: string, product_key?: string|null, sat_keys?: list<string>, categories?: list<string>}>, ungrouped?: 'itemized'|'group', ungrouped_name?: string, line_detail?: 'customer'|'always'|'never'}|null,
      *     global_concepts?: 'ticket'|'summary',
      * } $params
@@ -849,6 +855,9 @@ final class Issuers
      *     invoice_series: string|null,
      *     customer_notes: bool,
      *     failure_email: bool,
+     *     split_max: int,
+     *     split_min: float|int,
+     *     split_same: bool,
      *     global_concepts: 'ticket'|'summary',
      * }
      * @throws FiscalistoException
