@@ -538,4 +538,66 @@ final class Employees
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
         return $this->client->request('POST', '/v1/employees/' . rawurlencode($id) . '/portal', ['body' => $params, 'idempotent' => true], $options);
     }
+
+    /**
+     * Capacitación de un empleado
+     *
+     * Su ocupación del Catálogo Nacional de Ocupaciones (la suya o la de su puesto), su grado de
+     * estudios y los cursos que tomó con su constancia.
+     *
+     * GET /v1/employees/{id}/training
+     *
+     * @param string $id
+     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @return array{
+     *     object: 'employee_training',
+     *     livemode: bool,
+     *     issuer: string,
+     *     employee: string,
+     *     occupation: string|null,
+     *     own_occupation: string|null,
+     *     education: string|null,
+     *     courses: list<array{course: string, participant: string, name: string, thematic_area: string, hours: float|int, start_date: string, end_date: string, result: string, folio: int|null, issued_at: string|null, delivered_at: string|null, expires_on: string|null}>,
+     * }
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/nomina/get-employee-training
+     */
+    public function training(string $id, array $options = []): array
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('GET', '/v1/employees/' . rawurlencode($id) . '/training', [], $options);
+    }
+
+    /**
+     * Ocupación y estudios de un empleado
+     *
+     * Su ocupación cuando no es la de su puesto (null usa la del puesto) y su grado de estudios
+     * terminados, que pide el aviso a la STPS.
+     *
+     * POST /v1/employees/{id}/training
+     *
+     * @param string $id
+     * @param array{
+     *     occupation?: string|null,
+     *     education?: 'primaria'|'secundaria'|'bachillerato'|'tecnico'|'licenciatura'|'especialidad'|'maestria'|'doctorado'|null,
+     * } $params
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
+     * @return array{
+     *     object: 'employee_training',
+     *     livemode: bool,
+     *     issuer: string,
+     *     employee: string,
+     *     occupation: string|null,
+     *     own_occupation: string|null,
+     *     education: string|null,
+     *     courses: list<array{course: string, participant: string, name: string, thematic_area: string, hours: float|int, start_date: string, end_date: string, result: string, folio: int|null, issued_at: string|null, delivered_at: string|null, expires_on: string|null}>,
+     * }
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/nomina/update-employee-training
+     */
+    public function updateTraining(string $id, array $params = [], array $options = []): array
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('POST', '/v1/employees/' . rawurlencode($id) . '/training', ['body' => $params, 'idempotent' => true], $options);
+    }
 }
