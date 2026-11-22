@@ -482,8 +482,8 @@ final class Employees
      * Portal del empleado
      *
      * El enlace personal del empleado (sin cuenta) para ver, descargar y firmar de recibido sus
-     * recibos de nómina, ver sus vacaciones y pedir días; los celulares ligados y los recibos que
-     * firmó.
+     * recibos de nómina, ver sus vacaciones y pedir días; los celulares ligados, los que tienen
+     * avisos, sus últimos avisos y los recibos que firmó.
      *
      * GET /v1/employees/{id}/portal
      *
@@ -497,6 +497,8 @@ final class Employees
      *     enabled_at: string|null,
      *     phones: int,
      *     last_seen_at: string|null,
+     *     push_phones: int,
+     *     notices: list<array{kind: 'receipt'|'receipt_canceled'|'vacation_approved'|'vacation_rejected'|'sign_reminder', channel: 'push'|'email'|'off'|'none'|'skipped'|'stale'|null, created_at: string, sent_at: string|null}>,
      *     signed_receipts: list<array{uuid: string, signed_at: string}>,
      * }
      * @throws FiscalistoException
@@ -528,6 +530,8 @@ final class Employees
      *     enabled_at: string|null,
      *     phones: int,
      *     last_seen_at: string|null,
+     *     push_phones: int,
+     *     notices: list<array{kind: 'receipt'|'receipt_canceled'|'vacation_approved'|'vacation_rejected'|'sign_reminder', channel: 'push'|'email'|'off'|'none'|'skipped'|'stale'|null, created_at: string, sent_at: string|null}>,
      *     signed_receipts: list<array{uuid: string, signed_at: string}>,
      * }
      * @throws FiscalistoException
