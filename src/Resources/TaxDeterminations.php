@@ -41,6 +41,9 @@ final class TaxDeterminations
      *     vat_creditable: float|int,
      *     vat_withheld_by_customers: float|int,
      *     vat: float|int,
+     *     ieps_collected: float|int,
+     *     ieps_creditable: float|int,
+     *     ieps: float|int,
      *     suggested_isr: float|int|null,
      *     manual_entry: string|null,
      * }
@@ -77,6 +80,9 @@ final class TaxDeterminations
      *     vat_creditable: float|int,
      *     vat_withheld_by_customers: float|int,
      *     vat: float|int,
+     *     ieps_collected: float|int,
+     *     ieps_creditable: float|int,
+     *     ieps: float|int,
      *     suggested_isr: float|int|null,
      *     manual_entry: string|null,
      * }
@@ -109,6 +115,9 @@ final class TaxDeterminations
      *     vat_creditable: float|int,
      *     vat_withheld_by_customers: float|int,
      *     vat: float|int,
+     *     ieps_collected: float|int,
+     *     ieps_creditable: float|int,
+     *     ieps: float|int,
      *     suggested_isr: float|int|null,
      *     manual_entry: string|null,
      * }
