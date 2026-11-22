@@ -29,6 +29,9 @@ abstract class FiscalistoApi extends Core
     /** Emisores. */
     public readonly Resources\Issuers $issuers;
 
+    /** Emisores. */
+    public readonly Resources\ScheduleSettings $scheduleSettings;
+
     /** Facturas. */
     public readonly Resources\Invoices $invoices;
 
@@ -399,6 +402,7 @@ abstract class FiscalistoApi extends Core
         $this->testClocks = new Resources\TestClocks($this);
         $this->balance = new Resources\Balance($this);
         $this->issuers = new Resources\Issuers($this);
+        $this->scheduleSettings = new Resources\ScheduleSettings($this);
         $this->invoices = new Resources\Invoices($this);
         $this->receivables = new Resources\Receivables($this);
         $this->customers = new Resources\Customers($this);
