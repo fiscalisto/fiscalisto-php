@@ -38,7 +38,7 @@ final class PayrollCalendar
      *     livemode: bool,
      *     issuer: string,
      *     today: string,
-     *     events: list<array{object: 'payroll_calendar_event', obligation: 'pago'|'imss'|'rcv_infonavit'|'isn'|'aguinaldo'|'ptu'|'prima_riesgo'|'ajuste_anual', key: string, title: string, due_date: string, basis: string, to_confirm: string|null, paid: bool, paid_at: string|null, state: string|null, payroll: array<string, mixed>|null}>,
+     *     events: list<array{object: 'payroll_calendar_event', obligation: 'pago'|'imss'|'rcv_infonavit'|'isn'|'aguinaldo'|'ptu'|'prima_riesgo'|'ajuste_anual'|'icsoe'|'sisub', key: string, title: string, due_date: string, basis: string, to_confirm: string|null, paid: bool, paid_at: string|null, state: string|null, payroll: array<string, mixed>|null}>,
      * }
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/nomina/get-payroll-calendar
@@ -53,21 +53,21 @@ final class PayrollCalendar
      * Marcar un pago de nómina como pagado
      *
      * Marca (paid true) o desmarca (false) un pago del calendario de nómina: imss, rcv_infonavit,
-     * isn, aguinaldo, ptu, prima_riesgo o ajuste_anual, con su key como lo da GET
+     * isn, aguinaldo, ptu, prima_riesgo, ajuste_anual, icsoe o sisub, con su key como lo da GET
      * /v1/payroll_calendar. Una nómina (pago) queda hecha al timbrar sus recibos.
      *
      * POST /v1/payroll_calendar/mark
      *
      * @param array{
      *     issuer?: string,
-     *     obligation: 'imss'|'rcv_infonavit'|'isn'|'aguinaldo'|'ptu'|'prima_riesgo'|'ajuste_anual',
+     *     obligation: 'imss'|'rcv_infonavit'|'isn'|'aguinaldo'|'ptu'|'prima_riesgo'|'ajuste_anual'|'icsoe'|'sisub',
      *     key: string,
      *     paid: bool,
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     object: 'payroll_calendar_event',
-     *     obligation: 'pago'|'imss'|'rcv_infonavit'|'isn'|'aguinaldo'|'ptu'|'prima_riesgo'|'ajuste_anual',
+     *     obligation: 'pago'|'imss'|'rcv_infonavit'|'isn'|'aguinaldo'|'ptu'|'prima_riesgo'|'ajuste_anual'|'icsoe'|'sisub',
      *     key: string,
      *     title: string,
      *     due_date: string,

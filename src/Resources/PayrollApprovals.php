@@ -52,6 +52,7 @@ final class PayrollApprovals
      *     requested_at: string,
      *     decided_at: string|null,
      *     note: string|null,
+     *     step: array{number: int, of: int, name: string}|null,
      * }
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/nomina/create-payroll-approval
@@ -76,7 +77,7 @@ final class PayrollApprovals
      *     issuer?: string,
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, object: 'payroll_approval', livemode: bool, issuer: string, periodicity: string, period: array<string, mixed>, status: 'pending'|'approved'|'rejected'|'withdrawn'|'replaced', net: float|int, receipts: list<array<string, mixed>>, requested_at: string, decided_at: string|null, note: string|null}>
+     * @return Collection<array{id: string, object: 'payroll_approval', livemode: bool, issuer: string, periodicity: string, period: array<string, mixed>, status: 'pending'|'approved'|'rejected'|'withdrawn'|'replaced', net: float|int, receipts: list<array<string, mixed>>, requested_at: string, decided_at: string|null, note: string|null, step: array<string, mixed>|null}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/nomina/list-payroll-approvals
      */
@@ -108,6 +109,7 @@ final class PayrollApprovals
      *     requested_at: string,
      *     decided_at: string|null,
      *     note: string|null,
+     *     step: array{number: int, of: int, name: string}|null,
      * }
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/nomina/get-payroll-approval
@@ -141,6 +143,7 @@ final class PayrollApprovals
      *     requested_at: string,
      *     decided_at: string|null,
      *     note: string|null,
+     *     step: array{number: int, of: int, name: string}|null,
      * }
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/nomina/cancel-payroll-approval

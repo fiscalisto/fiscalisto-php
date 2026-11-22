@@ -108,6 +108,15 @@ abstract class FiscalistoApi extends Core
     public readonly Resources\PayrollCalendar $payrollCalendar;
 
     /** Nómina. */
+    public readonly Resources\RepseContracts $repseContracts;
+
+    /** Nómina. */
+    public readonly Resources\RepseProfile $repseProfile;
+
+    /** Nómina. */
+    public readonly Resources\RepseReturns $repseReturns;
+
+    /** Nómina. */
     public readonly Resources\PayrollOrgChart $payrollOrgChart;
 
     /** Nómina. */
@@ -416,6 +425,9 @@ abstract class FiscalistoApi extends Core
         $this->payrollTaxes = new Resources\PayrollTaxes($this);
         $this->payrollReports = new Resources\PayrollReports($this);
         $this->payrollCalendar = new Resources\PayrollCalendar($this);
+        $this->repseContracts = new Resources\RepseContracts($this);
+        $this->repseProfile = new Resources\RepseProfile($this);
+        $this->repseReturns = new Resources\RepseReturns($this);
         $this->payrollOrgChart = new Resources\PayrollOrgChart($this);
         $this->hiring = new Resources\Hiring($this);
         $this->candidates = new Resources\Candidates($this);
