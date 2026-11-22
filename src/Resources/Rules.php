@@ -263,4 +263,100 @@ final class Rules
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
         return $this->client->list('/v1/rules/' . rawurlencode($id) . '/runs', $params, $options);
     }
+
+    /**
+     * Probar una regla en los últimos días
+     *
+     * Con todos los registros de su trigger de los últimos days días (90 por omisión, hasta
+     * 2,000): en cuántos se cumple, cuánto suman y qué habría hecho. No cambia nada.
+     *
+     * POST /v1/rules/{id}/backtest
+     *
+     * @param string $id
+     * @param array{days?: int} $params
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
+     * @return array{
+     *     object: 'rule_backtest',
+     *     rule: string,
+     *     days: int,
+     *     since: string,
+     *     records: int,
+     *     matches: int,
+     *     amount: float|int|null,
+     *     capped: bool,
+     *     would_do: list<string>,
+     *     else_would_do: list<string>,
+     *     wait_days: int,
+     * }
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/reglas/backtest-rule
+     */
+    public function backtest(string $id, array $params = [], array $options = []): array
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('POST', '/v1/rules/' . rawurlencode($id) . '/backtest', ['body' => $params, 'idempotent' => true], $options);
+    }
+
+    /**
+     * Cambios de una regla
+     *
+     * Cada cambio, el más reciente primero, con quién lo hizo y la regla como quedó. También de
+     * una regla borrada (90 días).
+     *
+     * GET /v1/rules/{id}/versions
+     *
+     * @param string $id
+     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @return array{
+     *     object: 'list',
+     *     data: list<array{id: string, object: 'rule_version', change: 'created'|'edited'|'paused'|'resumed'|'deleted'|'restored', changed_by: string|null, rule: array<string, mixed>, created_at: string}>,
+     *     has_more: bool,
+     *     url: string,
+     * }
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/reglas/list-rule-versions
+     */
+    public function listVersions(string $id, array $options = []): array
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('GET', '/v1/rules/' . rawurlencode($id) . '/versions', [], $options);
+    }
+
+    /**
+     * Regresar una regla a una versión
+     *
+     * La regla vuelve a como quedó en esa versión; una borrada vuelve a existir. Se revisa como
+     * cualquier cambio y queda como una versión más.
+     *
+     * POST /v1/rules/{id}/versions/{version}/restore
+     *
+     * @param string $id
+     * @param string $version
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
+     * @return array{
+     *     id: string,
+     *     livemode: bool,
+     *     object: 'rule',
+     *     issuer: string,
+     *     name: string,
+     *     trigger: 'invoice.received'|'invoice.issued'|'invoice.paid'|'invoice.cancelled'|'invoice.approved'|'invoice.rejected'|'finding.created'|'payout.submitted'|'payout.paid'|'payout.failed'|'invoice.daily'|'purchase_order.daily'|'bank.movement'|'purchase_order.saved'|'purchase_order.approved'|'purchase_order.rejected'|'purchase_order.sent'|'purchase_order.confirmed'|'purchase_order.received_part'|'purchase_order.received_all'|'purchase_order.invoiced_all'|'purchase_order.price_variance'|'purchase_order.registered'|'sat.listed'|'sat.opinion'|'sat.buzon'|'sat.certificate',
+     *     conditions: array{match: 'all'|'any', conditions: list<array<string, mixed>>, groups: list<array<string, mixed>>},
+     *     actions: list<array{type: 'tag'|'cost_center'|'category'|'stage'|'close'|'ask_approval'|'notify'|'lote'|'hold_payment'|'email_supplier'|'review_findings'|'extra_signature'|'account'|'webhook'|'flag', severity?: 'critical'|'warning'|'info', detail?: string|null, finding_code?: string, tag?: string, url?: string, webhook_endpoint?: string|null, account?: string, category?: string, remove_when_unmet?: bool, cost_center?: string, stage?: int, members?: list<string>, note?: string|null, topic?: 'ordenes'|'pagos'|'facturas'|'complementos'|'documentos'|'precios', subject?: string, message?: string, per?: 'payout'|'invoice', columns?: array<string, mixed>|null, cc?: list<string>, findings?: list<string>, signatures?: int, reason?: string|null, lote_name?: string|null, pay_on?: 'monday'|'tuesday'|'wednesday'|'thursday'|'friday'|'in_days'|'due', days?: int}>,
+     *     else_actions: list<array{type: 'tag'|'cost_center'|'category'|'stage'|'close'|'ask_approval'|'notify'|'lote'|'hold_payment'|'email_supplier'|'review_findings'|'extra_signature'|'account'|'webhook'|'flag', severity?: 'critical'|'warning'|'info', detail?: string|null, finding_code?: string, tag?: string, url?: string, webhook_endpoint?: string|null, account?: string, category?: string, remove_when_unmet?: bool, cost_center?: string, stage?: int, members?: list<string>, note?: string|null, topic?: 'ordenes'|'pagos'|'facturas'|'complementos'|'documentos'|'precios', subject?: string, message?: string, per?: 'payout'|'invoice', columns?: array<string, mixed>|null, cc?: list<string>, findings?: list<string>, signatures?: int, reason?: string|null, lote_name?: string|null, pay_on?: 'monday'|'tuesday'|'wednesday'|'thursday'|'friday'|'in_days'|'due', days?: int}>,
+     *     once_per_record: bool,
+     *     wait_days: int,
+     *     stop_after: bool,
+     *     enabled: bool,
+     *     position: int,
+     *     created_at: string|null,
+     *     updated_at: string|null,
+     * }
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/reglas/restore-rule-version
+     */
+    public function restoreVersion(string $id, string $version, array $options = []): array
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('POST', '/v1/rules/' . rawurlencode($id) . '/versions/' . rawurlencode($version) . '/restore', ['idempotent' => true], $options);
+    }
 }
