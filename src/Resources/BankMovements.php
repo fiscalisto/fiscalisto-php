@@ -23,9 +23,9 @@ final class BankMovements
      *
      * Los movimientos de banco de un mes que ninguna factura explica: los retiros de los estados
      * de cuenta importados en la conciliación (comisiones, impuestos, pagos de préstamos,
-     * traspasos) y los depósitos que ahí se clasificaron como préstamo, traspaso o devolución.
-     * Cada uno con su póliza, si ya se registró, y la cuenta sugerida. Lo que pagó o cobró una
-     * factura ya está en la contabilidad por su CFDI.
+     * traspasos) y los depósitos que ahí se clasificaron como préstamo, traspaso, devolución o
+     * intereses. Cada uno con su póliza, si ya se registró, y la cuenta sugerida. Lo que pagó o
+     * cobró una factura ya está en la contabilidad por su CFDI.
      *
      * GET /v1/accounting/bank_movements
      *
@@ -33,7 +33,7 @@ final class BankMovements
      * @param array{timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     object: 'list',
-     *     data: list<array{id: string, livemode: bool, object: 'accounting_bank_movement', issuer: string, direction: 'deposit'|'withdrawal', date: string, description: string, reference: string|null, amount: float|int, bank: string, bank_account: string|null, classification: 'loan'|'transfer'|'refund'|null, status: 'pending'|'posted'|'paid_invoices'|'ignored', manual_entry: string|null, account: string|null, suggested_account: string|null}>,
+     *     data: list<array{id: string, livemode: bool, object: 'accounting_bank_movement', issuer: string, direction: 'deposit'|'withdrawal', date: string, description: string, reference: string|null, amount: float|int, bank: string, bank_account: string|null, classification: 'loan'|'transfer'|'refund'|'interest'|null, status: 'pending'|'posted'|'paid_invoices'|'ignored', manual_entry: string|null, account: string|null, suggested_account: string|null}>,
      *     has_more: bool,
      *     url: string,
      * }
@@ -72,7 +72,7 @@ final class BankMovements
      *     amount: float|int,
      *     bank: string,
      *     bank_account: string|null,
-     *     classification: 'loan'|'transfer'|'refund'|null,
+     *     classification: 'loan'|'transfer'|'refund'|'interest'|null,
      *     status: 'pending'|'posted'|'paid_invoices'|'ignored',
      *     manual_entry: string|null,
      *     account: string|null,
@@ -109,7 +109,7 @@ final class BankMovements
      *     amount: float|int,
      *     bank: string,
      *     bank_account: string|null,
-     *     classification: 'loan'|'transfer'|'refund'|null,
+     *     classification: 'loan'|'transfer'|'refund'|'interest'|null,
      *     status: 'pending'|'posted'|'paid_invoices'|'ignored',
      *     manual_entry: string|null,
      *     account: string|null,
@@ -147,7 +147,7 @@ final class BankMovements
      *     amount: float|int,
      *     bank: string,
      *     bank_account: string|null,
-     *     classification: 'loan'|'transfer'|'refund'|null,
+     *     classification: 'loan'|'transfer'|'refund'|'interest'|null,
      *     status: 'pending'|'posted'|'paid_invoices'|'ignored',
      *     manual_entry: string|null,
      *     account: string|null,

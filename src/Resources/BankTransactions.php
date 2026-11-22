@@ -41,7 +41,7 @@ final class BankTransactions
      *     issuer: string,
      *     added: int,
      *     duplicates: int,
-     *     data: list<array{id: string, livemode: bool, object: 'bank_transaction', issuer: string, date: string, amount: float|int, description: string, reference: string|null, account: string|null, payer_tax_id: string|null, status: 'open'|'matched'|'classified', classification: 'venta'|'prestamo'|'traspaso'|'devolucion'|null, note: string|null, invoices: list<string>, payment: string|null, suggested_match: array<string, mixed>|null, created_at: string|null}>,
+     *     data: list<array{id: string, livemode: bool, object: 'bank_transaction', issuer: string, date: string, amount: float|int, description: string, reference: string|null, account: string|null, payer_tax_id: string|null, status: 'open'|'matched'|'classified', classification: 'venta'|'prestamo'|'traspaso'|'devolucion'|'intereses'|null, note: string|null, invoices: list<string>, payment: string|null, suggested_match: array<string, mixed>|null, created_at: string|null}>,
      * }
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/conciliacion-bancaria/create-bank-transactions
@@ -66,7 +66,7 @@ final class BankTransactions
      *     status?: 'open'|'matched'|'classified',
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'bank_transaction', issuer: string, date: string, amount: float|int, description: string, reference: string|null, account: string|null, payer_tax_id: string|null, status: 'open'|'matched'|'classified', classification: 'venta'|'prestamo'|'traspaso'|'devolucion'|null, note: string|null, invoices: list<string>, payment: string|null, suggested_match: array<string, mixed>|null, created_at: string|null}>
+     * @return Collection<array{id: string, livemode: bool, object: 'bank_transaction', issuer: string, date: string, amount: float|int, description: string, reference: string|null, account: string|null, payer_tax_id: string|null, status: 'open'|'matched'|'classified', classification: 'venta'|'prestamo'|'traspaso'|'devolucion'|'intereses'|null, note: string|null, invoices: list<string>, payment: string|null, suggested_match: array<string, mixed>|null, created_at: string|null}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/conciliacion-bancaria/list-bank-transactions
      */
@@ -98,7 +98,7 @@ final class BankTransactions
      *     account: string|null,
      *     payer_tax_id: string|null,
      *     status: 'open'|'matched'|'classified',
-     *     classification: 'venta'|'prestamo'|'traspaso'|'devolucion'|null,
+     *     classification: 'venta'|'prestamo'|'traspaso'|'devolucion'|'intereses'|null,
      *     note: string|null,
      *     invoices: list<string>,
      *     payment: string|null,
@@ -138,7 +138,7 @@ final class BankTransactions
      *     account: string|null,
      *     payer_tax_id: string|null,
      *     status: 'open'|'matched'|'classified',
-     *     classification: 'venta'|'prestamo'|'traspaso'|'devolucion'|null,
+     *     classification: 'venta'|'prestamo'|'traspaso'|'devolucion'|'intereses'|null,
      *     note: string|null,
      *     invoices: list<string>,
      *     payment: string|null,
@@ -157,14 +157,15 @@ final class BankTransactions
     /**
      * Explicar un depósito sin factura
      *
-     * Un depósito que ninguna factura explica: venta (aún sin facturar), prestamo, traspaso o
-     * devolucion. El SAT puede presumir ingreso un depósito sin explicar (CFF art. 59 fr. III).
+     * Un depósito que ninguna factura explica: venta (aún sin facturar), prestamo, traspaso,
+     * devolucion o intereses. El SAT puede presumir ingreso un depósito sin explicar (CFF art. 59
+     * fr. III).
      *
      * POST /v1/bank_transactions/{id}/classify
      *
      * @param string $id
      * @param array{
-     *     classification: 'venta'|'prestamo'|'traspaso'|'devolucion',
+     *     classification: 'venta'|'prestamo'|'traspaso'|'devolucion'|'intereses',
      *     note?: string,
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
@@ -180,7 +181,7 @@ final class BankTransactions
      *     account: string|null,
      *     payer_tax_id: string|null,
      *     status: 'open'|'matched'|'classified',
-     *     classification: 'venta'|'prestamo'|'traspaso'|'devolucion'|null,
+     *     classification: 'venta'|'prestamo'|'traspaso'|'devolucion'|'intereses'|null,
      *     note: string|null,
      *     invoices: list<string>,
      *     payment: string|null,
@@ -218,7 +219,7 @@ final class BankTransactions
      *     account: string|null,
      *     payer_tax_id: string|null,
      *     status: 'open'|'matched'|'classified',
-     *     classification: 'venta'|'prestamo'|'traspaso'|'devolucion'|null,
+     *     classification: 'venta'|'prestamo'|'traspaso'|'devolucion'|'intereses'|null,
      *     note: string|null,
      *     invoices: list<string>,
      *     payment: string|null,
