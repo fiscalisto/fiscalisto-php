@@ -122,6 +122,18 @@ abstract class FiscalistoApi extends Core
     /** Nómina. */
     public readonly Resources\TrainingCourses $trainingCourses;
 
+    /** Nómina. */
+    public readonly Resources\Climate $climate;
+
+    /** Nómina. */
+    public readonly Resources\ClimateSurveys $climateSurveys;
+
+    /** Nómina. */
+    public readonly Resources\ClimateActions $climateActions;
+
+    /** Nómina. */
+    public readonly Resources\ClimateComplaints $climateComplaints;
+
     /** Lotes. */
     public readonly Resources\InvoiceBatches $invoiceBatches;
 
@@ -409,6 +421,10 @@ abstract class FiscalistoApi extends Core
         $this->candidates = new Resources\Candidates($this);
         $this->training = new Resources\Training($this);
         $this->trainingCourses = new Resources\TrainingCourses($this);
+        $this->climate = new Resources\Climate($this);
+        $this->climateSurveys = new Resources\ClimateSurveys($this);
+        $this->climateActions = new Resources\ClimateActions($this);
+        $this->climateComplaints = new Resources\ClimateComplaints($this);
         $this->invoiceBatches = new Resources\InvoiceBatches($this);
         $this->taxIds = new Resources\TaxIds($this);
         $this->branches = new Resources\Branches($this);
