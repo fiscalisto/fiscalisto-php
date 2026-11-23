@@ -381,6 +381,9 @@ final class ErrorCode
     /** El SAT no contestó o no dejó entrar con la e.firma del emisor. El mensaje trae lo que dijo; no se usó ningún timbre. Reintente en 10 minutos. */
     public const SAT_UNAVAILABLE = 'sat_unavailable';
 
+    /** Ese cambio ya no se puede deshacer: ya se deshizo, el ajuste cambió otra vez después (deshaga primero el más reciente) o ya no tiene el valor que dejó ese cambio. */
+    public const SETTING_CHANGE_NOT_UNDOABLE = 'setting_change_not_undoable';
+
     /** Demasiados timbres seguidos del mismo emisor. Espere lo que dice Retry-After; para muchas facturas use POST /v1/invoice_batches, y para una nómina POST /v1/payroll_batches. */
     public const STAMP_RATE_LIMIT = 'stamp_rate_limit';
 
