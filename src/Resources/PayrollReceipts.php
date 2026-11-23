@@ -187,6 +187,7 @@ final class PayrollReceipts
      *     other_payments: list<array{type: string, key: string, concept: string, amount: float|int, subsidy_caused?: float|int, subsidy_applied?: float|int, balance_compensation?: array<string, mixed>}>,
      *     isr: array{tariff: float|int, subsidy: float|int, withheld: float|int, exempt_minimum: bool, adjustment?: array<string, mixed>},
      *     totals: array{salaries: float|int, taxed: float|int, exempt: float|int, separation: float|int, retirement: float|int, perceptions: float|int, other_deductions: float|int, taxes_withheld: float|int, deductions: float|int, other_payments: float|int, subtotal: float|int, net: float|int},
+     *     explanation: list<array{id: string, kind: 'isr'|'subsidio'|'imss', concept: string, amount: float|int, summary: string, steps: list<array<string, mixed>>, law: list<array<string, mixed>>}>,
      * }
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/nomina/preview-payroll-receipt
