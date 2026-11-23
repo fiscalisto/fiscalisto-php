@@ -41,6 +41,8 @@ final class PrepaidExpenses
      *     expense_account_name: string|null,
      *     start_month: string|null,
      *     months: int|null,
+     *     start_date: string|null,
+     *     end_date: string|null,
      *     amount: float|int|null,
      *     pending: float|int|null,
      *     schedule: list<array{month: int, date: string, amount: float|int, posted: bool}>,
@@ -68,8 +70,10 @@ final class PrepaidExpenses
      * @param array{
      *     issuer?: string,
      *     kind?: 'insurance'|'rent'|'other',
-     *     months: int,
+     *     months?: int,
      *     start_month?: string,
+     *     start_date?: string,
+     *     end_date?: string,
      *     expense_account?: string,
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
@@ -85,6 +89,8 @@ final class PrepaidExpenses
      *     expense_account_name: string|null,
      *     start_month: string|null,
      *     months: int|null,
+     *     start_date: string|null,
+     *     end_date: string|null,
      *     amount: float|int|null,
      *     pending: float|int|null,
      *     schedule: list<array{month: int, date: string, amount: float|int, posted: bool}>,
@@ -92,7 +98,7 @@ final class PrepaidExpenses
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/contabilidad/update-prepaid-expense
      */
-    public function update(string $uuid, array $params, array $options = []): array
+    public function update(string $uuid, array $params = [], array $options = []): array
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
         return $this->client->request('POST', '/v1/accounting/prepaid_expenses/' . rawurlencode($uuid), ['body' => $params, 'idempotent' => true], $options);
@@ -121,6 +127,8 @@ final class PrepaidExpenses
      *     expense_account_name: string|null,
      *     start_month: string|null,
      *     months: int|null,
+     *     start_date: string|null,
+     *     end_date: string|null,
      *     amount: float|int|null,
      *     pending: float|int|null,
      *     schedule: list<array{month: int, date: string, amount: float|int, posted: bool}>,
