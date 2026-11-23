@@ -33,7 +33,7 @@ final class Account
      *     name: string,
      *     api_version: string,
      *     latest_api_version: string,
-     *     key: array{id: string, name: string, issuers: list<string>|null, read_only: bool, expires_at: string|null, sandbox: string|null},
+     *     key: array{id: string, name: string, issuers: list<string>|null, read_only: bool, permissions: array<string, mixed>|null, allowed_ips: list<string>|null, expires_at: string|null, sandbox: string|null},
      * }
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/cuenta/get-account
@@ -63,7 +63,7 @@ final class Account
      *     name: string,
      *     api_version: string,
      *     latest_api_version: string,
-     *     key: array{id: string, name: string, issuers: list<string>|null, read_only: bool, expires_at: string|null, sandbox: string|null},
+     *     key: array{id: string, name: string, issuers: list<string>|null, read_only: bool, permissions: array<string, mixed>|null, allowed_ips: list<string>|null, expires_at: string|null, sandbox: string|null},
      * }
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/cuenta/update-account

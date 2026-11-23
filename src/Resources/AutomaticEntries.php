@@ -38,10 +38,10 @@ final class AutomaticEntries
      *     type: 'invoice'|'payroll',
      *     date: string,
      *     description: string,
-     *     lines: list<array{account: string, account_name: string, grouping_code: string, debit: float|int, credit: float|int, cost_center: string|null}>,
+     *     lines: list<array{account: string, account_name: string, grouping_code: string, debit: float|int, credit: float|int, cost_center: string|null, reason: string|null}>,
      *     edited: bool,
      *     edited_at: string|null,
-     *     original_lines: list<array{account: string, account_name: string, grouping_code: string, debit: float|int, credit: float|int, cost_center: string|null}>|null,
+     *     original_lines: list<array{account: string, account_name: string, grouping_code: string, debit: float|int, credit: float|int, cost_center: string|null, reason: string|null}>|null,
      *     original_changed: bool|null,
      * }
      * @throws FiscalistoException
@@ -79,10 +79,10 @@ final class AutomaticEntries
      *     type: 'invoice'|'payroll',
      *     date: string,
      *     description: string,
-     *     lines: list<array{account: string, account_name: string, grouping_code: string, debit: float|int, credit: float|int, cost_center: string|null}>,
+     *     lines: list<array{account: string, account_name: string, grouping_code: string, debit: float|int, credit: float|int, cost_center: string|null, reason: string|null}>,
      *     edited: bool,
      *     edited_at: string|null,
-     *     original_lines: list<array{account: string, account_name: string, grouping_code: string, debit: float|int, credit: float|int, cost_center: string|null}>|null,
+     *     original_lines: list<array{account: string, account_name: string, grouping_code: string, debit: float|int, credit: float|int, cost_center: string|null, reason: string|null}>|null,
      *     original_changed: bool|null,
      * }
      * @throws FiscalistoException
@@ -113,10 +113,10 @@ final class AutomaticEntries
      *     type: 'invoice'|'payroll',
      *     date: string,
      *     description: string,
-     *     lines: list<array{account: string, account_name: string, grouping_code: string, debit: float|int, credit: float|int, cost_center: string|null}>,
+     *     lines: list<array{account: string, account_name: string, grouping_code: string, debit: float|int, credit: float|int, cost_center: string|null, reason: string|null}>,
      *     edited: bool,
      *     edited_at: string|null,
-     *     original_lines: list<array{account: string, account_name: string, grouping_code: string, debit: float|int, credit: float|int, cost_center: string|null}>|null,
+     *     original_lines: list<array{account: string, account_name: string, grouping_code: string, debit: float|int, credit: float|int, cost_center: string|null, reason: string|null}>|null,
      *     original_changed: bool|null,
      * }
      * @throws FiscalistoException

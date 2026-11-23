@@ -238,6 +238,30 @@ final class Invoices
     }
 
     /**
+     * Buscar facturas
+     *
+     * Con un lenguaje de búsqueda, como el de Stripe: campo:'valor' (igual, sin importar
+     * mayúsculas), campo~'valor' (contiene, 3 caracteres o más), >, >=, < y <= en números y
+     * fechas, -campo:'valor' (no) y campo:null; hasta 10 cláusulas unidas con AND o con OR. Se
+     * busca por customer (RFC), customer_name, uuid, series, folio, total, status (valid, pending,
+     * canceled, rejected o processing) y created. Los más recientes primero, por páginas como las
+     * listas. Una búsqueda que no se entiende responde search_query_invalid diciendo dónde.
+     *
+     * GET /v1/invoices/search
+     *
+     * @param array{query: string, limit?: int, starting_after?: string, issuer?: string} $params
+     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @return Collection<array{id: string, livemode: bool, object: 'invoice', issuer: string, branch: string|null, cost_center: string|null, type: 'I'|'E'|'P'|'T'|'N', status: 'processing'|'pending'|'valid'|'rejected'|'canceled', uuid: string|null, series: string|null, folio: string|null, date: string|null, customer: array<string, mixed>, use: string|null, payment_form: string|null, payment_method: string|null, payment_terms: string|null, notes: string|null, currency: string, exchange_rate: float|int|null, items: list<array<string, mixed>>, subtotal: float|int|null, discount: float|int|null, taxes: array<string, mixed>|null, total: float|int|null, payment_status: 'paid'|'partial'|'unpaid'|null, amount_due: float|int|null, amount_paid: float|int|null, paid_on: string|null, due_date: string|null, related: array<string, mixed>|null, payment?: array<string, mixed>|null, payroll?: array<string, mixed>, global?: array<string, mixed>, cancellation: array<string, mixed>|null, email: array<string, mixed>|null, error: array<string, mixed>|null, recurring_invoice: string|null, tickets: list<string>, origin: array<string, mixed>|null, created_at: string|null, metadata: array<string, mixed>, warnings?: list<string>, email_error?: string, substitutes?: array<string, mixed>, advance_application?: array<string, mixed>}>
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/facturas/search-invoices
+     */
+    public function search(array $params, array $options = []): Collection
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->list('/v1/invoices/search', $params, $options);
+    }
+
+    /**
      * Ver una factura
      *
      * Por su id (inv_…) o por su folio fiscal (UUID).

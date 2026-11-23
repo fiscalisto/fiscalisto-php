@@ -123,6 +123,30 @@ final class Products
     }
 
     /**
+     * Buscar productos
+     *
+     * Con un lenguaje de búsqueda, como el de Stripe: campo:'valor' (igual, sin importar
+     * mayúsculas), campo~'valor' (contiene, 3 caracteres o más), >, >=, < y <= en números y
+     * fechas, -campo:'valor' (no) y campo:null; hasta 10 cláusulas unidas con AND o con OR. Se
+     * busca por name, description, sku, product_key, unit_key, unit_price y created. Los más
+     * recientes primero, por páginas como las listas. Una búsqueda que no se entiende responde
+     * search_query_invalid diciendo dónde.
+     *
+     * GET /v1/products/search
+     *
+     * @param array{query: string, limit?: int, starting_after?: string, issuer?: string} $params
+     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @return Collection<array{id: string, livemode: bool, object: 'product', issuer: string, name: string|null, description: string, product_key: string, unit_key: string, unit_name: string|null, sku: string|null, category: string|null, unit_price: float|int, open_price: bool, taxability: string, iva: string, ieps: float|int|null, ieps_factor: string|null, iva_retention: float|int, isr_retention: float|int, local_taxes: list<array<string, mixed>>, hydrocarbon: array<string, mixed>|null, track_stock: bool, cost: float|int|null, barcode: string|null, min_stock: float|int|null, portal_visible: bool, min_order_qty: float|int|null, order_step: float|int|null, created_at: string, updated_at: string|null}>
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/productos/search-products
+     */
+    public function search(array $params, array $options = []): Collection
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->list('/v1/products/search', $params, $options);
+    }
+
+    /**
      * Ver un producto
      *
      * Un producto del catálogo.
