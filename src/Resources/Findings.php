@@ -23,11 +23,11 @@ final class Findings
      * Listar hallazgos
      *
      * Lo que Fiscalisto encontró en las órdenes de compra, pagos, proveedores, contabilidad,
-     * viáticos, tickets de compra, inventario y clientes del emisor, el más reciente primero: una
-     * factura que no coincide con su orden, un proveedor en la lista 69-B, un documento vencido,
-     * Caja con saldo acreedor, una comprobación vencida, un ticket sin factura, una existencia
-     * negativa, un saldo vencido. Sin status, los que nadie ha revisado. Los de facturas están en
-     * GET /v1/sat_findings. No usa timbres.
+     * viáticos, tickets de compra, inventario, clientes y nómina del emisor, el más reciente
+     * primero: una factura que no coincide con su orden, un proveedor en la lista 69-B, un
+     * documento vencido, Caja con saldo acreedor, una comprobación vencida, un ticket sin factura,
+     * una existencia negativa, un saldo vencido, un salario diario integrado bajo. Sin status, los
+     * que nadie ha revisado. Los de facturas están en GET /v1/sat_findings. No usa timbres.
      *
      * GET /v1/findings
      *
@@ -35,14 +35,14 @@ final class Findings
      *     issuer?: string,
      *     limit?: int,
      *     starting_after?: string,
-     *     area?: 'purchase_orders'|'payouts'|'suppliers'|'accounting'|'bank'|'expense_reports'|'purchase_receipts'|'inventory'|'customers',
+     *     area?: 'purchase_orders'|'payouts'|'suppliers'|'accounting'|'bank'|'expense_reports'|'purchase_receipts'|'inventory'|'customers'|'payroll',
      *     status?: 'open'|'reviewed'|'resolved'|'all',
      *     severity?: 'critical'|'warning'|'info',
      *     code?: string,
      *     counterparty_tax_id?: string,
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'finding', issuer: string, area: 'purchase_orders'|'payouts'|'suppliers'|'accounting'|'bank'|'expense_reports'|'purchase_receipts'|'inventory'|'customers'|null, record: array<string, mixed>, code: string, severity: 'critical'|'warning'|'info', title: string, explanation: string|null, text: string, amount: float|int|null, counterparty_tax_id: string|null, status: 'open'|'reviewed'|'resolved', holds_record: bool, note: string|null, created_at: string|null, updated_at: string|null, reviewed_at: string|null, resolved_at: string|null}>
+     * @return Collection<array{id: string, livemode: bool, object: 'finding', issuer: string, area: 'purchase_orders'|'payouts'|'suppliers'|'accounting'|'bank'|'expense_reports'|'purchase_receipts'|'inventory'|'customers'|'payroll'|null, record: array<string, mixed>, code: string, severity: 'critical'|'warning'|'info', title: string, explanation: string|null, text: string, amount: float|int|null, counterparty_tax_id: string|null, status: 'open'|'reviewed'|'resolved', holds_record: bool, note: string|null, created_at: string|null, updated_at: string|null, reviewed_at: string|null, resolved_at: string|null}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/hallazgos/list-findings
      */
@@ -66,8 +66,8 @@ final class Findings
      *     livemode: bool,
      *     object: 'finding',
      *     issuer: string,
-     *     area: 'purchase_orders'|'payouts'|'suppliers'|'accounting'|'bank'|'expense_reports'|'purchase_receipts'|'inventory'|'customers'|null,
-     *     record: array{type: 'purchase_order'|'payout'|'supplier'|'poliza'|'account'|'bank_movement'|'expense_report'|'expense_ticket'|'product'|'customer', id: string|null, reference: string, description: string},
+     *     area: 'purchase_orders'|'payouts'|'suppliers'|'accounting'|'bank'|'expense_reports'|'purchase_receipts'|'inventory'|'customers'|'payroll'|null,
+     *     record: array{type: 'purchase_order'|'payout'|'supplier'|'poliza'|'account'|'bank_movement'|'expense_report'|'expense_ticket'|'product'|'customer'|'employee', id: string|null, reference: string, description: string},
      *     code: string,
      *     severity: 'critical'|'warning'|'info',
      *     title: string,
@@ -109,8 +109,8 @@ final class Findings
      *     livemode: bool,
      *     object: 'finding',
      *     issuer: string,
-     *     area: 'purchase_orders'|'payouts'|'suppliers'|'accounting'|'bank'|'expense_reports'|'purchase_receipts'|'inventory'|'customers'|null,
-     *     record: array{type: 'purchase_order'|'payout'|'supplier'|'poliza'|'account'|'bank_movement'|'expense_report'|'expense_ticket'|'product'|'customer', id: string|null, reference: string, description: string},
+     *     area: 'purchase_orders'|'payouts'|'suppliers'|'accounting'|'bank'|'expense_reports'|'purchase_receipts'|'inventory'|'customers'|'payroll'|null,
+     *     record: array{type: 'purchase_order'|'payout'|'supplier'|'poliza'|'account'|'bank_movement'|'expense_report'|'expense_ticket'|'product'|'customer'|'employee', id: string|null, reference: string, description: string},
      *     code: string,
      *     severity: 'critical'|'warning'|'info',
      *     title: string,
@@ -150,8 +150,8 @@ final class Findings
      *     livemode: bool,
      *     object: 'finding',
      *     issuer: string,
-     *     area: 'purchase_orders'|'payouts'|'suppliers'|'accounting'|'bank'|'expense_reports'|'purchase_receipts'|'inventory'|'customers'|null,
-     *     record: array{type: 'purchase_order'|'payout'|'supplier'|'poliza'|'account'|'bank_movement'|'expense_report'|'expense_ticket'|'product'|'customer', id: string|null, reference: string, description: string},
+     *     area: 'purchase_orders'|'payouts'|'suppliers'|'accounting'|'bank'|'expense_reports'|'purchase_receipts'|'inventory'|'customers'|'payroll'|null,
+     *     record: array{type: 'purchase_order'|'payout'|'supplier'|'poliza'|'account'|'bank_movement'|'expense_report'|'expense_ticket'|'product'|'customer'|'employee', id: string|null, reference: string, description: string},
      *     code: string,
      *     severity: 'critical'|'warning'|'info',
      *     title: string,
