@@ -549,6 +549,7 @@ final class Issuers
      *     pdf: bool,
      *     checked_at: string|null,
      *     last_error: string|null,
+     *     last_error_cause: 'sat_unavailable'|'sat_refused'|'account'|'internal'|null,
      * }
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/cumplimiento-sat/get-compliance-opinion

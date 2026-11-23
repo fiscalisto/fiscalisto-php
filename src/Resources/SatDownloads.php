@@ -55,6 +55,7 @@ final class SatDownloads
      *     status: 'processing'|'completed'|'failed',
      *     new_invoices: int|null,
      *     error: string|null,
+     *     error_cause: 'sat_unavailable'|'sat_refused'|'account'|'internal'|null,
      *     created_at: string|null,
      *     completed_at: string|null,
      * }
@@ -76,7 +77,7 @@ final class SatDownloads
      *
      * @param array{limit?: int, starting_after?: string, issuer?: string} $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'sat_download', issuer: string, direction: 'received'|'issued', from: string|null, to: string|null, type: 'I'|'E'|'P'|'T'|'N'|null, counterparty_tax_id: string|null, uuid: string|null, status: 'processing'|'completed'|'failed', new_invoices: int|null, error: string|null, created_at: string|null, completed_at: string|null}>
+     * @return Collection<array{id: string, livemode: bool, object: 'sat_download', issuer: string, direction: 'received'|'issued', from: string|null, to: string|null, type: 'I'|'E'|'P'|'T'|'N'|null, counterparty_tax_id: string|null, uuid: string|null, status: 'processing'|'completed'|'failed', new_invoices: int|null, error: string|null, error_cause: 'sat_unavailable'|'sat_refused'|'account'|'internal'|null, created_at: string|null, completed_at: string|null}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/descargas-del-sat/list-sat-downloads
      */
@@ -110,6 +111,7 @@ final class SatDownloads
      *     status: 'processing'|'completed'|'failed',
      *     new_invoices: int|null,
      *     error: string|null,
+     *     error_cause: 'sat_unavailable'|'sat_refused'|'account'|'internal'|null,
      *     created_at: string|null,
      *     completed_at: string|null,
      * }
