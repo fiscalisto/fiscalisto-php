@@ -79,11 +79,18 @@ final class Accounting
      * El libro mayor de un periodo de hasta 12 meses: el saldo inicial de cada cuenta, cada cargo
      * y abono con su póliza (journal_entry, el mismo id de journal_entries), su CFDI y el saldo
      * que deja, y el saldo final. Solo las cuentas que se movieron, o la que pida con account
-     * aunque no tenga movimientos. Una cuenta que no está en el catálogo contesta account_missing.
+     * aunque no tenga movimientos; grouping_code lo limita a las de un código agrupador. Una
+     * cuenta que no está en el catálogo contesta account_missing.
      *
      * GET /v1/accounting/general_ledger
      *
-     * @param array{from_month: string, to_month?: string, account?: string, issuer?: string} $params
+     * @param array{
+     *     from_month: string,
+     *     to_month?: string,
+     *     account?: string,
+     *     grouping_code?: string,
+     *     issuer?: string,
+     * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     object: 'general_ledger',
