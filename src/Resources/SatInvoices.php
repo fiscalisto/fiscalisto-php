@@ -41,7 +41,7 @@ final class SatInvoices
      *     cash_confirmation?: 'pending'|'confirmed',
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'sat_invoice', issuer: string, uuid: string, direction: 'received'|'issued', type: 'I'|'E'|'P'|'T'|'N'|null, date: string, series: string|null, folio: string|null, issued_by: array<string, mixed>, issued_to: array<string, mixed>, currency: string|null, exchange_rate: float|int|null, payment_method: string|null, payment_form: string|null, use: string|null, subtotal: float|int|null, total: float|int|null, taxes: array<string, mixed>, sat_status: 'active'|'canceled'|null, paid_otherwise: array<string, mixed>|null, cash_confirmation: 'pending'|'confirmed'|null, cost_center: string|null, account: string|null, tags: list<array<string, mixed>>, sat_download: string|null, downloaded_at: string|null}>
+     * @return Collection<array{id: string, livemode: bool, object: 'sat_invoice', issuer: string, uuid: string, direction: 'received'|'issued', type: 'I'|'E'|'P'|'T'|'N'|null, date: string, series: string|null, folio: string|null, issued_by: array<string, mixed>, issued_to: array<string, mixed>, currency: string|null, exchange_rate: float|int|null, payment_method: string|null, payment_form: string|null, use: string|null, subtotal: float|int|null, total: float|int|null, taxes: array<string, mixed>, sat_status: 'active'|'canceled'|null, paid_otherwise: array<string, mixed>|null, cash_confirmation: 'pending'|'confirmed'|null, cash_confirmed_at: string|null, cost_center: string|null, account: string|null, tags: list<array<string, mixed>>, sat_download: string|null, downloaded_at: string|null}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/descargas-del-sat/list-sat-invoices
      */
@@ -84,6 +84,7 @@ final class SatInvoices
      *     sat_status: 'active'|'canceled'|null,
      *     paid_otherwise: array{without_complement: bool, paid_on: string|null, payment_form: string|null, money_source: 'petty_cash'|'reimbursement'|'bank'|'other'|null, by_rule: bool}|null,
      *     cash_confirmation: 'pending'|'confirmed'|null,
+     *     cash_confirmed_at: string|null,
      *     cost_center: string|null,
      *     account: string|null,
      *     tags: list<array{id: string, name: string, color: string, automatic: bool}>,
@@ -135,6 +136,7 @@ final class SatInvoices
      *     sat_status: 'active'|'canceled'|null,
      *     paid_otherwise: array{without_complement: bool, paid_on: string|null, payment_form: string|null, money_source: 'petty_cash'|'reimbursement'|'bank'|'other'|null, by_rule: bool}|null,
      *     cash_confirmation: 'pending'|'confirmed'|null,
+     *     cash_confirmed_at: string|null,
      *     cost_center: string|null,
      *     account: string|null,
      *     tags: list<array{id: string, name: string, color: string, automatic: bool}>,
@@ -194,6 +196,7 @@ final class SatInvoices
      *     sat_status: 'active'|'canceled'|null,
      *     paid_otherwise: array{without_complement: bool, paid_on: string|null, payment_form: string|null, money_source: 'petty_cash'|'reimbursement'|'bank'|'other'|null, by_rule: bool}|null,
      *     cash_confirmation: 'pending'|'confirmed'|null,
+     *     cash_confirmed_at: string|null,
      *     cost_center: string|null,
      *     account: string|null,
      *     tags: list<array{id: string, name: string, color: string, automatic: bool}>,
@@ -243,6 +246,7 @@ final class SatInvoices
      *     sat_status: 'active'|'canceled'|null,
      *     paid_otherwise: array{without_complement: bool, paid_on: string|null, payment_form: string|null, money_source: 'petty_cash'|'reimbursement'|'bank'|'other'|null, by_rule: bool}|null,
      *     cash_confirmation: 'pending'|'confirmed'|null,
+     *     cash_confirmed_at: string|null,
      *     cost_center: string|null,
      *     account: string|null,
      *     tags: list<array{id: string, name: string, color: string, automatic: bool}>,
