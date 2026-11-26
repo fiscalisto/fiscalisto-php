@@ -22,16 +22,23 @@ final class Events
     /**
      * Listar eventos
      *
-     * Los de los últimos 30 días, los más recientes primero.
+     * Los de los últimos 30 días, los más recientes primero. Para leer hacia adelante sin perder
+     * ninguno (lo que llegó después del último que procesó), mande ending_before con ese evento y
+     * repita con el primero de data mientras has_more sea true.
      *
      * GET /v1/events
      *
      * @param array{
      *     limit?: int,
      *     starting_after?: string,
-     *     type?: 'invoice.stamped'|'invoice.failed'|'invoice.canceled'|'invoice.cancellation_pending'|'invoice.cancellation_rejected'|'invoice.cancellation_failed'|'invoice.paid'|'invoice.partially_paid'|'invoice.email_bounced'|'invoice.email_complained'|'retention.stamped'|'retention.failed'|'retention.canceled'|'invoice_batch.completed'|'payroll_batch.completed'|'customer.created'|'customer.updated'|'customer.deleted'|'product.created'|'product.updated'|'product.deleted'|'customer_data_request.completed'|'sat_download.completed'|'sat_download.failed'|'sat_declaration.created'|'sat_declaration.updated'|'sat_refresh.completed'|'sat_refresh.failed'|'ticket.invoiced'|'ticket.included_in_global'|'recurring_invoice.failed'|'quote.viewed'|'quote.accepted'|'quote.changes_requested'|'quote.rejected'|'quote.withdrawn'|'sales_order.confirmed'|'sales_order.customer_confirmed'|'sales_order.delivered'|'sales_order.paid'|'sales_order.canceled'|'supplier_invoice.received'|'supplier_invoice.approved'|'supplier_invoice.rejected'|'supplier_invoice.scheduled'|'supplier_invoice.paid'|'portal_supplier.approved'|'payout.approved'|'payout.paid'|'payout.partially_paid'|'payout.failed'|'payout.canceled'|'payout_transfer.succeeded'|'payout_transfer.failed'|'payout_transfer.returned'|'issuer.ready'|'balance.low'|'usage.high'|'test_clock.ready'|'rule.matched'|'invoice.*'|'invoice_batch.*'|'payroll_batch.*'|'recurring_invoice.*'|'quote.*'|'sales_order.*'|'supplier_invoice.*'|'portal_supplier.*'|'payout.*'|'payout_transfer.*'|'ticket.*'|'retention.*'|'customer.*'|'product.*'|'customer_data_request.*'|'sat_download.*'|'sat_declaration.*'|'sat_refresh.*'|'issuer.*'|'balance.*'|'usage.*'|'test_clock.*'|'rule.*',
+     *     ending_before?: string,
+     *     type?: 'invoice.stamped'|'invoice.failed'|'invoice.canceled'|'invoice.cancellation_pending'|'invoice.cancellation_rejected'|'invoice.cancellation_failed'|'invoice.paid'|'invoice.partially_paid'|'invoice.email_bounced'|'invoice.email_complained'|'invoice.draft_created'|'invoice.draft_updated'|'invoice.draft_deleted'|'retention.stamped'|'retention.failed'|'retention.canceled'|'invoice_batch.completed'|'payroll_batch.completed'|'customer.created'|'customer.updated'|'customer.deleted'|'product.created'|'product.updated'|'product.deleted'|'customer_data_request.completed'|'sat_download.completed'|'sat_download.failed'|'sat_declaration.created'|'sat_declaration.updated'|'sat_refresh.completed'|'sat_refresh.failed'|'ticket.invoiced'|'ticket.included_in_global'|'recurring_invoice.failed'|'quote.viewed'|'quote.accepted'|'quote.changes_requested'|'quote.rejected'|'quote.withdrawn'|'sales_order.confirmed'|'sales_order.customer_confirmed'|'sales_order.delivered'|'sales_order.paid'|'sales_order.canceled'|'supplier_invoice.received'|'supplier_invoice.approved'|'supplier_invoice.rejected'|'supplier_invoice.scheduled'|'supplier_invoice.paid'|'portal_supplier.approved'|'payout.approved'|'payout.paid'|'payout.partially_paid'|'payout.failed'|'payout.canceled'|'payout_transfer.succeeded'|'payout_transfer.failed'|'payout_transfer.returned'|'issuer.ready'|'balance.low'|'usage.high'|'test_clock.ready'|'rule.matched'|'invoice.*'|'invoice_batch.*'|'payroll_batch.*'|'recurring_invoice.*'|'quote.*'|'sales_order.*'|'supplier_invoice.*'|'portal_supplier.*'|'payout.*'|'payout_transfer.*'|'ticket.*'|'retention.*'|'customer.*'|'product.*'|'customer_data_request.*'|'sat_download.*'|'sat_declaration.*'|'sat_refresh.*'|'issuer.*'|'balance.*'|'usage.*'|'test_clock.*'|'rule.*',
      *     object?: string,
      *     delivery_success?: bool,
+     *     'created[gte]'?: string,
+     *     'created[gt]'?: string,
+     *     'created[lte]'?: string,
+     *     'created[lt]'?: string,
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
      * @return Collection<array{id: string, object: 'event', type: string, api_version: string, livemode: bool, created_at: string, data: array<string, mixed>}>

@@ -33,6 +33,10 @@ final class Candidates
      *     issuer?: string,
      *     vacancy?: string,
      *     stage?: string,
+     *     'created[gte]'?: string,
+     *     'created[gt]'?: string,
+     *     'created[lte]'?: string,
+     *     'created[lt]'?: string,
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
      * @return Collection<array{id: string, object: 'candidate', livemode: bool, issuer: string, vacancy: string, name: string, email: string, phone: string|null, stage: string, rating: int|null, note: string|null, meets_requirements: bool, unmet_requirements: list<string>, answers: list<array<string, mixed>>, employee: string|null, created_at: string}>

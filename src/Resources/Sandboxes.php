@@ -58,6 +58,12 @@ final class Sandboxes
      *
      * GET /v1/sandboxes
      *
+     * @param array{
+     *     'created[gte]'?: string,
+     *     'created[gt]'?: string,
+     *     'created[lte]'?: string,
+     *     'created[lt]'?: string,
+     * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     object: 'list',
@@ -68,10 +74,10 @@ final class Sandboxes
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/entornos-de-prueba/list-sandboxes
      */
-    public function list(array $options = []): array
+    public function list(array $params = [], array $options = []): array
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
-        return $this->client->request('GET', '/v1/sandboxes', [], $options);
+        return $this->client->request('GET', '/v1/sandboxes', ['query' => $params], $options);
     }
 
     /**

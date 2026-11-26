@@ -47,6 +47,7 @@ final class RepseContracts
      *     client_address: array{street: string, exterior?: string, interior?: string, neighborhood?: string, zip: string, municipality: string, state: string},
      *     site_address: array{street: string, exterior?: string, interior?: string, neighborhood?: string, zip: string, municipality: string, state: string},
      *     workers: list<array{employee: string, start_date: string, end_date?: string|null}>,
+     *     metadata?: array<string, mixed>,
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
@@ -68,6 +69,7 @@ final class RepseContracts
      *     client_address: array{street: string, exterior: string|null, interior: string|null, neighborhood: string|null, zip: string, municipality: string, state: string},
      *     site_address: array{street: string, exterior: string|null, interior: string|null, neighborhood: string|null, zip: string, municipality: string, state: string},
      *     workers: list<array{employee: string, name: string, start_date: string, end_date: string|null}>,
+     *     metadata: array<string, mixed>,
      *     created_at: string|null,
      * }
      * @throws FiscalistoException
@@ -87,9 +89,18 @@ final class RepseContracts
      *
      * GET /v1/repse_contracts
      *
-     * @param array{limit?: int, starting_after?: string, issuer?: string} $params
+     * @param array{
+     *     limit?: int,
+     *     starting_after?: string,
+     *     issuer?: string,
+     *     'created[gte]'?: string,
+     *     'created[gt]'?: string,
+     *     'created[lte]'?: string,
+     *     'created[lt]'?: string,
+     *     metadata?: array<string, mixed>,
+     * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'repse_contract', issuer: string, number: string, kind: string, contract_object: string, service: string, amount: float|int, start_date: string, end_date: string|null, estimated_workers: int, client_tax_id: string, client_name: string, client_employer_registration: string|null, client_address: array<string, mixed>, site_address: array<string, mixed>, workers: list<array<string, mixed>>, created_at: string|null}>
+     * @return Collection<array{id: string, livemode: bool, object: 'repse_contract', issuer: string, number: string, kind: string, contract_object: string, service: string, amount: float|int, start_date: string, end_date: string|null, estimated_workers: int, client_tax_id: string, client_name: string, client_employer_registration: string|null, client_address: array<string, mixed>, site_address: array<string, mixed>, workers: list<array<string, mixed>>, metadata: array<string, mixed>, created_at: string|null}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/nomina/list-repse-contracts
      */
@@ -127,6 +138,7 @@ final class RepseContracts
      *     client_address: array{street: string, exterior: string|null, interior: string|null, neighborhood: string|null, zip: string, municipality: string, state: string},
      *     site_address: array{street: string, exterior: string|null, interior: string|null, neighborhood: string|null, zip: string, municipality: string, state: string},
      *     workers: list<array{employee: string, name: string, start_date: string, end_date: string|null}>,
+     *     metadata: array<string, mixed>,
      *     created_at: string|null,
      * }
      * @throws FiscalistoException
@@ -163,6 +175,7 @@ final class RepseContracts
      *     client_address?: array{street: string, exterior?: string, interior?: string, neighborhood?: string, zip: string, municipality: string, state: string},
      *     site_address?: array{street: string, exterior?: string, interior?: string, neighborhood?: string, zip: string, municipality: string, state: string},
      *     workers?: list<array{employee: string, start_date: string, end_date?: string|null}>,
+     *     metadata?: array<string, mixed>|null,
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
@@ -184,6 +197,7 @@ final class RepseContracts
      *     client_address: array{street: string, exterior: string|null, interior: string|null, neighborhood: string|null, zip: string, municipality: string, state: string},
      *     site_address: array{street: string, exterior: string|null, interior: string|null, neighborhood: string|null, zip: string, municipality: string, state: string},
      *     workers: list<array{employee: string, name: string, start_date: string, end_date: string|null}>,
+     *     metadata: array<string, mixed>,
      *     created_at: string|null,
      * }
      * @throws FiscalistoException

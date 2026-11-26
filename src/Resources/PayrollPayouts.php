@@ -36,14 +36,19 @@ final class PayrollPayouts
      *
      * POST /v1/payroll_payouts
      *
-     * @param array{issuer?: string, payment_date: string, pay_on?: string} $params
+     * @param array{
+     *     issuer?: string,
+     *     payment_date: string,
+     *     pay_on?: string,
+     *     metadata?: array<string, mixed>,
+     * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     object: 'payroll_payout',
      *     livemode: bool,
      *     issuer: string,
      *     payment_date: string,
-     *     payout: array{id: string, livemode: bool, object: 'payout', issuer: string, number: int, status: 'draft'|'pending_approval'|'approved'|'sending'|'paid'|'partially_paid'|'failed'|'canceled', name: string|null, pay_on: string, exchange_rate: 'official'|'fixed'|null, total: float|int, currency: 'MXN', note: string|null, source: 'app'|'api'|'assistant'|'rule'|'recurring', payout_mandate: string|null, signatures: array<string, mixed>, app_url: string, transfers: list<array<string, mixed>>, cancel_reason: string|null, created_by_api: bool, created_at: string|null, approved_at: string|null, sent_at: string|null, settled_at: string|null, canceled_at: string|null},
+     *     payout: array{id: string, livemode: bool, object: 'payout', issuer: string, number: int, status: 'draft'|'pending_approval'|'approved'|'sending'|'paid'|'partially_paid'|'failed'|'canceled', name: string|null, pay_on: string, exchange_rate: 'official'|'fixed'|null, total: float|int, currency: 'MXN', note: string|null, source: 'app'|'api'|'assistant'|'rule'|'recurring', payout_mandate: string|null, signatures: array<string, mixed>, app_url: string, transfers: list<array<string, mixed>>, cancel_reason: string|null, created_by_api: bool, metadata: array<string, mixed>, created_at: string|null, approved_at: string|null, sent_at: string|null, settled_at: string|null, canceled_at: string|null},
      *     excluded: list<array{employee: string|null, name: string, tax_id: string, amount: float|int, status: 'ready'|'add'|'waiting'|'blocked'|'no_clabe'|'zero'|'in_payout', reason: string}>,
      * }
      * @throws FiscalistoException

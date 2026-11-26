@@ -33,10 +33,14 @@ final class SatFindingCounterparties
      *     limit?: int,
      *     starting_after?: string,
      *     direction?: 'issued'|'received',
-     *     date_gte?: string,
-     *     date_lte?: string,
+     *     'date[gte]'?: string,
+     *     'date[gt]'?: string,
+     *     'date[lte]'?: string,
+     *     'date[lt]'?: string,
      *     severity?: 'critical'|'warning'|'info',
      *     code?: string,
+     *     date_gte?: string,
+     *     date_lte?: string,
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
      * @return Collection<array{id: string, livemode: bool, object: 'sat_finding_counterparty', issuer: string, rfc: string, name: string|null, severity: 'critical'|'warning'|'info', invoices: int, amount: float|int, last_date: string|null, findings: list<array<string, mixed>>}>

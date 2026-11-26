@@ -38,15 +38,17 @@ final class ProductionOrders
      *     destination_warehouse?: string,
      *     due_date?: string|null,
      *     note?: string|null,
+     *     metadata?: array<string, mixed>,
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     id: string,
      *     livemode: bool,
      *     object: 'production_order',
+     *     metadata: array<string, mixed>,
      *     issuer: string,
      *     number: string,
-     *     status: 'draft'|'in_process'|'completed'|'cancelled',
+     *     status: 'draft'|'in_process'|'completed'|'canceled',
      *     product: string,
      *     quantity: float|int,
      *     quantity_made: float|int|null,
@@ -62,7 +64,7 @@ final class ProductionOrders
      *     created_at: string|null,
      *     started_at: string|null,
      *     completed_at: string|null,
-     *     cancelled_at: string|null,
+     *     canceled_at: string|null,
      * }
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/inventario/create-production-order
@@ -85,10 +87,15 @@ final class ProductionOrders
      *     starting_after?: string,
      *     issuer?: string,
      *     product?: string,
-     *     status?: 'draft'|'in_process'|'completed'|'cancelled',
+     *     status?: 'draft'|'in_process'|'completed'|'canceled'|'cancelled',
+     *     'created[gte]'?: string,
+     *     'created[gt]'?: string,
+     *     'created[lte]'?: string,
+     *     'created[lt]'?: string,
+     *     metadata?: array<string, mixed>,
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'production_order', issuer: string, number: string, status: 'draft'|'in_process'|'completed'|'cancelled', product: string, quantity: float|int, quantity_made: float|int|null, warehouse: string, destination_warehouse: string, lot: string|null, due_date: string|null, note: string|null, components: list<array<string, mixed>>, other_costs: list<array<string, mixed>>, materials_cost: float|int|null, unit_cost: float|int|null, created_at: string|null, started_at: string|null, completed_at: string|null, cancelled_at: string|null}>
+     * @return Collection<array{id: string, livemode: bool, object: 'production_order', metadata: array<string, mixed>, issuer: string, number: string, status: 'draft'|'in_process'|'completed'|'canceled', product: string, quantity: float|int, quantity_made: float|int|null, warehouse: string, destination_warehouse: string, lot: string|null, due_date: string|null, note: string|null, components: list<array<string, mixed>>, other_costs: list<array<string, mixed>>, materials_cost: float|int|null, unit_cost: float|int|null, created_at: string|null, started_at: string|null, completed_at: string|null, canceled_at: string|null}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/inventario/list-production-orders
      */
@@ -111,9 +118,10 @@ final class ProductionOrders
      *     id: string,
      *     livemode: bool,
      *     object: 'production_order',
+     *     metadata: array<string, mixed>,
      *     issuer: string,
      *     number: string,
-     *     status: 'draft'|'in_process'|'completed'|'cancelled',
+     *     status: 'draft'|'in_process'|'completed'|'canceled',
      *     product: string,
      *     quantity: float|int,
      *     quantity_made: float|int|null,
@@ -129,7 +137,7 @@ final class ProductionOrders
      *     created_at: string|null,
      *     started_at: string|null,
      *     completed_at: string|null,
-     *     cancelled_at: string|null,
+     *     canceled_at: string|null,
      * }
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/inventario/get-production-order
@@ -156,9 +164,10 @@ final class ProductionOrders
      *     id: string,
      *     livemode: bool,
      *     object: 'production_order',
+     *     metadata: array<string, mixed>,
      *     issuer: string,
      *     number: string,
-     *     status: 'draft'|'in_process'|'completed'|'cancelled',
+     *     status: 'draft'|'in_process'|'completed'|'canceled',
      *     product: string,
      *     quantity: float|int,
      *     quantity_made: float|int|null,
@@ -174,7 +183,7 @@ final class ProductionOrders
      *     created_at: string|null,
      *     started_at: string|null,
      *     completed_at: string|null,
-     *     cancelled_at: string|null,
+     *     canceled_at: string|null,
      * }
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/inventario/start-production-order
@@ -205,9 +214,10 @@ final class ProductionOrders
      *     id: string,
      *     livemode: bool,
      *     object: 'production_order',
+     *     metadata: array<string, mixed>,
      *     issuer: string,
      *     number: string,
-     *     status: 'draft'|'in_process'|'completed'|'cancelled',
+     *     status: 'draft'|'in_process'|'completed'|'canceled',
      *     product: string,
      *     quantity: float|int,
      *     quantity_made: float|int|null,
@@ -223,7 +233,7 @@ final class ProductionOrders
      *     created_at: string|null,
      *     started_at: string|null,
      *     completed_at: string|null,
-     *     cancelled_at: string|null,
+     *     canceled_at: string|null,
      * }
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/inventario/complete-production-order
@@ -237,7 +247,7 @@ final class ProductionOrders
     /**
      * Cancelar una orden de producción
      *
-     * Los componentes regresan a su almacén y lo producido sale (status cancelled). Una ya
+     * Los componentes regresan a su almacén y lo producido sale (status canceled). Una ya
      * cancelada: 400 inventory_refused.
      *
      * POST /v1/production_orders/{id}/cancel
@@ -248,9 +258,10 @@ final class ProductionOrders
      *     id: string,
      *     livemode: bool,
      *     object: 'production_order',
+     *     metadata: array<string, mixed>,
      *     issuer: string,
      *     number: string,
-     *     status: 'draft'|'in_process'|'completed'|'cancelled',
+     *     status: 'draft'|'in_process'|'completed'|'canceled',
      *     product: string,
      *     quantity: float|int,
      *     quantity_made: float|int|null,
@@ -266,7 +277,7 @@ final class ProductionOrders
      *     created_at: string|null,
      *     started_at: string|null,
      *     completed_at: string|null,
-     *     cancelled_at: string|null,
+     *     canceled_at: string|null,
      * }
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/inventario/cancel-production-order

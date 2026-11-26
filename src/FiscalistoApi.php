@@ -395,6 +395,9 @@ abstract class FiscalistoApi extends Core
     /** Pedidos. */
     public readonly Resources\SalesOrders $salesOrders;
 
+    /** Llaves de API. */
+    public readonly Resources\ApiKeys $apiKeys;
+
     /** Webhooks. */
     public readonly Resources\WebhookEndpoints $webhookEndpoints;
 
@@ -536,6 +539,7 @@ abstract class FiscalistoApi extends Core
         $this->recurringInvoices = new Resources\RecurringInvoices($this);
         $this->quotes = new Resources\Quotes($this);
         $this->salesOrders = new Resources\SalesOrders($this);
+        $this->apiKeys = new Resources\ApiKeys($this);
         $this->webhookEndpoints = new Resources\WebhookEndpoints($this);
         $this->events = new Resources\Events($this);
     }

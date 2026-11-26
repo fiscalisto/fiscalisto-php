@@ -33,6 +33,10 @@ final class SupplierInvoices
      *     issuer?: string,
      *     status?: 'received'|'approved'|'scheduled'|'paid'|'rejected',
      *     supplier?: string,
+     *     'received[gte]'?: string,
+     *     'received[gt]'?: string,
+     *     'received[lte]'?: string,
+     *     'received[lt]'?: string,
      *     received_since?: string,
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options

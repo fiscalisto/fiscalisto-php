@@ -82,7 +82,15 @@ final class StoreConnections
      *
      * GET /v1/store_connections
      *
-     * @param array{limit?: int, starting_after?: string, issuer?: string} $params
+     * @param array{
+     *     limit?: int,
+     *     starting_after?: string,
+     *     issuer?: string,
+     *     'created[gte]'?: string,
+     *     'created[gt]'?: string,
+     *     'created[lte]'?: string,
+     *     'created[lt]'?: string,
+     * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
      * @return Collection<array{id: string, livemode: bool, object: 'store_connection', issuer: string, platform: 'shopify'|'mercadolibre'|'amazon'|'tiendanube'|'woocommerce'|'mercadopago'|'conekta'|'openpay', shop: string|null, name: string|null, status: 'pending'|'active'|'disconnected', authorize_url: string|null, settings: array<string, mixed>, orders_count: int, last_order_at: string|null, last_error: array<string, mixed>|null, created_at: string|null}>
      * @throws FiscalistoException

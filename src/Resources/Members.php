@@ -27,7 +27,13 @@ final class Members
      *
      * GET /v1/members
      *
-     * @param array{issuer?: string} $params
+     * @param array{
+     *     issuer?: string,
+     *     'created[gte]'?: string,
+     *     'created[gt]'?: string,
+     *     'created[lte]'?: string,
+     *     'created[lt]'?: string,
+     * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     object: 'list',

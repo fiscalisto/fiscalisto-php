@@ -6,6 +6,7 @@ declare(strict_types=1);
 
 namespace Fiscalisto\Resources;
 
+use Fiscalisto\Collection;
 use Fiscalisto\Core;
 use Fiscalisto\FiscalistoException;
 
@@ -29,22 +30,22 @@ final class VacationRequests
      *     employee?: string,
      *     status?: 'pending'|'approved'|'rejected'|'canceled',
      *     limit?: int,
+     *     starting_after?: string,
      *     issuer?: string,
+     *     'created[gte]'?: string,
+     *     'created[gt]'?: string,
+     *     'created[lte]'?: string,
+     *     'created[lt]'?: string,
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return array{
-     *     object: 'list',
-     *     data: list<array{id: string, object: 'vacation_request', livemode: bool, employee: string, employee_name: string|null, from: string, to: string, days: float|int, note: string|null, status: 'pending'|'approved'|'rejected'|'canceled', decided_at: string|null, decision_note: string|null, created_at: string}>,
-     *     has_more: bool,
-     *     url: string,
-     * }
+     * @return Collection<array{id: string, object: 'vacation_request', livemode: bool, employee: string, employee_name: string|null, from: string, to: string, days: float|int, note: string|null, status: 'pending'|'approved'|'rejected'|'canceled', decided_at: string|null, decision_note: string|null, created_at: string}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/nomina/list-vacation-requests
      */
-    public function list(array $params = [], array $options = []): array
+    public function list(array $params = [], array $options = []): Collection
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
-        return $this->client->request('GET', '/v1/vacation_requests', ['query' => $params], $options);
+        return $this->client->list('/v1/vacation_requests', $params, $options);
     }
 
     /**

@@ -114,6 +114,11 @@ final class Retentions
      *     status?: 'valid'|'canceled'|'rejected'|'processing',
      *     recipient?: string,
      *     year?: string,
+     *     'created[gte]'?: string,
+     *     'created[gt]'?: string,
+     *     'created[lte]'?: string,
+     *     'created[lt]'?: string,
+     *     metadata?: array<string, mixed>,
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
      * @return Collection<array{id: string, livemode: bool, object: 'retention', issuer: string, status: 'processing'|'valid'|'rejected'|'canceled', uuid: string|null, folio: int|null, internal_folio: string|null, date: string|null, code: string, description: string|null, recipient: array<string, mixed>, period: array<string, mixed>, totals: array<string, mixed>, taxes: list<array<string, mixed>>, dividends?: array<string, mixed>, interest?: array<string, mixed>, foreign_payment?: array<string, mixed>, distributable_remainder?: array<string, mixed>, trust_lease?: array<string, mixed>, share_sale?: array<string, mixed>, prize?: array<string, mixed>, trust?: array<string, mixed>, retirement_plan?: array<string, mixed>, mortgage_interest?: array<string, mixed>, financial_derivatives?: array<string, mixed>, platform?: array<string, mixed>, cancellation: array<string, mixed>|null, email: array<string, mixed>|null, error: array<string, mixed>|null, created_at: string|null, metadata: array<string, mixed>, warnings?: list<string>, email_error?: string, replaced?: array<string, mixed>}>

@@ -64,6 +64,14 @@ final class BankTransactions
      *     starting_after?: string,
      *     issuer?: string,
      *     status?: 'open'|'matched'|'classified',
+     *     'date[gte]'?: string,
+     *     'date[gt]'?: string,
+     *     'date[lte]'?: string,
+     *     'date[lt]'?: string,
+     *     'created[gte]'?: string,
+     *     'created[gt]'?: string,
+     *     'created[lte]'?: string,
+     *     'created[lt]'?: string,
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
      * @return Collection<array{id: string, livemode: bool, object: 'bank_transaction', issuer: string, date: string, amount: float|int, description: string, reference: string|null, account: string|null, payer_tax_id: string|null, status: 'open'|'matched'|'classified', classification: 'venta'|'prestamo'|'traspaso'|'devolucion'|'intereses'|null, note: string|null, invoices: list<string>, payment: string|null, suggested_match: array<string, mixed>|null, created_at: string|null}>

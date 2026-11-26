@@ -29,7 +29,7 @@ final class TrainingCourses
      *
      * @param array{limit?: int, starting_after?: string, issuer?: string} $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, object: 'training_course', livemode: bool, issuer: string, name: string, thematic_area: string, hours: float|int, modality: string, trainer_kind: string, trainer_name: string|null, start_date: string, end_date: string, cancelled: bool, trainer_registration?: string|null, instructor_name?: string|null, validity_months?: int|null, passing_score?: float|int|null, place?: string|null, objective?: string|null, signers_problem?: string|null, participants?: list<array<string, mixed>>, counts?: array<string, mixed>}>
+     * @return Collection<array{id: string, object: 'training_course', livemode: bool, issuer: string, name: string, thematic_area: string, hours: float|int, modality: string, trainer_kind: string, trainer_name: string|null, start_date: string, end_date: string, canceled: bool, trainer_registration?: string|null, instructor_name?: string|null, validity_months?: int|null, passing_score?: float|int|null, place?: string|null, objective?: string|null, signers_problem?: string|null, participants?: list<array<string, mixed>>, counts?: array<string, mixed>}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/nomina/list-training-courses
      */
@@ -81,7 +81,7 @@ final class TrainingCourses
      *     trainer_name: string|null,
      *     start_date: string,
      *     end_date: string,
-     *     cancelled: bool,
+     *     canceled: bool,
      *     trainer_registration?: string|null,
      *     instructor_name?: string|null,
      *     validity_months?: int|null,
@@ -125,7 +125,7 @@ final class TrainingCourses
      *     trainer_name: string|null,
      *     start_date: string,
      *     end_date: string,
-     *     cancelled: bool,
+     *     canceled: bool,
      *     trainer_registration?: string|null,
      *     instructor_name?: string|null,
      *     validity_months?: int|null,
@@ -186,7 +186,7 @@ final class TrainingCourses
      *     trainer_name: string|null,
      *     start_date: string,
      *     end_date: string,
-     *     cancelled: bool,
+     *     canceled: bool,
      *     trainer_registration?: string|null,
      *     instructor_name?: string|null,
      *     validity_months?: int|null,
@@ -209,14 +209,14 @@ final class TrainingCourses
     /**
      * Borrar un curso de capacitación
      *
-     * Lo borra si nadie tiene su constancia; si alguien la tiene, lo cancela (cancelled true),
+     * Lo borra si nadie tiene su constancia; si alguien la tiene, lo cancela (canceled true),
      * porque las copias se conservan a disposición de la STPS (artículo 26, fracción III).
      *
      * DELETE /v1/training_courses/{id}
      *
      * @param string $id
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return array{id: string, object: 'training_course', deleted: bool, cancelled: bool}
+     * @return array{id: string, object: 'training_course', deleted: bool, canceled: bool}
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/nomina/delete-training-course
      */
@@ -249,7 +249,7 @@ final class TrainingCourses
      *     trainer_name: string|null,
      *     start_date: string,
      *     end_date: string,
-     *     cancelled: bool,
+     *     canceled: bool,
      *     trainer_registration?: string|null,
      *     instructor_name?: string|null,
      *     validity_months?: int|null,
@@ -296,7 +296,7 @@ final class TrainingCourses
      *     trainer_name: string|null,
      *     start_date: string,
      *     end_date: string,
-     *     cancelled: bool,
+     *     canceled: bool,
      *     trainer_registration?: string|null,
      *     instructor_name?: string|null,
      *     validity_months?: int|null,
@@ -342,7 +342,7 @@ final class TrainingCourses
      *     trainer_name: string|null,
      *     start_date: string,
      *     end_date: string,
-     *     cancelled: bool,
+     *     canceled: bool,
      *     trainer_registration?: string|null,
      *     instructor_name?: string|null,
      *     validity_months?: int|null,
@@ -390,7 +390,7 @@ final class TrainingCourses
      *     trainer_name: string|null,
      *     start_date: string,
      *     end_date: string,
-     *     cancelled: bool,
+     *     canceled: bool,
      *     trainer_registration?: string|null,
      *     instructor_name?: string|null,
      *     validity_months?: int|null,

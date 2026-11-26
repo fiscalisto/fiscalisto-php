@@ -40,6 +40,10 @@ final class Findings
      *     severity?: 'critical'|'warning'|'info',
      *     code?: string,
      *     counterparty_tax_id?: string,
+     *     'created[gte]'?: string,
+     *     'created[gt]'?: string,
+     *     'created[lte]'?: string,
+     *     'created[lt]'?: string,
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
      * @return Collection<array{id: string, livemode: bool, object: 'finding', issuer: string, area: 'purchase_orders'|'payouts'|'suppliers'|'accounting'|'bank'|'expense_reports'|'purchase_receipts'|'inventory'|'customers'|'payroll'|null, record: array<string, mixed>, code: string, severity: 'critical'|'warning'|'info', title: string, explanation: string|null, text: string, amount: float|int|null, counterparty_tax_id: string|null, status: 'open'|'reviewed'|'resolved', holds_record: bool, note: string|null, created_at: string|null, updated_at: string|null, reviewed_at: string|null, resolved_at: string|null}>

@@ -77,7 +77,15 @@ final class PayrollBatches
      *
      * GET /v1/payroll_batches
      *
-     * @param array{limit?: int, starting_after?: string, issuer?: string} $params
+     * @param array{
+     *     limit?: int,
+     *     starting_after?: string,
+     *     issuer?: string,
+     *     'created[gte]'?: string,
+     *     'created[gt]'?: string,
+     *     'created[lte]'?: string,
+     *     'created[lt]'?: string,
+     * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
      * @return Collection<array{id: string, livemode: bool, object: 'payroll_batch', issuer: string, name: string, calculation: 'fiscalisto'|'external', status: 'processing'|'completed', total: int, stamped: int, failed: int, processing: int, created_at: string|null, completed_at: string|null, receipts?: list<array<string, mixed>>}>
      * @throws FiscalistoException

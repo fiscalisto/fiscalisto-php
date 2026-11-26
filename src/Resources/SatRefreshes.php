@@ -32,6 +32,10 @@ final class SatRefreshes
      *     starting_after?: string,
      *     issuer?: string,
      *     document?: 'declarations'|'compliance_opinion'|'tax_status_certificate'|'sat_mailbox',
+     *     'created[gte]'?: string,
+     *     'created[gt]'?: string,
+     *     'created[lte]'?: string,
+     *     'created[lt]'?: string,
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
      * @return Collection<array{object: 'sat_refresh', id: string, livemode: bool, issuer: string, document: 'declarations'|'compliance_opinion'|'tax_status_certificate'|'sat_mailbox', status: 'processing'|'completed'|'failed', result: array<string, mixed>|null, error: string|null, charged: bool, timbre_held: bool, created_at: string, completed_at: string|null, refreshed_at: string, next_refresh_at: string, url: string}>

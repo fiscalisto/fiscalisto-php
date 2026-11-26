@@ -34,9 +34,10 @@ final class RecurringInvoices
      *     issuer?: string,
      *     name: string,
      *     schedule: array{frequency: 'monthly'|'weekly'|'daily', interval?: int, day_of_month?: int|'last', start_date?: string, hour?: int, time_zone?: 'America/Mexico_City'|'America/Cancun'|'America/Mazatlan'|'America/Hermosillo'|'America/Tijuana'|'America/Matamoros'|'America/Ciudad_Juarez'},
-     *     invoice: array{issuer?: string, branch?: string, cost_center?: string, warehouse?: string, customer?: string|array{tax_id: string, legal_name: string, tax_system: string, zip: string, email?: string|null, foreign?: array<string, mixed>, ieps_taxpayer?: bool}, items: list<array{product?: string, description?: string, product_key?: string, unit_key?: string, unit_name?: string|null, sku?: string|null, quantity?: float|int, unit_price?: float|int, discount?: float|int, taxability?: '01'|'02'|'03'|'04'|'05'|'06'|'07'|'08', iva?: '0'|'0.16'|'0.08'|'exento', ieps?: float|int, ieps_factor?: 'Tasa'|'Cuota', ieps_units?: float|int, iva_retention?: float|int, isr_retention?: float|int, predial?: list<string>, pedimentos?: list<string>, third_party?: array<string, mixed>, iedu?: array<string, mixed>, used_vehicle?: array<string, mixed>, hydrocarbon?: array<string, mixed>, addenda?: array<string, mixed>}>, type?: 'I'|'T', carta_porte?: array{modes?: list<'01'|'02'|'03'|'04'>, international?: array<string, mixed>, istmo?: array<string, mixed>, reverse_logistics?: bool, origin: array<string, mixed>, destinations: list<array<string, mixed>>, goods: list<array<string, mixed>>, vehicle?: array<string, mixed>, sea?: array<string, mixed>, air?: array<string, mixed>, rail?: array<string, mixed>, drivers: list<array<string, mixed>>, figures?: list<array<string, mixed>>}, carta_porte_exemption?: '2.7.7.2.1'|'2.7.7.2.2'|'2.7.7.2.3', ine?: array{process: 'Ordinario'|'Precampaña'|'Campaña', committee?: 'Ejecutivo Nacional'|'Ejecutivo Estatal'|'Directivo Estatal', accounting_id?: string, entities?: list<array<string, mixed>>}, leyendas?: list<array{text: string, disposition?: string, norm?: string}>, donation?: array{in_kind?: bool, deducted?: bool}, local_taxes?: list<array{retention: bool, name: string, rate: float|int, amount: float|int}>, export?: '01'|'02'|'03'|'04', comercio_exterior?: array{motive?: '99'|'01'|'02'|'03'|'04'|'05', owners?: list<array<string, mixed>>, incoterm?: string, certificate?: string, usd_rate: float|int, issuer_curp?: string, issuer_address?: array<string, mixed>, receiver_address?: array<string, mixed>, recipient?: array<string, mixed>, goods: list<array<string, mixed>>, notes?: string}, global?: array{periodicity: string, months: string, year: int, keep_concepts?: bool}, use?: string, payment_form?: string, payment_method?: 'PUE'|'PPD', paid_later?: bool, currency?: string, series?: string, notes?: string, payment_terms?: string, pdf_language?: 'es'|'en'|'bi', addenda?: array{type: 'walmart'|'soriana'|'liverpool'|'homedepot'|'chedraui'|'generic', values: array<string, mixed>, customer?: array<string, mixed>}, related?: array{relationship: string, uuids: list<string>}, exchange_rate?: float|int, folio?: int, continue_sequence?: bool, date?: string, send_email?: bool, email_cc?: string|null, metadata?: array<string, mixed>, async?: bool},
+     *     invoice: array{issuer?: string, branch?: string, cost_center?: string, warehouse?: string, customer?: string|array{tax_id: string, legal_name: string, tax_system: string, zip: string, email?: string|null, foreign?: array<string, mixed>, ieps_taxpayer?: bool}, items: list<array{product?: string, description?: string, product_key?: string, unit_key?: string, unit_name?: string|null, sku?: string|null, quantity?: float|int, unit_price?: float|int, discount?: float|int, taxability?: '01'|'02'|'03'|'04'|'05'|'06'|'07'|'08', iva?: '0'|'0.16'|'0.08'|'exento', ieps?: float|int, ieps_factor?: 'Tasa'|'Cuota', ieps_units?: float|int, iva_retention?: float|int, isr_retention?: float|int, predial?: list<string>, pedimentos?: list<string>, third_party?: array<string, mixed>, iedu?: array<string, mixed>, used_vehicle?: array<string, mixed>, hydrocarbon?: array<string, mixed>, addenda?: array<string, mixed>}>, type?: 'I'|'T', carta_porte?: array{modes?: list<'01'|'02'|'03'|'04'>, international?: array<string, mixed>, istmo?: array<string, mixed>, reverse_logistics?: bool, origin: array<string, mixed>, destinations: list<array<string, mixed>>, goods: list<array<string, mixed>>, vehicle?: array<string, mixed>, sea?: array<string, mixed>, air?: array<string, mixed>, rail?: array<string, mixed>, drivers: list<array<string, mixed>>, figures?: list<array<string, mixed>>}, carta_porte_exemption?: '2.7.7.2.1'|'2.7.7.2.2'|'2.7.7.2.3', ine?: array{process: 'Ordinario'|'Precampaña'|'Campaña', committee?: 'Ejecutivo Nacional'|'Ejecutivo Estatal'|'Directivo Estatal', accounting_id?: string, entities?: list<array<string, mixed>>}, leyendas?: list<array{text: string, disposition?: string, norm?: string}>, donation?: array{in_kind?: bool, deducted?: bool}, local_taxes?: list<array{retention: bool, name: string, rate: float|int, amount: float|int}>, export?: '01'|'02'|'03'|'04', comercio_exterior?: array{motive?: '99'|'01'|'02'|'03'|'04'|'05', owners?: list<array<string, mixed>>, incoterm?: string, certificate?: string, usd_rate: float|int, issuer_curp?: string, issuer_address?: array<string, mixed>, receiver_address?: array<string, mixed>, recipient?: array<string, mixed>, goods: list<array<string, mixed>>, notes?: string}, global?: array{periodicity: string, months: string, year: int, keep_concepts?: bool}, use?: string, payment_form?: string, payment_method?: 'PUE'|'PPD', paid_later?: bool, currency?: string, series?: string, notes?: string, payment_terms?: string, pdf_language?: 'es'|'en'|'bi', addenda?: array{type: 'walmart'|'soriana'|'liverpool'|'homedepot'|'chedraui'|'generic', values: array<string, mixed>, customer?: array<string, mixed>}, related?: array{relationship: string, uuids: list<string>}, exchange_rate?: float|int, folio?: int, continue_sequence?: bool, date?: string, send_email?: bool, email_cc?: string|null, metadata?: array<string, mixed>, draft?: bool, async?: bool},
      *     send_email?: bool,
      *     catch_up?: 'all'|'latest',
+     *     metadata?: array<string, mixed>,
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
@@ -57,6 +58,7 @@ final class RecurringInvoices
      *     currency: string,
      *     items: list<array{description: string, product_key: string, quantity?: float|int, unit_key?: string, unit_price: float|int}>,
      *     total: float|int|null,
+     *     metadata: array<string, mixed>,
      *     created_at: string|null,
      * }
      * @throws FiscalistoException
@@ -80,9 +82,14 @@ final class RecurringInvoices
      *     starting_after?: string,
      *     issuer?: string,
      *     status?: 'active'|'paused',
+     *     'created[gte]'?: string,
+     *     'created[gt]'?: string,
+     *     'created[lte]'?: string,
+     *     'created[lt]'?: string,
+     *     metadata?: array<string, mixed>,
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'recurring_invoice', issuer: string, name: string, status: 'active'|'paused', schedule: array<string, mixed>, next_invoice_on: string, last_invoiced_on: string|null, last_invoice: string|null, last_error: array<string, mixed>|null, send_email: bool, catch_up: 'all'|'latest', customer: array<string, mixed>, currency: string, items: list<array<string, mixed>>, total: float|int|null, created_at: string|null}>
+     * @return Collection<array{id: string, livemode: bool, object: 'recurring_invoice', issuer: string, name: string, status: 'active'|'paused', schedule: array<string, mixed>, next_invoice_on: string, last_invoiced_on: string|null, last_invoice: string|null, last_error: array<string, mixed>|null, send_email: bool, catch_up: 'all'|'latest', customer: array<string, mixed>, currency: string, items: list<array<string, mixed>>, total: float|int|null, metadata: array<string, mixed>, created_at: string|null}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/facturas-recurrentes/list-recurring-invoices
      */
@@ -120,6 +127,7 @@ final class RecurringInvoices
      *     currency: string,
      *     items: list<array{description: string, product_key: string, quantity?: float|int, unit_key?: string, unit_price: float|int}>,
      *     total: float|int|null,
+     *     metadata: array<string, mixed>,
      *     created_at: string|null,
      * }
      * @throws FiscalistoException
@@ -144,10 +152,11 @@ final class RecurringInvoices
      * @param array{
      *     name?: string,
      *     schedule?: array{frequency?: 'monthly'|'weekly'|'daily', interval?: int, day_of_month?: int|'last', start_date?: string, hour?: int, time_zone?: 'America/Mexico_City'|'America/Cancun'|'America/Mazatlan'|'America/Hermosillo'|'America/Tijuana'|'America/Matamoros'|'America/Ciudad_Juarez'},
-     *     invoice?: array{issuer?: string, branch?: string, cost_center?: string, warehouse?: string, customer?: string|array{tax_id: string, legal_name: string, tax_system: string, zip: string, email?: string|null, foreign?: array<string, mixed>, ieps_taxpayer?: bool}, items: list<array{product?: string, description?: string, product_key?: string, unit_key?: string, unit_name?: string|null, sku?: string|null, quantity?: float|int, unit_price?: float|int, discount?: float|int, taxability?: '01'|'02'|'03'|'04'|'05'|'06'|'07'|'08', iva?: '0'|'0.16'|'0.08'|'exento', ieps?: float|int, ieps_factor?: 'Tasa'|'Cuota', ieps_units?: float|int, iva_retention?: float|int, isr_retention?: float|int, predial?: list<string>, pedimentos?: list<string>, third_party?: array<string, mixed>, iedu?: array<string, mixed>, used_vehicle?: array<string, mixed>, hydrocarbon?: array<string, mixed>, addenda?: array<string, mixed>}>, type?: 'I'|'T', carta_porte?: array{modes?: list<'01'|'02'|'03'|'04'>, international?: array<string, mixed>, istmo?: array<string, mixed>, reverse_logistics?: bool, origin: array<string, mixed>, destinations: list<array<string, mixed>>, goods: list<array<string, mixed>>, vehicle?: array<string, mixed>, sea?: array<string, mixed>, air?: array<string, mixed>, rail?: array<string, mixed>, drivers: list<array<string, mixed>>, figures?: list<array<string, mixed>>}, carta_porte_exemption?: '2.7.7.2.1'|'2.7.7.2.2'|'2.7.7.2.3', ine?: array{process: 'Ordinario'|'Precampaña'|'Campaña', committee?: 'Ejecutivo Nacional'|'Ejecutivo Estatal'|'Directivo Estatal', accounting_id?: string, entities?: list<array<string, mixed>>}, leyendas?: list<array{text: string, disposition?: string, norm?: string}>, donation?: array{in_kind?: bool, deducted?: bool}, local_taxes?: list<array{retention: bool, name: string, rate: float|int, amount: float|int}>, export?: '01'|'02'|'03'|'04', comercio_exterior?: array{motive?: '99'|'01'|'02'|'03'|'04'|'05', owners?: list<array<string, mixed>>, incoterm?: string, certificate?: string, usd_rate: float|int, issuer_curp?: string, issuer_address?: array<string, mixed>, receiver_address?: array<string, mixed>, recipient?: array<string, mixed>, goods: list<array<string, mixed>>, notes?: string}, global?: array{periodicity: string, months: string, year: int, keep_concepts?: bool}, use?: string, payment_form?: string, payment_method?: 'PUE'|'PPD', paid_later?: bool, currency?: string, series?: string, notes?: string, payment_terms?: string, pdf_language?: 'es'|'en'|'bi', addenda?: array{type: 'walmart'|'soriana'|'liverpool'|'homedepot'|'chedraui'|'generic', values: array<string, mixed>, customer?: array<string, mixed>}, related?: array{relationship: string, uuids: list<string>}, exchange_rate?: float|int, folio?: int, continue_sequence?: bool, date?: string, send_email?: bool, email_cc?: string|null, metadata?: array<string, mixed>, async?: bool},
+     *     invoice?: array{issuer?: string, branch?: string, cost_center?: string, warehouse?: string, customer?: string|array{tax_id: string, legal_name: string, tax_system: string, zip: string, email?: string|null, foreign?: array<string, mixed>, ieps_taxpayer?: bool}, items: list<array{product?: string, description?: string, product_key?: string, unit_key?: string, unit_name?: string|null, sku?: string|null, quantity?: float|int, unit_price?: float|int, discount?: float|int, taxability?: '01'|'02'|'03'|'04'|'05'|'06'|'07'|'08', iva?: '0'|'0.16'|'0.08'|'exento', ieps?: float|int, ieps_factor?: 'Tasa'|'Cuota', ieps_units?: float|int, iva_retention?: float|int, isr_retention?: float|int, predial?: list<string>, pedimentos?: list<string>, third_party?: array<string, mixed>, iedu?: array<string, mixed>, used_vehicle?: array<string, mixed>, hydrocarbon?: array<string, mixed>, addenda?: array<string, mixed>}>, type?: 'I'|'T', carta_porte?: array{modes?: list<'01'|'02'|'03'|'04'>, international?: array<string, mixed>, istmo?: array<string, mixed>, reverse_logistics?: bool, origin: array<string, mixed>, destinations: list<array<string, mixed>>, goods: list<array<string, mixed>>, vehicle?: array<string, mixed>, sea?: array<string, mixed>, air?: array<string, mixed>, rail?: array<string, mixed>, drivers: list<array<string, mixed>>, figures?: list<array<string, mixed>>}, carta_porte_exemption?: '2.7.7.2.1'|'2.7.7.2.2'|'2.7.7.2.3', ine?: array{process: 'Ordinario'|'Precampaña'|'Campaña', committee?: 'Ejecutivo Nacional'|'Ejecutivo Estatal'|'Directivo Estatal', accounting_id?: string, entities?: list<array<string, mixed>>}, leyendas?: list<array{text: string, disposition?: string, norm?: string}>, donation?: array{in_kind?: bool, deducted?: bool}, local_taxes?: list<array{retention: bool, name: string, rate: float|int, amount: float|int}>, export?: '01'|'02'|'03'|'04', comercio_exterior?: array{motive?: '99'|'01'|'02'|'03'|'04'|'05', owners?: list<array<string, mixed>>, incoterm?: string, certificate?: string, usd_rate: float|int, issuer_curp?: string, issuer_address?: array<string, mixed>, receiver_address?: array<string, mixed>, recipient?: array<string, mixed>, goods: list<array<string, mixed>>, notes?: string}, global?: array{periodicity: string, months: string, year: int, keep_concepts?: bool}, use?: string, payment_form?: string, payment_method?: 'PUE'|'PPD', paid_later?: bool, currency?: string, series?: string, notes?: string, payment_terms?: string, pdf_language?: 'es'|'en'|'bi', addenda?: array{type: 'walmart'|'soriana'|'liverpool'|'homedepot'|'chedraui'|'generic', values: array<string, mixed>, customer?: array<string, mixed>}, related?: array{relationship: string, uuids: list<string>}, exchange_rate?: float|int, folio?: int, continue_sequence?: bool, date?: string, send_email?: bool, email_cc?: string|null, metadata?: array<string, mixed>, draft?: bool, async?: bool},
      *     send_email?: bool,
      *     catch_up?: 'all'|'latest',
      *     active?: bool,
+     *     metadata?: array<string, mixed>|null,
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
@@ -168,6 +177,7 @@ final class RecurringInvoices
      *     currency: string,
      *     items: list<array{description: string, product_key: string, quantity?: float|int, unit_key?: string, unit_price: float|int}>,
      *     total: float|int|null,
+     *     metadata: array<string, mixed>,
      *     created_at: string|null,
      * }
      * @throws FiscalistoException
@@ -225,6 +235,7 @@ final class RecurringInvoices
      *     currency: string,
      *     items: list<array{description: string, product_key: string, quantity?: float|int, unit_key?: string, unit_price: float|int}>,
      *     total: float|int|null,
+     *     metadata: array<string, mixed>,
      *     created_at: string|null,
      * }
      * @throws FiscalistoException
@@ -255,7 +266,7 @@ final class RecurringInvoices
      *     branch: string|null,
      *     cost_center: string|null,
      *     type: 'I'|'E'|'P'|'T'|'N',
-     *     status: 'processing'|'pending'|'valid'|'rejected'|'canceled',
+     *     status: 'draft'|'processing'|'pending'|'valid'|'rejected'|'canceled',
      *     uuid: string|null,
      *     series: string|null,
      *     folio: string|null,
@@ -290,6 +301,7 @@ final class RecurringInvoices
      *     origin: array{type: 'app'|'api'|'assistant'|'point_of_sale'|'autofactura'|'invoice_link'|'quote'|'recurring_invoice'|'global_invoice', name: string|null}|null,
      *     created_at: string|null,
      *     metadata: array<string, mixed>,
+     *     draft?: array{updated_at: string|null, awaiting_approval: bool, stamping: bool, scheduled_at: string|null, send_email: bool, email_cc: string|null},
      *     warnings?: list<string>,
      *     email_error?: string,
      *     substitutes?: array{invoice: string, canceled: bool, cancel_error?: string, cancellation: array<string, mixed>|null},

@@ -31,6 +31,7 @@ final class WebhookEndpoints
      *     events?: list<string>|null,
      *     description?: string|null,
      *     api_version?: string|null,
+     *     metadata?: array<string, mixed>,
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
@@ -46,6 +47,7 @@ final class WebhookEndpoints
      *     failing_since?: string|null,
      *     previous_secret_expires_at: string|null,
      *     api_version: string|null,
+     *     metadata: array<string, mixed>,
      *     created_at: string|null,
      *     secret?: string,
      * }
@@ -65,9 +67,17 @@ final class WebhookEndpoints
      *
      * GET /v1/webhook_endpoints
      *
-     * @param array{limit?: int, starting_after?: string} $params
+     * @param array{
+     *     limit?: int,
+     *     starting_after?: string,
+     *     'created[gte]'?: string,
+     *     'created[gt]'?: string,
+     *     'created[lte]'?: string,
+     *     'created[lt]'?: string,
+     *     metadata?: array<string, mixed>,
+     * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'webhook_endpoint', sandbox: string|null, url: string, description: string|null, events: list<string>, status: 'enabled'|'failing'|'disabled', disabled_reason?: string|null, failing_since?: string|null, previous_secret_expires_at: string|null, api_version: string|null, created_at: string|null, secret?: string}>
+     * @return Collection<array{id: string, livemode: bool, object: 'webhook_endpoint', sandbox: string|null, url: string, description: string|null, events: list<string>, status: 'enabled'|'failing'|'disabled', disabled_reason?: string|null, failing_since?: string|null, previous_secret_expires_at: string|null, api_version: string|null, metadata: array<string, mixed>, created_at: string|null, secret?: string}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/webhooks/list-webhook-endpoints
      */
@@ -100,6 +110,7 @@ final class WebhookEndpoints
      *     failing_since?: string|null,
      *     previous_secret_expires_at: string|null,
      *     api_version: string|null,
+     *     metadata: array<string, mixed>,
      *     created_at: string|null,
      *     secret?: string,
      * }
@@ -127,6 +138,7 @@ final class WebhookEndpoints
      *     description?: string|null,
      *     disabled?: bool,
      *     api_version?: string|null,
+     *     metadata?: array<string, mixed>|null,
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
@@ -142,6 +154,7 @@ final class WebhookEndpoints
      *     failing_since?: string|null,
      *     previous_secret_expires_at: string|null,
      *     api_version: string|null,
+     *     metadata: array<string, mixed>,
      *     created_at: string|null,
      *     secret?: string,
      * }
@@ -198,6 +211,7 @@ final class WebhookEndpoints
      *     failing_since?: string|null,
      *     previous_secret_expires_at: string|null,
      *     api_version: string|null,
+     *     metadata: array<string, mixed>,
      *     created_at: string|null,
      *     secret?: string,
      * }
@@ -222,7 +236,7 @@ final class WebhookEndpoints
      *
      * @param string $id
      * @param array{
-     *     type?: 'invoice.stamped'|'invoice.failed'|'invoice.canceled'|'invoice.cancellation_pending'|'invoice.cancellation_rejected'|'invoice.cancellation_failed'|'invoice.paid'|'invoice.partially_paid'|'invoice.email_bounced'|'invoice.email_complained'|'retention.stamped'|'retention.failed'|'retention.canceled'|'invoice_batch.completed'|'payroll_batch.completed'|'customer.created'|'customer.updated'|'customer.deleted'|'product.created'|'product.updated'|'product.deleted'|'customer_data_request.completed'|'sat_download.completed'|'sat_download.failed'|'sat_declaration.created'|'sat_declaration.updated'|'sat_refresh.completed'|'sat_refresh.failed'|'ticket.invoiced'|'ticket.included_in_global'|'recurring_invoice.failed'|'quote.viewed'|'quote.accepted'|'quote.changes_requested'|'quote.rejected'|'quote.withdrawn'|'sales_order.confirmed'|'sales_order.customer_confirmed'|'sales_order.delivered'|'sales_order.paid'|'sales_order.canceled'|'supplier_invoice.received'|'supplier_invoice.approved'|'supplier_invoice.rejected'|'supplier_invoice.scheduled'|'supplier_invoice.paid'|'portal_supplier.approved'|'payout.approved'|'payout.paid'|'payout.partially_paid'|'payout.failed'|'payout.canceled'|'payout_transfer.succeeded'|'payout_transfer.failed'|'payout_transfer.returned'|'issuer.ready'|'balance.low'|'usage.high'|'test_clock.ready'|'rule.matched',
+     *     type?: 'invoice.stamped'|'invoice.failed'|'invoice.canceled'|'invoice.cancellation_pending'|'invoice.cancellation_rejected'|'invoice.cancellation_failed'|'invoice.paid'|'invoice.partially_paid'|'invoice.email_bounced'|'invoice.email_complained'|'invoice.draft_created'|'invoice.draft_updated'|'invoice.draft_deleted'|'retention.stamped'|'retention.failed'|'retention.canceled'|'invoice_batch.completed'|'payroll_batch.completed'|'customer.created'|'customer.updated'|'customer.deleted'|'product.created'|'product.updated'|'product.deleted'|'customer_data_request.completed'|'sat_download.completed'|'sat_download.failed'|'sat_declaration.created'|'sat_declaration.updated'|'sat_refresh.completed'|'sat_refresh.failed'|'ticket.invoiced'|'ticket.included_in_global'|'recurring_invoice.failed'|'quote.viewed'|'quote.accepted'|'quote.changes_requested'|'quote.rejected'|'quote.withdrawn'|'sales_order.confirmed'|'sales_order.customer_confirmed'|'sales_order.delivered'|'sales_order.paid'|'sales_order.canceled'|'supplier_invoice.received'|'supplier_invoice.approved'|'supplier_invoice.rejected'|'supplier_invoice.scheduled'|'supplier_invoice.paid'|'portal_supplier.approved'|'payout.approved'|'payout.paid'|'payout.partially_paid'|'payout.failed'|'payout.canceled'|'payout_transfer.succeeded'|'payout_transfer.failed'|'payout_transfer.returned'|'issuer.ready'|'balance.low'|'usage.high'|'test_clock.ready'|'rule.matched',
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
@@ -249,7 +263,15 @@ final class WebhookEndpoints
      * GET /v1/webhook_endpoints/{id}/deliveries
      *
      * @param string $id
-     * @param array{limit?: int, starting_after?: string, succeeded?: bool} $params
+     * @param array{
+     *     limit?: int,
+     *     starting_after?: string,
+     *     succeeded?: bool,
+     *     'created[gte]'?: string,
+     *     'created[gt]'?: string,
+     *     'created[lte]'?: string,
+     *     'created[lt]'?: string,
+     * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
      * @return Collection<array{object: 'webhook_delivery', id: string, webhook_endpoint: string, event: string, event_type: string|null, succeeded: bool, status: int|null, error: string|null, duration_ms: int, attempts: int, resent: bool, test: bool, created_at: string, next_retry_at: string|null}>
      * @throws FiscalistoException

@@ -33,6 +33,10 @@ final class PortalSuppliers
      *     issuer?: string,
      *     status?: 'invited'|'onboarding'|'in_review'|'approved'|'rejected'|'suspended',
      *     tax_id?: string,
+     *     'created[gte]'?: string,
+     *     'created[gt]'?: string,
+     *     'created[lte]'?: string,
+     *     'created[lt]'?: string,
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
      * @return Collection<array{id: string, livemode: bool, object: 'portal_supplier', issuer: string, tax_id: string, name: string|null, emails: list<string>, phone: string|null, status: 'invited'|'onboarding'|'in_review'|'approved'|'rejected'|'suspended', repse: bool, documents: array<string, mixed>, bank_account: array<string, mixed>|null, score: array<string, mixed>, last_seen_at: string|null, created_at: string|null, updated_at: string|null}>

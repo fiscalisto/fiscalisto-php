@@ -35,6 +35,7 @@ final class CustomerDataRequests
      *     reference?: string,
      *     description?: string,
      *     expires_in_days?: int,
+     *     metadata?: array<string, mixed>,
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
@@ -47,6 +48,7 @@ final class CustomerDataRequests
      *     reference: string|null,
      *     description: string|null,
      *     expires_at: string|null,
+     *     metadata: array<string, mixed>,
      *     created_at: string|null,
      *     submission: array{tax_id: string, legal_name: string, tax_system: string, zip: string, use: string, email: string|null, source: 'constancia'|'manual', customer: string|null, applied: bool, submitted_at: string|null}|null,
      * }
@@ -66,9 +68,18 @@ final class CustomerDataRequests
      *
      * GET /v1/customer_data_requests
      *
-     * @param array{limit?: int, starting_after?: string, issuer?: string} $params
+     * @param array{
+     *     limit?: int,
+     *     starting_after?: string,
+     *     issuer?: string,
+     *     'created[gte]'?: string,
+     *     'created[gt]'?: string,
+     *     'created[lte]'?: string,
+     *     'created[lt]'?: string,
+     *     metadata?: array<string, mixed>,
+     * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'customer_data_request', issuer: string, status: 'open'|'completed'|'expired'|'canceled', url: string|null, reference: string|null, description: string|null, expires_at: string|null, created_at: string|null, submission: array<string, mixed>|null}>
+     * @return Collection<array{id: string, livemode: bool, object: 'customer_data_request', issuer: string, status: 'open'|'completed'|'expired'|'canceled', url: string|null, reference: string|null, description: string|null, expires_at: string|null, metadata: array<string, mixed>, created_at: string|null, submission: array<string, mixed>|null}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/clientes/list-customer-data-requests
      */
@@ -98,6 +109,7 @@ final class CustomerDataRequests
      *     reference: string|null,
      *     description: string|null,
      *     expires_at: string|null,
+     *     metadata: array<string, mixed>,
      *     created_at: string|null,
      *     submission: array{tax_id: string, legal_name: string, tax_system: string, zip: string, use: string, email: string|null, source: 'constancia'|'manual', customer: string|null, applied: bool, submitted_at: string|null}|null,
      * }
@@ -129,6 +141,7 @@ final class CustomerDataRequests
      *     reference: string|null,
      *     description: string|null,
      *     expires_at: string|null,
+     *     metadata: array<string, mixed>,
      *     created_at: string|null,
      *     submission: array{tax_id: string, legal_name: string, tax_system: string, zip: string, use: string, email: string|null, source: 'constancia'|'manual', customer: string|null, applied: bool, submitted_at: string|null}|null,
      * }

@@ -474,8 +474,9 @@ final class Accounting
      * complementaria), cada uno en su ZIP con el nombre que espera el SAT, en el formato 1.3 del
      * Anexo 24. Con journal_request, también las pólizas (PL), que se entregan cuando el SAT las
      * pide. Con month AAAA-13, la balanza de comprobación ajustada al cierre del ejercicio (regla
-     * 2.8.1.6 RMF): solo la balanza, con los saldos finales de diciembre como saldos iniciales y,
-     * con closing_entry, la póliza de cierre.
+     * 2.8.1.6 RMF), con los saldos finales de diciembre como saldos iniciales y, con
+     * closing_entry, la póliza de cierre, y el catálogo como mes 12 (se envía con ella si no
+     * cambió en el ejercicio, fr. I); sin pólizas.
      *
      * GET /v1/accounting/electronic_accounting
      *

@@ -92,6 +92,10 @@ final class SatReviews
      * @param array{
      *     issuer?: string,
      *     status?: 'open'|'answered'|'concluded'|'assessed'|'in_defense'|'closed',
+     *     'created[gte]'?: string,
+     *     'created[gt]'?: string,
+     *     'created[lte]'?: string,
+     *     'created[lt]'?: string,
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
      * @return array{

@@ -49,7 +49,7 @@ final class CompanyReport
      *     version: 'full'|'executive',
      *     fiscal_health: array{score: int|null, band: 'attention'|'fair'|'good'|'excellent'|null, factors_used: int, factors_total: int, factors: list<array<string, mixed>>},
      *     indicators: list<array{key: string, label: string, state: 'ok'|'risk'|'no_data', value: float|int|null, display: string, threshold: float|int|null, custom_threshold: bool}>,
-     *     years: list<array{year: int, partial: bool, income: float|int, income_cancelled: float|int, cash_share: float|int|null, credit_share: float|int|null, collected_share: float|int|null, days_to_collect: float|int|null, expenses: float|int, expenses_cancelled: float|int, paid_share: float|int|null, days_to_pay: float|int|null, payroll_paid: float|int, payroll_received: float|int, payroll_received_net: float|int, profit: float|int, margin: float|int|null}>,
+     *     years: list<array{year: int, partial: bool, income: float|int, income_canceled: float|int, cash_share: float|int|null, credit_share: float|int|null, collected_share: float|int|null, days_to_collect: float|int|null, expenses: float|int, expenses_canceled: float|int, paid_share: float|int|null, days_to_pay: float|int|null, payroll_paid: float|int, payroll_received: float|int, payroll_received_net: float|int, profit: float|int, margin: float|int|null}>,
      *     totals: array{income: float|int, expenses: float|int, receivable: float|int, payable: float|int},
      *     customers: array{count: int, hhi: float|int|null, top10_share: float|int|null, parties: list<array<string, mixed>>},
      *     suppliers: array{count: int, hhi: float|int|null, top10_share: float|int|null, parties: list<array<string, mixed>>},

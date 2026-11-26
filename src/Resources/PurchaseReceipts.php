@@ -47,12 +47,14 @@ final class PurchaseReceipts
      *     store_email?: string|null,
      *     use?: string|null,
      *     note?: string|null,
+     *     metadata?: array<string, mixed>,
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     id: string,
      *     livemode: bool,
      *     object: 'purchase_receipt',
+     *     metadata: array<string, mixed>,
      *     issuer: string,
      *     status: 'pending'|'requested'|'invoiced'|'non_deductible',
      *     store: array{name: string|null, tax_id: string|null, email: string|null, portal_url: string|null, on_fiscalisto: bool},
@@ -94,9 +96,14 @@ final class PurchaseReceipts
      *     starting_after?: string,
      *     issuer?: string,
      *     status?: 'pending'|'requested'|'invoiced'|'non_deductible',
+     *     'created[gte]'?: string,
+     *     'created[gt]'?: string,
+     *     'created[lte]'?: string,
+     *     'created[lt]'?: string,
+     *     metadata?: array<string, mixed>,
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'purchase_receipt', issuer: string, status: 'pending'|'requested'|'invoiced'|'non_deductible', store: array<string, mixed>, date: string|null, total: float|int|null, payment_method: 'efectivo'|'tarjeta'|'otro'|null, folio: string|null, fields: list<array<string, mixed>>, use: string|null, note: string|null, file_type: string|null, cash_over_limit: bool, days_left_in_month: int|null, requested: array<string, mixed>|null, invoice_uuid: string|null, invoice: string|null, invoiced_at: string|null, non_deductible_at: string|null, created_at: string|null}>
+     * @return Collection<array{id: string, livemode: bool, object: 'purchase_receipt', metadata: array<string, mixed>, issuer: string, status: 'pending'|'requested'|'invoiced'|'non_deductible', store: array<string, mixed>, date: string|null, total: float|int|null, payment_method: 'efectivo'|'tarjeta'|'otro'|null, folio: string|null, fields: list<array<string, mixed>>, use: string|null, note: string|null, file_type: string|null, cash_over_limit: bool, days_left_in_month: int|null, requested: array<string, mixed>|null, invoice_uuid: string|null, invoice: string|null, invoiced_at: string|null, non_deductible_at: string|null, created_at: string|null}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/tickets-de-compra/list-purchase-receipts
      */
@@ -119,6 +126,7 @@ final class PurchaseReceipts
      *     id: string,
      *     livemode: bool,
      *     object: 'purchase_receipt',
+     *     metadata: array<string, mixed>,
      *     issuer: string,
      *     status: 'pending'|'requested'|'invoiced'|'non_deductible',
      *     store: array{name: string|null, tax_id: string|null, email: string|null, portal_url: string|null, on_fiscalisto: bool},
@@ -169,12 +177,14 @@ final class PurchaseReceipts
      *     store_email?: string|null,
      *     use?: string|null,
      *     note?: string|null,
+     *     metadata?: array<string, mixed>|null,
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     id: string,
      *     livemode: bool,
      *     object: 'purchase_receipt',
+     *     metadata: array<string, mixed>,
      *     issuer: string,
      *     status: 'pending'|'requested'|'invoiced'|'non_deductible',
      *     store: array{name: string|null, tax_id: string|null, email: string|null, portal_url: string|null, on_fiscalisto: bool},
@@ -245,6 +255,7 @@ final class PurchaseReceipts
      *     id: string,
      *     livemode: bool,
      *     object: 'purchase_receipt',
+     *     metadata: array<string, mixed>,
      *     issuer: string,
      *     status: 'pending'|'requested'|'invoiced'|'non_deductible',
      *     store: array{name: string|null, tax_id: string|null, email: string|null, portal_url: string|null, on_fiscalisto: bool},
@@ -289,6 +300,7 @@ final class PurchaseReceipts
      *     id: string,
      *     livemode: bool,
      *     object: 'purchase_receipt',
+     *     metadata: array<string, mixed>,
      *     issuer: string,
      *     status: 'pending'|'requested'|'invoiced'|'non_deductible',
      *     store: array{name: string|null, tax_id: string|null, email: string|null, portal_url: string|null, on_fiscalisto: bool},
@@ -331,6 +343,7 @@ final class PurchaseReceipts
      *     id: string,
      *     livemode: bool,
      *     object: 'purchase_receipt',
+     *     metadata: array<string, mixed>,
      *     issuer: string,
      *     status: 'pending'|'requested'|'invoiced'|'non_deductible',
      *     store: array{name: string|null, tax_id: string|null, email: string|null, portal_url: string|null, on_fiscalisto: bool},
@@ -374,6 +387,7 @@ final class PurchaseReceipts
      *     id: string,
      *     livemode: bool,
      *     object: 'purchase_receipt',
+     *     metadata: array<string, mixed>,
      *     issuer: string,
      *     status: 'pending'|'requested'|'invoiced'|'non_deductible',
      *     store: array{name: string|null, tax_id: string|null, email: string|null, portal_url: string|null, on_fiscalisto: bool},

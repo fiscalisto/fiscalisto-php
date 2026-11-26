@@ -42,12 +42,14 @@ final class CustomerGroups
      *     delivery_days?: list<int>|null,
      *     cutoff_hour?: int|null,
      *     prep_days?: int,
+     *     metadata?: array<string, mixed>,
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     id: string,
      *     livemode: bool,
      *     object: 'customer_group',
+     *     metadata: array<string, mixed>,
      *     issuer: string,
      *     name: string,
      *     color: string,
@@ -80,9 +82,18 @@ final class CustomerGroups
      *
      * GET /v1/customer_groups
      *
-     * @param array{limit?: int, starting_after?: string, issuer?: string} $params
+     * @param array{
+     *     limit?: int,
+     *     starting_after?: string,
+     *     issuer?: string,
+     *     'created[gte]'?: string,
+     *     'created[gt]'?: string,
+     *     'created[lte]'?: string,
+     *     'created[lt]'?: string,
+     *     metadata?: array<string, mixed>,
+     * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'customer_group', issuer: string, name: string, color: string, price_list: string|null, discount_percent: float|int, credit_days: int|null, quote_valid_days: int|null, min_order: float|int|null, portal_ordering: bool, portal_changes: 'none'|'until_confirmed'|'until_delivered', delivery_days: list<int>|null, cutoff_hour: int|null, prep_days: int, customers: int, created_at: string|null}>
+     * @return Collection<array{id: string, livemode: bool, object: 'customer_group', metadata: array<string, mixed>, issuer: string, name: string, color: string, price_list: string|null, discount_percent: float|int, credit_days: int|null, quote_valid_days: int|null, min_order: float|int|null, portal_ordering: bool, portal_changes: 'none'|'until_confirmed'|'until_delivered', delivery_days: list<int>|null, cutoff_hour: int|null, prep_days: int, customers: int, created_at: string|null}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/listas-de-precios/list-customer-groups
      */
@@ -105,6 +116,7 @@ final class CustomerGroups
      *     id: string,
      *     livemode: bool,
      *     object: 'customer_group',
+     *     metadata: array<string, mixed>,
      *     issuer: string,
      *     name: string,
      *     color: string,
@@ -151,12 +163,14 @@ final class CustomerGroups
      *     delivery_days?: list<int>|null,
      *     cutoff_hour?: int|null,
      *     prep_days?: int,
+     *     metadata?: array<string, mixed>|null,
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     id: string,
      *     livemode: bool,
      *     object: 'customer_group',
+     *     metadata: array<string, mixed>,
      *     issuer: string,
      *     name: string,
      *     color: string,

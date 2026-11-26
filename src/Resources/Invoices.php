@@ -65,6 +65,7 @@ final class Invoices
      *     send_email?: bool,
      *     email_cc?: string|null,
      *     metadata?: array<string, mixed>,
+     *     draft?: bool,
      *     async?: bool,
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
@@ -76,7 +77,7 @@ final class Invoices
      *     branch: string|null,
      *     cost_center: string|null,
      *     type: 'I'|'E'|'P'|'T'|'N',
-     *     status: 'processing'|'pending'|'valid'|'rejected'|'canceled',
+     *     status: 'draft'|'processing'|'pending'|'valid'|'rejected'|'canceled',
      *     uuid: string|null,
      *     series: string|null,
      *     folio: string|null,
@@ -111,6 +112,7 @@ final class Invoices
      *     origin: array{type: 'app'|'api'|'assistant'|'point_of_sale'|'autofactura'|'invoice_link'|'quote'|'recurring_invoice'|'global_invoice', name: string|null}|null,
      *     created_at: string|null,
      *     metadata: array<string, mixed>,
+     *     draft?: array{updated_at: string|null, awaiting_approval: bool, stamping: bool, scheduled_at: string|null, send_email: bool, email_cc: string|null},
      *     warnings?: list<string>,
      *     email_error?: string,
      *     substitutes?: array{invoice: string, canceled: bool, cancel_error?: string, cancellation: array<string, mixed>|null},
@@ -136,16 +138,25 @@ final class Invoices
      *     limit?: int,
      *     starting_after?: string,
      *     issuer?: string,
-     *     status?: 'valid'|'pending'|'canceled'|'rejected'|'processing',
+     *     status?: 'valid'|'pending'|'canceled'|'rejected'|'processing'|'draft',
      *     type?: 'I'|'E'|'P'|'T'|'N',
      *     customer?: string,
      *     payment_status?: 'unpaid'|'partial'|'open'|'paid',
+     *     'date[gte]'?: string,
+     *     'date[gt]'?: string,
+     *     'date[lte]'?: string,
+     *     'date[lt]'?: string,
+     *     cost_center?: string,
+     *     'created[gte]'?: string,
+     *     'created[gt]'?: string,
+     *     'created[lte]'?: string,
+     *     'created[lt]'?: string,
+     *     metadata?: array<string, mixed>,
      *     created_gte?: string,
      *     created_lte?: string,
-     *     cost_center?: string,
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'invoice', issuer: string, branch: string|null, cost_center: string|null, type: 'I'|'E'|'P'|'T'|'N', status: 'processing'|'pending'|'valid'|'rejected'|'canceled', uuid: string|null, series: string|null, folio: string|null, date: string|null, customer: array<string, mixed>, use: string|null, payment_form: string|null, payment_method: string|null, payment_terms: string|null, notes: string|null, currency: string, exchange_rate: float|int|null, items: list<array<string, mixed>>, subtotal: float|int|null, discount: float|int|null, taxes: array<string, mixed>|null, total: float|int|null, payment_status: 'paid'|'partial'|'unpaid'|null, amount_due: float|int|null, amount_paid: float|int|null, paid_on: string|null, due_date: string|null, related: array<string, mixed>|null, payment?: array<string, mixed>|null, payroll?: array<string, mixed>, global?: array<string, mixed>, cancellation: array<string, mixed>|null, email: array<string, mixed>|null, error: array<string, mixed>|null, recurring_invoice: string|null, tickets: list<string>, origin: array<string, mixed>|null, created_at: string|null, metadata: array<string, mixed>, warnings?: list<string>, email_error?: string, substitutes?: array<string, mixed>, advance_application?: array<string, mixed>}>
+     * @return Collection<array{id: string, livemode: bool, object: 'invoice', issuer: string, branch: string|null, cost_center: string|null, type: 'I'|'E'|'P'|'T'|'N', status: 'draft'|'processing'|'pending'|'valid'|'rejected'|'canceled', uuid: string|null, series: string|null, folio: string|null, date: string|null, customer: array<string, mixed>, use: string|null, payment_form: string|null, payment_method: string|null, payment_terms: string|null, notes: string|null, currency: string, exchange_rate: float|int|null, items: list<array<string, mixed>>, subtotal: float|int|null, discount: float|int|null, taxes: array<string, mixed>|null, total: float|int|null, payment_status: 'paid'|'partial'|'unpaid'|null, amount_due: float|int|null, amount_paid: float|int|null, paid_on: string|null, due_date: string|null, related: array<string, mixed>|null, payment?: array<string, mixed>|null, payroll?: array<string, mixed>, global?: array<string, mixed>, cancellation: array<string, mixed>|null, email: array<string, mixed>|null, error: array<string, mixed>|null, recurring_invoice: string|null, tickets: list<string>, origin: array<string, mixed>|null, created_at: string|null, metadata: array<string, mixed>, draft?: array<string, mixed>, warnings?: list<string>, email_error?: string, substitutes?: array<string, mixed>, advance_application?: array<string, mixed>}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/facturas/list-invoices
      */
@@ -202,6 +213,7 @@ final class Invoices
      *     send_email?: bool,
      *     email_cc?: string|null,
      *     metadata?: array<string, mixed>,
+     *     draft?: bool,
      *     async?: bool,
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
@@ -244,14 +256,25 @@ final class Invoices
      * mayúsculas), campo~'valor' (contiene, 3 caracteres o más), >, >=, < y <= en números y
      * fechas, -campo:'valor' (no) y campo:null; hasta 10 cláusulas unidas con AND o con OR. Se
      * busca por customer (RFC), customer_name, uuid, series, folio, total, status (valid, pending,
-     * canceled, rejected o processing) y created. Los más recientes primero, por páginas como las
-     * listas. Una búsqueda que no se entiende responde search_query_invalid diciendo dónde.
+     * canceled, rejected o processing), created y metadata (metadata['order_id']:'123', con la
+     * llave entre corchetes). Los más recientes primero, por páginas como las listas. Una búsqueda
+     * que no se entiende responde search_query_invalid diciendo dónde.
      *
      * GET /v1/invoices/search
      *
-     * @param array{query: string, limit?: int, starting_after?: string, issuer?: string} $params
+     * @param array{
+     *     query: string,
+     *     limit?: int,
+     *     starting_after?: string,
+     *     issuer?: string,
+     *     'created[gte]'?: string,
+     *     'created[gt]'?: string,
+     *     'created[lte]'?: string,
+     *     'created[lt]'?: string,
+     *     metadata?: array<string, mixed>,
+     * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'invoice', issuer: string, branch: string|null, cost_center: string|null, type: 'I'|'E'|'P'|'T'|'N', status: 'processing'|'pending'|'valid'|'rejected'|'canceled', uuid: string|null, series: string|null, folio: string|null, date: string|null, customer: array<string, mixed>, use: string|null, payment_form: string|null, payment_method: string|null, payment_terms: string|null, notes: string|null, currency: string, exchange_rate: float|int|null, items: list<array<string, mixed>>, subtotal: float|int|null, discount: float|int|null, taxes: array<string, mixed>|null, total: float|int|null, payment_status: 'paid'|'partial'|'unpaid'|null, amount_due: float|int|null, amount_paid: float|int|null, paid_on: string|null, due_date: string|null, related: array<string, mixed>|null, payment?: array<string, mixed>|null, payroll?: array<string, mixed>, global?: array<string, mixed>, cancellation: array<string, mixed>|null, email: array<string, mixed>|null, error: array<string, mixed>|null, recurring_invoice: string|null, tickets: list<string>, origin: array<string, mixed>|null, created_at: string|null, metadata: array<string, mixed>, warnings?: list<string>, email_error?: string, substitutes?: array<string, mixed>, advance_application?: array<string, mixed>}>
+     * @return Collection<array{id: string, livemode: bool, object: 'invoice', issuer: string, branch: string|null, cost_center: string|null, type: 'I'|'E'|'P'|'T'|'N', status: 'draft'|'processing'|'pending'|'valid'|'rejected'|'canceled', uuid: string|null, series: string|null, folio: string|null, date: string|null, customer: array<string, mixed>, use: string|null, payment_form: string|null, payment_method: string|null, payment_terms: string|null, notes: string|null, currency: string, exchange_rate: float|int|null, items: list<array<string, mixed>>, subtotal: float|int|null, discount: float|int|null, taxes: array<string, mixed>|null, total: float|int|null, payment_status: 'paid'|'partial'|'unpaid'|null, amount_due: float|int|null, amount_paid: float|int|null, paid_on: string|null, due_date: string|null, related: array<string, mixed>|null, payment?: array<string, mixed>|null, payroll?: array<string, mixed>, global?: array<string, mixed>, cancellation: array<string, mixed>|null, email: array<string, mixed>|null, error: array<string, mixed>|null, recurring_invoice: string|null, tickets: list<string>, origin: array<string, mixed>|null, created_at: string|null, metadata: array<string, mixed>, draft?: array<string, mixed>, warnings?: list<string>, email_error?: string, substitutes?: array<string, mixed>, advance_application?: array<string, mixed>}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/facturas/search-invoices
      */
@@ -264,7 +287,8 @@ final class Invoices
     /**
      * Ver una factura
      *
-     * Por su id (inv_…) o por su folio fiscal (UUID).
+     * Por su id (inv_…) o por su folio fiscal (UUID). Un borrador responde con status draft; ya
+     * timbrado, su id responde con la factura timbrada (que tiene su propio id).
      *
      * GET /v1/invoices/{id}
      *
@@ -279,7 +303,7 @@ final class Invoices
      *     branch: string|null,
      *     cost_center: string|null,
      *     type: 'I'|'E'|'P'|'T'|'N',
-     *     status: 'processing'|'pending'|'valid'|'rejected'|'canceled',
+     *     status: 'draft'|'processing'|'pending'|'valid'|'rejected'|'canceled',
      *     uuid: string|null,
      *     series: string|null,
      *     folio: string|null,
@@ -314,6 +338,7 @@ final class Invoices
      *     origin: array{type: 'app'|'api'|'assistant'|'point_of_sale'|'autofactura'|'invoice_link'|'quote'|'recurring_invoice'|'global_invoice', name: string|null}|null,
      *     created_at: string|null,
      *     metadata: array<string, mixed>,
+     *     draft?: array{updated_at: string|null, awaiting_approval: bool, stamping: bool, scheduled_at: string|null, send_email: bool, email_cc: string|null},
      *     warnings?: list<string>,
      *     email_error?: string,
      *     substitutes?: array{invoice: string, canceled: bool, cancel_error?: string, cancellation: array<string, mixed>|null},
@@ -329,17 +354,57 @@ final class Invoices
     }
 
     /**
-     * Actualizar una factura
+     * Actualizar una factura o un borrador
      *
-     * Lo que se puede cambiar de una factura timbrada sin tocar el CFDI: su centro de costo
-     * (cost_center, o null para quitárselo; los complementos de pago y los traslados no llevan) y
-     * la nota para el cliente del PDF (notes, o null para quitarla; el XML no cambia y el
-     * siguiente PDF y correo ya la llevan).
+     * Un borrador (status draft) se cambia completo: mande la factura entera, con el mismo cuerpo
+     * y las mismas revisiones que POST /v1/invoices (un error responde invoice_invalid; los avisos
+     * vienen en warnings); metadata que no mande se queda como estaba. Si esperaba la aprobación
+     * de un administrador en Fiscalisto, la solicitud se retira. De una factura timbrada solo
+     * cambia lo que no toca el CFDI: su centro de costo (cost_center, o null para quitárselo; los
+     * complementos de pago y los traslados no llevan) y la nota para el cliente del PDF (notes, o
+     * null para quitarla; el XML no cambia y el siguiente PDF y correo ya la llevan).
      *
      * POST /v1/invoices/{id}
      *
      * @param string $id
-     * @param array{cost_center?: string|null, notes?: string|null} $params
+     * @param array{
+     *     issuer?: string,
+     *     branch?: string,
+     *     cost_center?: string,
+     *     warehouse?: string,
+     *     customer?: string|array{tax_id: string, legal_name: string, tax_system: string, zip: string, email?: string|null, foreign?: array{country: string, tax_id: string}, ieps_taxpayer?: bool},
+     *     items?: list<array{product?: string, description?: string, product_key?: string, unit_key?: string, unit_name?: string|null, sku?: string|null, quantity?: float|int, unit_price?: float|int, discount?: float|int, taxability?: '01'|'02'|'03'|'04'|'05'|'06'|'07'|'08', iva?: '0'|'0.16'|'0.08'|'exento', ieps?: float|int, ieps_factor?: 'Tasa'|'Cuota', ieps_units?: float|int, iva_retention?: float|int, isr_retention?: float|int, predial?: list<string>, pedimentos?: list<string>, third_party?: array{tax_id: string, name: string, tax_system: string, zip: string}, iedu?: array{student_name: string, curp: string, level: 'Preescolar'|'Primaria'|'Secundaria'|'Profesional técnico'|'Bachillerato o su equivalente', rvoe: string, payer_tax_id?: string|null}, used_vehicle?: array{purchase_amount: float|int, sale_amount: float|int, vehicle_key: string, make: string, type: string, model: string, engine_number?: string, serial_number?: string, niv?: string, guide_value: float|int, customs?: list<array<string, mixed>>}, hydrocarbon?: array{permit_type: string, permit_number: string, subproduct: string}, addenda?: array<string, mixed>}>,
+     *     type?: 'I'|'T',
+     *     carta_porte?: array{modes?: list<'01'|'02'|'03'|'04'>, international?: array{direction: 'Entrada'|'Salida', country: string, via: string, regimes: list<string>}, istmo?: array{origin: string, destination: string}, reverse_logistics?: bool, origin: array{tax_id: string, name?: string, foreign?: array<string, mixed>, date_time: string, distance_km?: float|int, station?: array<string, mixed>, navigation?: 'Altura'|'Cabotaje', address: array<string, mixed>}, destinations: list<array{tax_id: string, name?: string, foreign?: array<string, mixed>, date_time: string, distance_km?: float|int, station?: array<string, mixed>, navigation?: 'Altura'|'Cabotaje', address: array<string, mixed>}>, goods: list<array{product_key: string, description: string, quantity: float|int, unit_key: string, weight_kg: float|int, dimensions?: string, hazmat?: array<string, mixed>, cofepris?: array<string, mixed>, value?: float|int, currency?: string, tariff?: string, cce_uuid?: string, material?: array<string, mixed>, customs_docs?: list<array<string, mixed>>, guides?: list<array<string, mixed>>, quantities?: list<array<string, mixed>>, detail?: array<string, mixed>, stcc?: string}>, vehicle?: array{config: string, plate: string, year: int, gross_weight: float|int, permit_type: string, permit_number: string, insurer: string, policy: string, env_insurer?: string, env_policy?: string, cargo_insurer?: string, cargo_policy?: string, premium?: float|int, trailers?: list<array<string, mixed>>}, sea?: array{permit_type?: string, permit_number?: string, insurer?: string, policy?: string, vessel_type: string, registration: string, imo: string, year?: int, vessel_name?: string, flag: string, gross_tonnage: float|int, cargo_type: string, length?: float|int, beam?: float|int, draft?: float|int, depth?: float|int, line?: string, agent_name: string, agent_authorization: string, voyage?: string, bill_of_lading?: string, temp_permit?: string, containers?: list<array<string, mixed>>}, air?: array{permit_type: string, permit_number: string, aircraft?: string, insurer?: string, policy?: string, waybill: string, contract_place?: string, carrier: string, shipper?: array<string, mixed>, rate_charge?: float|int}, rail?: array{service: string, traffic: string, insurer?: string, policy?: string, rights?: list<array<string, mixed>>, cars: list<array<string, mixed>>}, drivers: list<array{tax_id: string|'', license: string, name: string, foreign?: array<string, mixed>}>, figures?: list<array{type: '02'|'03'|'04'|'05', tax_id?: string, foreign?: array<string, mixed>, name: string, parts?: list<string>, address?: array<string, mixed>}>},
+     *     carta_porte_exemption?: '2.7.7.2.1'|'2.7.7.2.2'|'2.7.7.2.3',
+     *     ine?: array{process: 'Ordinario'|'Precampaña'|'Campaña', committee?: 'Ejecutivo Nacional'|'Ejecutivo Estatal'|'Directivo Estatal', accounting_id?: string, entities?: list<array{key: string, scope?: 'Local'|'Federal', accounting_ids?: list<string>}>},
+     *     leyendas?: list<array{text: string, disposition?: string, norm?: string}>,
+     *     donation?: array{in_kind?: bool, deducted?: bool},
+     *     local_taxes?: list<array{retention: bool, name: string, rate: float|int, amount: float|int}>,
+     *     export?: '01'|'02'|'03'|'04',
+     *     comercio_exterior?: array{motive?: '99'|'01'|'02'|'03'|'04'|'05', owners?: list<array{tax_id: string, country: string}>, incoterm?: string, certificate?: string, usd_rate: float|int, issuer_curp?: string, issuer_address?: array{street: string, exterior?: string, interior?: string, zip?: string}, receiver_address?: array{street: string, exterior?: string, interior?: string, colony?: string, locality?: string, municipality?: string, state?: string, country: string, zip: string}, recipient?: array{name?: string, tax_id?: string, address: array<string, mixed>}, goods: list<array{id?: string, tariff?: string, unit?: string, quantity?: float|int, unit_value_usd?: float|int}>, notes?: string},
+     *     global?: array{periodicity: string, months: string, year: int, keep_concepts?: bool},
+     *     use?: string,
+     *     payment_form?: string,
+     *     payment_method?: 'PUE'|'PPD',
+     *     paid_later?: bool,
+     *     currency?: string,
+     *     series?: string,
+     *     notes?: string,
+     *     payment_terms?: string,
+     *     pdf_language?: 'es'|'en'|'bi',
+     *     addenda?: array{type: 'walmart'|'soriana'|'liverpool'|'homedepot'|'chedraui'|'generic', values: array<string, mixed>, customer?: array<string, mixed>},
+     *     related?: array{relationship: string, uuids: list<string>},
+     *     exchange_rate?: float|int,
+     *     folio?: int,
+     *     continue_sequence?: bool,
+     *     date?: string,
+     *     send_email?: bool,
+     *     email_cc?: string|null,
+     *     metadata?: array<string, mixed>,
+     *     draft?: bool,
+     *     async?: bool,
+     * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     id: string,
@@ -349,7 +414,7 @@ final class Invoices
      *     branch: string|null,
      *     cost_center: string|null,
      *     type: 'I'|'E'|'P'|'T'|'N',
-     *     status: 'processing'|'pending'|'valid'|'rejected'|'canceled',
+     *     status: 'draft'|'processing'|'pending'|'valid'|'rejected'|'canceled',
      *     uuid: string|null,
      *     series: string|null,
      *     folio: string|null,
@@ -384,6 +449,7 @@ final class Invoices
      *     origin: array{type: 'app'|'api'|'assistant'|'point_of_sale'|'autofactura'|'invoice_link'|'quote'|'recurring_invoice'|'global_invoice', name: string|null}|null,
      *     created_at: string|null,
      *     metadata: array<string, mixed>,
+     *     draft?: array{updated_at: string|null, awaiting_approval: bool, stamping: bool, scheduled_at: string|null, send_email: bool, email_cc: string|null},
      *     warnings?: list<string>,
      *     email_error?: string,
      *     substitutes?: array{invoice: string, canceled: bool, cancel_error?: string, cancellation: array<string, mixed>|null},
@@ -396,6 +462,98 @@ final class Invoices
     {
         // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
         return $this->client->request('POST', '/v1/invoices/' . rawurlencode($id), ['body' => $params, 'idempotent' => true], $options);
+    }
+
+    /**
+     * Borrar un borrador
+     *
+     * Borra un borrador (status draft), hecho con la API o en Fiscalisto. Una factura timbrada no
+     * se borra: responde invoice_not_draft; cancélela con POST /v1/invoices/{id}/cancel.
+     *
+     * DELETE /v1/invoices/{id}
+     *
+     * @param string $id
+     * @param array{timeout?: float|int, max_retries?: int} $options
+     * @return array{id: string, object: string, deleted: true}
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/facturas/delete-invoice
+     */
+    public function delete(string $id, array $options = []): array
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('DELETE', '/v1/invoices/' . rawurlencode($id), [], $options);
+    }
+
+    /**
+     * Timbrar un borrador
+     *
+     * Timbra un borrador tal como está guardado (no lleva cuerpo; cámbielo antes con POST
+     * /v1/invoices/{id}), con las mismas revisiones y respuestas que POST /v1/invoices: 201
+     * timbrada, o 202 en processing si el PAC tarda. Pide Idempotency-Key; además, un borrador se
+     * timbra una sola vez aunque lo timbren a la vez desde la API y desde Fiscalisto. Ya timbrado,
+     * responde con esa factura. Uno que espera la aprobación de un administrador responde
+     * draft_awaiting_approval.
+     *
+     * POST /v1/invoices/{id}/stamp
+     *
+     * @param string $id
+     * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
+     * @return array{
+     *     id: string,
+     *     livemode: bool,
+     *     object: 'invoice',
+     *     issuer: string,
+     *     branch: string|null,
+     *     cost_center: string|null,
+     *     type: 'I'|'E'|'P'|'T'|'N',
+     *     status: 'draft'|'processing'|'pending'|'valid'|'rejected'|'canceled',
+     *     uuid: string|null,
+     *     series: string|null,
+     *     folio: string|null,
+     *     date: string|null,
+     *     customer: array{tax_id: string|null, legal_name: string|null, tax_system?: string, zip?: string, foreign?: array<string, mixed>},
+     *     use: string|null,
+     *     payment_form: string|null,
+     *     payment_method: string|null,
+     *     payment_terms: string|null,
+     *     notes: string|null,
+     *     currency: string,
+     *     exchange_rate: float|int|null,
+     *     items: list<array<string, mixed>>,
+     *     subtotal: float|int|null,
+     *     discount: float|int|null,
+     *     taxes: array{iva: float|int|null, ieps: float|null, iva_withheld: float|null, isr_withheld: float|null, local_transferred: float|null, local_withheld: float|null}|null,
+     *     total: float|int|null,
+     *     payment_status: 'paid'|'partial'|'unpaid'|null,
+     *     amount_due: float|int|null,
+     *     amount_paid: float|int|null,
+     *     paid_on: string|null,
+     *     due_date: string|null,
+     *     related: array<string, mixed>|null,
+     *     payment?: array{date: string|null, payment_form: string|null, currency: string, exchange_rate: float|int|null, amount: float|int, operation_number: string|null, documents: list<array<string, mixed>>}|null,
+     *     payroll?: array{type: 'O'|'E', calculation: 'fiscalisto'|'external', periodicity: string, period: array<string, mixed>, days: float|int, references: array<string, mixed>|null, employer: array<string, mixed>, employee: array<string, mixed>, perceptions: list<array<string, mixed>>, deductions: list<array<string, mixed>>, other_payments: list<array<string, mixed>>, separation?: array<string, mixed>, retirement?: array<string, mixed>, disabilities?: list<array<string, mixed>>, imss_days?: array<string, mixed>, totals: array<string, mixed>},
+     *     global?: array<string, mixed>,
+     *     cancellation: array{status: string|null, motive: string|null, substitution: string|null, canceled_at: string|null, next_attempt_at: string|null, error: string|null}|null,
+     *     email: array{to: string|null, cc: string|null, sent_at: string|null, status: 'sent'|'delayed'|'delivered'|'opened'|'bounced'|'complained', recipients: list<array<string, mixed>>}|null,
+     *     error: array{message: string, sat_code: string|null, raw: string}|null,
+     *     recurring_invoice: string|null,
+     *     tickets: list<string>,
+     *     origin: array{type: 'app'|'api'|'assistant'|'point_of_sale'|'autofactura'|'invoice_link'|'quote'|'recurring_invoice'|'global_invoice', name: string|null}|null,
+     *     created_at: string|null,
+     *     metadata: array<string, mixed>,
+     *     draft?: array{updated_at: string|null, awaiting_approval: bool, stamping: bool, scheduled_at: string|null, send_email: bool, email_cc: string|null},
+     *     warnings?: list<string>,
+     *     email_error?: string,
+     *     substitutes?: array{invoice: string, canceled: bool, cancel_error?: string, cancellation: array<string, mixed>|null},
+     *     advance_application?: array{advance: string|null, advance_uuid: string, method: 'egreso'|'remanente', status: 'done'|'credit_note_pending', credit_note: string|null, credit_note_error?: string},
+     * }
+     * @throws FiscalistoException
+     * @see https://fiscalisto.com/docs/api/referencia/facturas/stamp-invoice
+     */
+    public function stamp(string $id, array $options = []): array
+    {
+        // @phpstan-ignore return.type (lo que contesta la API, documentado arriba)
+        return $this->client->request('POST', '/v1/invoices/' . rawurlencode($id) . '/stamp', ['idempotent' => true], $options);
     }
 
     /**
@@ -480,7 +638,7 @@ final class Invoices
      *     branch: string|null,
      *     cost_center: string|null,
      *     type: 'I'|'E'|'P'|'T'|'N',
-     *     status: 'processing'|'pending'|'valid'|'rejected'|'canceled',
+     *     status: 'draft'|'processing'|'pending'|'valid'|'rejected'|'canceled',
      *     uuid: string|null,
      *     series: string|null,
      *     folio: string|null,
@@ -515,6 +673,7 @@ final class Invoices
      *     origin: array{type: 'app'|'api'|'assistant'|'point_of_sale'|'autofactura'|'invoice_link'|'quote'|'recurring_invoice'|'global_invoice', name: string|null}|null,
      *     created_at: string|null,
      *     metadata: array<string, mixed>,
+     *     draft?: array{updated_at: string|null, awaiting_approval: bool, stamping: bool, scheduled_at: string|null, send_email: bool, email_cc: string|null},
      *     warnings?: list<string>,
      *     email_error?: string,
      *     substitutes?: array{invoice: string, canceled: bool, cancel_error?: string, cancellation: array<string, mixed>|null},
@@ -540,7 +699,11 @@ final class Invoices
      * POST /v1/invoices/{id}/cancel
      *
      * @param string $id
-     * @param array{motive?: '01'|'02'|'03'|'04', substitution?: string} $params
+     * @param array{
+     *     motive?: '01'|'02'|'03'|'04',
+     *     substitution?: string,
+     *     notify_customer?: bool,
+     * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     id: string,
@@ -550,7 +713,7 @@ final class Invoices
      *     branch: string|null,
      *     cost_center: string|null,
      *     type: 'I'|'E'|'P'|'T'|'N',
-     *     status: 'processing'|'pending'|'valid'|'rejected'|'canceled',
+     *     status: 'draft'|'processing'|'pending'|'valid'|'rejected'|'canceled',
      *     uuid: string|null,
      *     series: string|null,
      *     folio: string|null,
@@ -585,6 +748,7 @@ final class Invoices
      *     origin: array{type: 'app'|'api'|'assistant'|'point_of_sale'|'autofactura'|'invoice_link'|'quote'|'recurring_invoice'|'global_invoice', name: string|null}|null,
      *     created_at: string|null,
      *     metadata: array<string, mixed>,
+     *     draft?: array{updated_at: string|null, awaiting_approval: bool, stamping: bool, scheduled_at: string|null, send_email: bool, email_cc: string|null},
      *     warnings?: list<string>,
      *     email_error?: string,
      *     substitutes?: array{invoice: string, canceled: bool, cancel_error?: string, cancellation: array<string, mixed>|null},
@@ -643,6 +807,7 @@ final class Invoices
      *     send_email?: bool,
      *     email_cc?: string|null,
      *     metadata?: array<string, mixed>,
+     *     draft?: bool,
      *     async?: bool,
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
@@ -654,7 +819,7 @@ final class Invoices
      *     branch: string|null,
      *     cost_center: string|null,
      *     type: 'I'|'E'|'P'|'T'|'N',
-     *     status: 'processing'|'pending'|'valid'|'rejected'|'canceled',
+     *     status: 'draft'|'processing'|'pending'|'valid'|'rejected'|'canceled',
      *     uuid: string|null,
      *     series: string|null,
      *     folio: string|null,
@@ -689,6 +854,7 @@ final class Invoices
      *     origin: array{type: 'app'|'api'|'assistant'|'point_of_sale'|'autofactura'|'invoice_link'|'quote'|'recurring_invoice'|'global_invoice', name: string|null}|null,
      *     created_at: string|null,
      *     metadata: array<string, mixed>,
+     *     draft?: array{updated_at: string|null, awaiting_approval: bool, stamping: bool, scheduled_at: string|null, send_email: bool, email_cc: string|null},
      *     warnings?: list<string>,
      *     email_error?: string,
      *     substitutes?: array{invoice: string, canceled: bool, cancel_error?: string, cancellation: array<string, mixed>|null},
@@ -723,7 +889,7 @@ final class Invoices
      *     branch: string|null,
      *     cost_center: string|null,
      *     type: 'I'|'E'|'P'|'T'|'N',
-     *     status: 'processing'|'pending'|'valid'|'rejected'|'canceled',
+     *     status: 'draft'|'processing'|'pending'|'valid'|'rejected'|'canceled',
      *     uuid: string|null,
      *     series: string|null,
      *     folio: string|null,
@@ -758,6 +924,7 @@ final class Invoices
      *     origin: array{type: 'app'|'api'|'assistant'|'point_of_sale'|'autofactura'|'invoice_link'|'quote'|'recurring_invoice'|'global_invoice', name: string|null}|null,
      *     created_at: string|null,
      *     metadata: array<string, mixed>,
+     *     draft?: array{updated_at: string|null, awaiting_approval: bool, stamping: bool, scheduled_at: string|null, send_email: bool, email_cc: string|null},
      *     warnings?: list<string>,
      *     email_error?: string,
      *     substitutes?: array{invoice: string, canceled: bool, cancel_error?: string, cancellation: array<string, mixed>|null},
@@ -791,7 +958,7 @@ final class Invoices
      *     branch: string|null,
      *     cost_center: string|null,
      *     type: 'I'|'E'|'P'|'T'|'N',
-     *     status: 'processing'|'pending'|'valid'|'rejected'|'canceled',
+     *     status: 'draft'|'processing'|'pending'|'valid'|'rejected'|'canceled',
      *     uuid: string|null,
      *     series: string|null,
      *     folio: string|null,
@@ -826,6 +993,7 @@ final class Invoices
      *     origin: array{type: 'app'|'api'|'assistant'|'point_of_sale'|'autofactura'|'invoice_link'|'quote'|'recurring_invoice'|'global_invoice', name: string|null}|null,
      *     created_at: string|null,
      *     metadata: array<string, mixed>,
+     *     draft?: array{updated_at: string|null, awaiting_approval: bool, stamping: bool, scheduled_at: string|null, send_email: bool, email_cc: string|null},
      *     warnings?: list<string>,
      *     email_error?: string,
      *     substitutes?: array{invoice: string, canceled: bool, cancel_error?: string, cancellation: array<string, mixed>|null},

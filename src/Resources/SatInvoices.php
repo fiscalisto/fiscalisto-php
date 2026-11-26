@@ -34,11 +34,15 @@ final class SatInvoices
      *     direction?: 'received'|'issued',
      *     type?: 'I'|'E'|'P'|'T'|'N',
      *     counterparty_tax_id?: string,
-     *     date_gte?: string,
-     *     date_lte?: string,
+     *     'date[gte]'?: string,
+     *     'date[gt]'?: string,
+     *     'date[lte]'?: string,
+     *     'date[lt]'?: string,
      *     cost_center?: string,
      *     tag?: string,
      *     cash_confirmation?: 'pending'|'confirmed',
+     *     date_gte?: string,
+     *     date_lte?: string,
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
      * @return Collection<array{id: string, livemode: bool, object: 'sat_invoice', issuer: string, uuid: string, direction: 'received'|'issued', type: 'I'|'E'|'P'|'T'|'N'|null, date: string, series: string|null, folio: string|null, issued_by: array<string, mixed>, issued_to: array<string, mixed>, currency: string|null, exchange_rate: float|int|null, payment_method: string|null, payment_form: string|null, use: string|null, subtotal: float|int|null, total: float|int|null, taxes: array<string, mixed>, sat_status: 'active'|'canceled'|null, paid_otherwise: array<string, mixed>|null, cash_confirmation: 'pending'|'confirmed'|null, cash_confirmed_at: string|null, cost_center: string|null, account: string|null, tags: list<array<string, mixed>>, sat_download: string|null, downloaded_at: string|null}>

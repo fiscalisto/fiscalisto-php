@@ -81,9 +81,17 @@ final class ManualEntries
      * @param array{
      *     limit?: int,
      *     starting_after?: string,
+     *     'date[gte]'?: string,
+     *     'date[gt]'?: string,
+     *     'date[lte]'?: string,
+     *     'date[lt]'?: string,
+     *     issuer?: string,
+     *     'created[gte]'?: string,
+     *     'created[gt]'?: string,
+     *     'created[lte]'?: string,
+     *     'created[lt]'?: string,
      *     from?: string,
      *     to?: string,
-     *     issuer?: string,
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
      * @return Collection<array{id: string, livemode: bool, object: 'manual_journal_entry', issuer: string, date: string, description: string, kind: 'adjustment'|'accrual'|'reclassification'|'other', journal_type: 'journal'|'income'|'expense', reverse_next_month: bool, reverses_on: string|null, repeat_until: string|null, uuid: string|null, uuid_tax_id: string|null, total: float|int, lines: list<array<string, mixed>>, created_at: string|null, updated_at: string|null}>

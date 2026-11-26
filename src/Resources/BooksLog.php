@@ -33,11 +33,15 @@ final class BooksLog
      *
      * @param array{
      *     subject?: 'manual_journal_entry'|'opening_balances'|'account'|'chart_of_accounts'|'period_close'|'consolidation_elimination'|'entry_template'|'fixed_asset'|'invoice_account'|'automatic_journal_entry'|'prepaid_expense',
-     *     from?: string,
-     *     to?: string,
      *     limit?: int,
      *     starting_after?: string,
      *     issuer?: string,
+     *     'created[gte]'?: string,
+     *     'created[gt]'?: string,
+     *     'created[lte]'?: string,
+     *     'created[lt]'?: string,
+     *     from?: string,
+     *     to?: string,
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
      * @return Collection<array{id: string, livemode: bool, object: 'books_log_entry', issuer: string, created_at: string, subject: 'manual_journal_entry'|'opening_balances'|'account'|'chart_of_accounts'|'period_close'|'consolidation_elimination'|'entry_template'|'fixed_asset'|'invoice_account'|'automatic_journal_entry'|'prepaid_expense', subject_id: string|null, action: 'created'|'updated'|'deleted'|'restored'|'imported'|'closed'|'reopened', description: string, actor: array<string, mixed>, before: mixed, after: mixed}>

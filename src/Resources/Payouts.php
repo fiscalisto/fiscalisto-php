@@ -41,6 +41,7 @@ final class Payouts
      *     exchange_rate?: 'official'|'fixed',
      *     invoices?: list<array{uuid: string, amount?: float|int, reason?: string|null}>,
      *     payments?: list<array{tax_id: string, name?: string|null, amount: float|int, description?: string|null, no_invoice_reason?: string|null}>,
+     *     metadata?: array<string, mixed>,
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
@@ -63,6 +64,7 @@ final class Payouts
      *     transfers: list<array{id: string, livemode: bool, object: 'payout_transfer', issuer: string, payout: string, supplier_tax_id: string, supplier_name: string|null, payee_account: string, clabe: string, bank: string|null, amount: float|int, currency: 'MXN', concept: string, reference: string|null, status: 'queued'|'sending'|'in_transit'|'unknown'|'succeeded'|'failed'|'returning'|'returned'|'not_sent'|'removed', tracking_key: string|null, cep_url: string|null, failure_reason: string|null, invoices: list<array<string, mixed>>, sent_at: string|null, settled_at: string|null}>,
      *     cancel_reason: string|null,
      *     created_by_api: bool,
+     *     metadata: array<string, mixed>,
      *     created_at: string|null,
      *     approved_at: string|null,
      *     sent_at: string|null,
@@ -91,11 +93,20 @@ final class Payouts
      *     starting_after?: string,
      *     issuer?: string,
      *     status?: 'draft'|'pending_approval'|'approved'|'sending'|'paid'|'partially_paid'|'failed'|'canceled',
+     *     'pay_on[gte]'?: string,
+     *     'pay_on[gt]'?: string,
+     *     'pay_on[lte]'?: string,
+     *     'pay_on[lt]'?: string,
+     *     'created[gte]'?: string,
+     *     'created[gt]'?: string,
+     *     'created[lte]'?: string,
+     *     'created[lt]'?: string,
+     *     metadata?: array<string, mixed>,
      *     pay_on_from?: string,
      *     pay_on_to?: string,
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'payout', issuer: string, number: int, status: 'draft'|'pending_approval'|'approved'|'sending'|'paid'|'partially_paid'|'failed'|'canceled', name: string|null, pay_on: string, exchange_rate: 'official'|'fixed'|null, total: float|int, currency: 'MXN', note: string|null, source: 'app'|'api'|'assistant'|'rule'|'recurring', payout_mandate: string|null, signatures: array<string, mixed>, app_url: string, transfers: list<array<string, mixed>>, cancel_reason: string|null, created_by_api: bool, created_at: string|null, approved_at: string|null, sent_at: string|null, settled_at: string|null, canceled_at: string|null}>
+     * @return Collection<array{id: string, livemode: bool, object: 'payout', issuer: string, number: int, status: 'draft'|'pending_approval'|'approved'|'sending'|'paid'|'partially_paid'|'failed'|'canceled', name: string|null, pay_on: string, exchange_rate: 'official'|'fixed'|null, total: float|int, currency: 'MXN', note: string|null, source: 'app'|'api'|'assistant'|'rule'|'recurring', payout_mandate: string|null, signatures: array<string, mixed>, app_url: string, transfers: list<array<string, mixed>>, cancel_reason: string|null, created_by_api: bool, metadata: array<string, mixed>, created_at: string|null, approved_at: string|null, sent_at: string|null, settled_at: string|null, canceled_at: string|null}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/pagos-a-proveedores/list-payouts
      */
@@ -193,6 +204,7 @@ final class Payouts
      *     transfers: list<array{id: string, livemode: bool, object: 'payout_transfer', issuer: string, payout: string, supplier_tax_id: string, supplier_name: string|null, payee_account: string, clabe: string, bank: string|null, amount: float|int, currency: 'MXN', concept: string, reference: string|null, status: 'queued'|'sending'|'in_transit'|'unknown'|'succeeded'|'failed'|'returning'|'returned'|'not_sent'|'removed', tracking_key: string|null, cep_url: string|null, failure_reason: string|null, invoices: list<array<string, mixed>>, sent_at: string|null, settled_at: string|null}>,
      *     cancel_reason: string|null,
      *     created_by_api: bool,
+     *     metadata: array<string, mixed>,
      *     created_at: string|null,
      *     approved_at: string|null,
      *     sent_at: string|null,
@@ -241,6 +253,7 @@ final class Payouts
      *     transfers: list<array{id: string, livemode: bool, object: 'payout_transfer', issuer: string, payout: string, supplier_tax_id: string, supplier_name: string|null, payee_account: string, clabe: string, bank: string|null, amount: float|int, currency: 'MXN', concept: string, reference: string|null, status: 'queued'|'sending'|'in_transit'|'unknown'|'succeeded'|'failed'|'returning'|'returned'|'not_sent'|'removed', tracking_key: string|null, cep_url: string|null, failure_reason: string|null, invoices: list<array<string, mixed>>, sent_at: string|null, settled_at: string|null}>,
      *     cancel_reason: string|null,
      *     created_by_api: bool,
+     *     metadata: array<string, mixed>,
      *     created_at: string|null,
      *     approved_at: string|null,
      *     sent_at: string|null,

@@ -11,10 +11,10 @@ namespace Fiscalisto;
  */
 abstract class Core
 {
-    public const VERSION = '0.1.224';
+    public const VERSION = '0.1.225';
     public const DEFAULT_BASE_URL = 'https://api.fiscalisto.com';
     /** La versión de la API para la que se hizo este SDK (cabecera Fiscalisto-Version). */
-    public const API_VERSION = '2026-10-24';
+    public const API_VERSION = '2026-11-25';
 
     /** true con una llave fk_live_ (producción), false con fk_test_ (pruebas). */
     public readonly bool $livemode;
@@ -25,6 +25,7 @@ abstract class Core
     private readonly float $timeout;
     private readonly ?string $apiVersion;
     private readonly ?string $language;
+    private bool $warnedExpiry = false;
     /** @var callable(array{method: string, url: string, headers: array<string, string>, body: ?string, timeout: float}): array{status: int, headers: array<string, string>, body: string} */
     private $transport;
     /** @var callable(float): void */
@@ -140,6 +141,14 @@ abstract class Core
             $status = $response['status'];
             $responseHeaders = array_change_key_case($response['headers'], CASE_LOWER);
             $requestId = $responseHeaders['request-id'] ?? null;
+            if (!$this->warnedExpiry) {
+                $warning = self::expiryWarning($responseHeaders, time());
+                if ($warning !== null) {
+                    $this->warnedExpiry = true;
+                    // error_log, not trigger_error: frameworks turn warnings into exceptions.
+                    error_log($warning);
+                }
+            }
             if ($status >= 200 && $status < 300) {
                 $as = $spec['as'] ?? 'json';
                 if ($as !== 'json') {
@@ -160,7 +169,9 @@ abstract class Core
             $parsed = json_decode($response['body'], true);
             /** @var array<string, mixed> $raw */
             $raw = is_array($parsed) && is_array($parsed['error'] ?? null) ? $parsed['error'] : [];
-            $retryAfter = is_numeric($responseHeaders['retry-after'] ?? null) ? (float) $responseHeaders['retry-after'] : 0.0;
+            // Retry-After when the API sends it; otherwise RateLimit-Reset on a 429.
+            $wait = $responseHeaders['retry-after'] ?? ($status === 429 ? ($responseHeaders['ratelimit-reset'] ?? null) : null);
+            $retryAfter = is_numeric($wait) ? (float) $wait : 0.0;
             $retryable = $status === 429
                 || ($raw['code'] ?? null) === 'request_in_progress'
                 || ($safe && $status >= 500);
@@ -179,13 +190,14 @@ abstract class Core
      */
     public function list(string $path, array $query, array $options = []): Collection
     {
-        return new Collection(function (?string $startingAfter) use ($path, $query, $options): array {
-            if ($startingAfter !== null) {
-                $query['starting_after'] = $startingAfter;
+        $forward = !empty($query['ending_before']);
+        return new Collection(function (?string $cursor) use ($path, $query, $options, $forward): array {
+            if ($cursor !== null) {
+                $query[$forward ? 'ending_before' : 'starting_after'] = $cursor;
             }
             /** @var array{object: string, data: list<array<string, mixed>>, has_more: bool, url: string} */
             return $this->request('GET', $path, ['query' => $query], $options);
-        });
+        }, $forward);
     }
 
     /** @param array<string, mixed> $query */
@@ -196,6 +208,15 @@ abstract class Core
             if ($v === null) {
                 continue;
             }
+            if (is_array($v) && !array_is_list($v)) {
+                // metadata[pedido]=A-1042, one pair per key.
+                foreach ($v as $sub => $x) {
+                    if ($x !== null) {
+                        $pairs[] = rawurlencode($k . '[' . $sub . ']') . '=' . rawurlencode((string) $x);
+                    }
+                }
+                continue;
+            }
             $value = is_bool($v) ? ($v ? 'true' : 'false') : (is_scalar($v) ? (string) $v : json_encode($v, JSON_THROW_ON_ERROR));
             $pairs[] = rawurlencode((string) $k) . '=' . rawurlencode($value);
         }
@@ -203,6 +224,25 @@ abstract class Core
     }
 
     /** 0.5 s, 1 s, 2 s… hasta 8 s, con algo de azar para no llegar todos juntos. */
+    /**
+     * The console message when the API says the key ends soon (Fiscalisto-Key-Expires-At within
+     * 7 days, or Fiscalisto-Warning: api_key_expires_soon); null otherwise.
+     *
+     * @param array<string, mixed> $headers lowercase names
+     */
+    public static function expiryWarning(array $headers, int $now): ?string
+    {
+        $expiresAt = $headers['fiscalisto-key-expires-at'] ?? null;
+        $at = is_string($expiresAt) ? strtotime($expiresAt) : false;
+        $warning = $headers['fiscalisto-warning'] ?? null;
+        $flagged = is_string($warning) && preg_match('/\bapi_key_expires_soon\b/', $warning) === 1;
+        if (!$flagged && !($at !== false && $at > $now && $at - $now <= 7 * 24 * 3600)) {
+            return null;
+        }
+        $when = $at !== false ? 'el ' . gmdate('Y-m-d\TH:i:s\Z', $at) : 'en menos de 7 días';
+        return "[fiscalisto] Su llave de la API vence $when. Cámbiela antes en Desarrolladores › Llaves (Cambiar llave) para que sus solicitudes no fallen con api_key_expired.";
+    }
+
     private static function backoff(int $attempt): float
     {
         return min(8.0, 0.5 * 2 ** $attempt) * (0.75 + mt_rand() / mt_getrandmax() / 2);

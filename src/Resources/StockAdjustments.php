@@ -35,12 +35,14 @@ final class StockAdjustments
      *     reason: 'shrinkage'|'theft'|'damage'|'expiration'|'internal_use'|'gift'|'initial'|'surplus'|'count'|'other',
      *     note?: string|null,
      *     lines: list<array{product: string, quantity: float|int, unit_cost?: float|int, lot?: string, expires_on?: string}>,
+     *     metadata?: array<string, mixed>,
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     id: string,
      *     livemode: bool,
      *     object: 'stock_adjustment',
+     *     metadata: array<string, mixed>,
      *     issuer: string,
      *     warehouse: string,
      *     reason: 'shrinkage'|'theft'|'damage'|'expiration'|'internal_use'|'gift'|'initial'|'surplus'|'count'|'other',
@@ -72,9 +74,14 @@ final class StockAdjustments
      *     issuer?: string,
      *     warehouse?: string,
      *     status?: 'applied'|'pending'|'rejected'|'reversed',
+     *     'created[gte]'?: string,
+     *     'created[gt]'?: string,
+     *     'created[lte]'?: string,
+     *     'created[lt]'?: string,
+     *     metadata?: array<string, mixed>,
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'stock_adjustment', issuer: string, warehouse: string, reason: 'shrinkage'|'theft'|'damage'|'expiration'|'internal_use'|'gift'|'initial'|'surplus'|'count'|'other', note: string|null, status: 'applied'|'pending'|'rejected'|'reversed', value: float|int, lines: list<array<string, mixed>>, created_at: string|null}>
+     * @return Collection<array{id: string, livemode: bool, object: 'stock_adjustment', metadata: array<string, mixed>, issuer: string, warehouse: string, reason: 'shrinkage'|'theft'|'damage'|'expiration'|'internal_use'|'gift'|'initial'|'surplus'|'count'|'other', note: string|null, status: 'applied'|'pending'|'rejected'|'reversed', value: float|int, lines: list<array<string, mixed>>, created_at: string|null}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/inventario/list-stock-adjustments
      */
@@ -97,6 +104,7 @@ final class StockAdjustments
      *     id: string,
      *     livemode: bool,
      *     object: 'stock_adjustment',
+     *     metadata: array<string, mixed>,
      *     issuer: string,
      *     warehouse: string,
      *     reason: 'shrinkage'|'theft'|'damage'|'expiration'|'internal_use'|'gift'|'initial'|'surplus'|'count'|'other',

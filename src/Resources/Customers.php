@@ -73,6 +73,7 @@ final class Customers
      *
      * @param array{
      *     issuer?: string,
+     *     metadata?: array<string, mixed>|null,
      *     tax_id: string,
      *     legal_name: string,
      *     tax_system: string,
@@ -108,6 +109,7 @@ final class Customers
      *     group: string|null,
      *     price_list: string|null,
      *     discount_percent: float|int|null,
+     *     metadata: array<string, mixed>,
      *     created_at: string,
      *     updated_at: string|null,
      * }
@@ -127,9 +129,19 @@ final class Customers
      *
      * GET /v1/customers
      *
-     * @param array{limit?: int, starting_after?: string, issuer?: string, tax_id?: string} $params
+     * @param array{
+     *     limit?: int,
+     *     starting_after?: string,
+     *     issuer?: string,
+     *     tax_id?: string,
+     *     'created[gte]'?: string,
+     *     'created[gt]'?: string,
+     *     'created[lte]'?: string,
+     *     'created[lt]'?: string,
+     *     metadata?: array<string, mixed>,
+     * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'customer', issuer: string, tax_id: string, legal_name: string, tax_system: string, zip: string, email: string|null, use: string|null, foreign: array<string, mixed>|null, ieps_taxpayer: bool, credit_days: int|null, quote_valid_days: int|null, payment_terms: string|null, group: string|null, price_list: string|null, discount_percent: float|int|null, created_at: string, updated_at: string|null}>
+     * @return Collection<array{id: string, livemode: bool, object: 'customer', issuer: string, tax_id: string, legal_name: string, tax_system: string, zip: string, email: string|null, use: string|null, foreign: array<string, mixed>|null, ieps_taxpayer: bool, credit_days: int|null, quote_valid_days: int|null, payment_terms: string|null, group: string|null, price_list: string|null, discount_percent: float|int|null, metadata: array<string, mixed>, created_at: string, updated_at: string|null}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/clientes/list-customers
      */
@@ -145,15 +157,26 @@ final class Customers
      * Con un lenguaje de búsqueda, como el de Stripe: campo:'valor' (igual, sin importar
      * mayúsculas), campo~'valor' (contiene, 3 caracteres o más), >, >=, < y <= en números y
      * fechas, -campo:'valor' (no) y campo:null; hasta 10 cláusulas unidas con AND o con OR. Se
-     * busca por tax_id, legal_name, email, zip, tax_system, use y created. Los más recientes
-     * primero, por páginas como las listas. Una búsqueda que no se entiende responde
-     * search_query_invalid diciendo dónde.
+     * busca por tax_id, legal_name, email, zip, tax_system, use, created y metadata
+     * (metadata['order_id']:'123', con la llave entre corchetes). Los más recientes primero, por
+     * páginas como las listas. Una búsqueda que no se entiende responde search_query_invalid
+     * diciendo dónde.
      *
      * GET /v1/customers/search
      *
-     * @param array{query: string, limit?: int, starting_after?: string, issuer?: string} $params
+     * @param array{
+     *     query: string,
+     *     limit?: int,
+     *     starting_after?: string,
+     *     issuer?: string,
+     *     'created[gte]'?: string,
+     *     'created[gt]'?: string,
+     *     'created[lte]'?: string,
+     *     'created[lt]'?: string,
+     *     metadata?: array<string, mixed>,
+     * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'customer', issuer: string, tax_id: string, legal_name: string, tax_system: string, zip: string, email: string|null, use: string|null, foreign: array<string, mixed>|null, ieps_taxpayer: bool, credit_days: int|null, quote_valid_days: int|null, payment_terms: string|null, group: string|null, price_list: string|null, discount_percent: float|int|null, created_at: string, updated_at: string|null}>
+     * @return Collection<array{id: string, livemode: bool, object: 'customer', issuer: string, tax_id: string, legal_name: string, tax_system: string, zip: string, email: string|null, use: string|null, foreign: array<string, mixed>|null, ieps_taxpayer: bool, credit_days: int|null, quote_valid_days: int|null, payment_terms: string|null, group: string|null, price_list: string|null, discount_percent: float|int|null, metadata: array<string, mixed>, created_at: string, updated_at: string|null}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/clientes/search-customers
      */
@@ -191,6 +214,7 @@ final class Customers
      *     group: string|null,
      *     price_list: string|null,
      *     discount_percent: float|int|null,
+     *     metadata: array<string, mixed>,
      *     created_at: string,
      *     updated_at: string|null,
      * }
@@ -212,6 +236,7 @@ final class Customers
      *
      * @param string $id
      * @param array{
+     *     metadata?: array<string, mixed>|null,
      *     tax_id?: string,
      *     legal_name?: string,
      *     tax_system?: string,
@@ -247,6 +272,7 @@ final class Customers
      *     group: string|null,
      *     price_list: string|null,
      *     discount_percent: float|int|null,
+     *     metadata: array<string, mixed>,
      *     created_at: string,
      *     updated_at: string|null,
      * }

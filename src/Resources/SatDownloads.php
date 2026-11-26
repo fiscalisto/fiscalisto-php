@@ -75,7 +75,15 @@ final class SatDownloads
      *
      * GET /v1/sat_downloads
      *
-     * @param array{limit?: int, starting_after?: string, issuer?: string} $params
+     * @param array{
+     *     limit?: int,
+     *     starting_after?: string,
+     *     issuer?: string,
+     *     'created[gte]'?: string,
+     *     'created[gt]'?: string,
+     *     'created[lte]'?: string,
+     *     'created[lt]'?: string,
+     * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
      * @return Collection<array{id: string, livemode: bool, object: 'sat_download', issuer: string, direction: 'received'|'issued', from: string|null, to: string|null, type: 'I'|'E'|'P'|'T'|'N'|null, counterparty_tax_id: string|null, uuid: string|null, status: 'processing'|'completed'|'failed', new_invoices: int|null, error: string|null, error_cause: 'sat_unavailable'|'sat_refused'|'account'|'internal'|null, created_at: string|null, completed_at: string|null}>
      * @throws FiscalistoException

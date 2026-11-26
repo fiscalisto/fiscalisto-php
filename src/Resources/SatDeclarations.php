@@ -81,6 +81,10 @@ final class SatDeclarations
      *     source?: 'monthly'|'annual'|'dyp',
      *     month?: int,
      *     type?: 'normal'|'complementary',
+     *     'created[gte]'?: string,
+     *     'created[gt]'?: string,
+     *     'created[lte]'?: string,
+     *     'created[lt]'?: string,
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
      * @return Collection<array{id: string, livemode: bool, object: 'sat_declaration', issuer: string, source: 'monthly'|'annual'|'dyp', year: int, month: int|null, period: string, type: 'normal'|'complementary', complementary_type: string|null, operation_number: string, payment_line: string|null, filed_on: string|null, profit_coefficient: float|int|null, isr_due: float|int|null, vat_due: float|int|null, total_due: float|int|null, sections: list<array<string, mixed>>, receipt: array<string, mixed>|null, summary: array<string, mixed>, figures_status: 'read'|'pending'|'unavailable', figures_expected_at: string|null, payment: array<string, mixed>|null, files: array<string, mixed>, files_error: string|null, files_error_cause: 'sat_unavailable'|'sat_refused'|'account'|'internal'|null, created_at: string|null, updated_at: string|null}>

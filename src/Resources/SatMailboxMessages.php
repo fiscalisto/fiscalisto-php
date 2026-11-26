@@ -26,7 +26,16 @@ final class SatMailboxMessages
      *
      * GET /v1/sat_mailbox_messages
      *
-     * @param array{limit?: int, starting_after?: string, issuer?: string, unread?: bool} $params
+     * @param array{
+     *     limit?: int,
+     *     starting_after?: string,
+     *     issuer?: string,
+     *     unread?: bool,
+     *     'created[gte]'?: string,
+     *     'created[gt]'?: string,
+     *     'created[lte]'?: string,
+     *     'created[lt]'?: string,
+     * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
      * @return Collection<array{id: string, livemode: bool, object: 'sat_mailbox_message', issuer: string, subject: string, summary: string|null, source: 'mailbox'|'email', unread: bool, urgency: 'urgent'|'attention'|'informational', kind: string, action_required: bool, received_at: string|null, created_at: string|null}>
      * @throws FiscalistoException

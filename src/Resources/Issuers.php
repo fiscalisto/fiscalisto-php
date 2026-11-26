@@ -85,6 +85,11 @@ final class Issuers
      *     starting_after?: string,
      *     tax_id?: string,
      *     include_archived?: bool,
+     *     'created[gte]'?: string,
+     *     'created[gt]'?: string,
+     *     'created[lte]'?: string,
+     *     'created[lt]'?: string,
+     *     metadata?: array<string, mixed>,
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
      * @return Collection<array{id: string, livemode: bool, object: 'issuer', source: 'api'|'empresa', type: 'own'|'connected'|'portal', tax_id: string, legal_name: string|null, tax_system: string|null, zip: string|null, status: 'active'|'needs_certificate'|'certificate_expired'|'needs_efirma'|'archived', requirement: string|null, certificate: array<string, mixed>|null, sat_downloads: array<string, mixed>, employer_registration: string|null, curp: string|null, donation_authorization: array<string, mixed>|null, stamps_as: string, sandbox: string|null, test_clock: array<string, mixed>|null, created_at: string|null, archived_at: string|null, metadata: array<string, mixed>}>

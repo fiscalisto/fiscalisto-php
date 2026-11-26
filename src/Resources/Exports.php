@@ -77,7 +77,15 @@ final class Exports
      *
      * GET /v1/exports
      *
-     * @param array{limit?: int, starting_after?: string, issuer?: string} $params
+     * @param array{
+     *     limit?: int,
+     *     starting_after?: string,
+     *     issuer?: string,
+     *     'created[gte]'?: string,
+     *     'created[gt]'?: string,
+     *     'created[lte]'?: string,
+     *     'created[lt]'?: string,
+     * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
      * @return Collection<array{id: string, object: 'export', livemode: bool, issuer: string, format: 'zip'|'xlsx', files: 'xml'|'pdf'|'xml_and_pdf'|null, direction: 'issued'|'received', from: string|null, to: string|null, type: 'I'|'E'|'P'|'T'|'N'|null, status: 'processing'|'completed'|'failed'|'expired', invoice_count: float|int, size_bytes: float|int|null, error: string|null, created_at: string|null, completed_at: string|null, expires_at: string|null}>
      * @throws FiscalistoException

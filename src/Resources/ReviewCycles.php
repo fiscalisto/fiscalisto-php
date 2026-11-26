@@ -27,7 +27,15 @@ final class ReviewCycles
      *
      * GET /v1/review_cycles
      *
-     * @param array{limit?: int, starting_after?: string, issuer?: string} $params
+     * @param array{
+     *     limit?: int,
+     *     starting_after?: string,
+     *     issuer?: string,
+     *     'created[gte]'?: string,
+     *     'created[gt]'?: string,
+     *     'created[lte]'?: string,
+     *     'created[lt]'?: string,
+     * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
      * @return Collection<array{id: string, object: 'review_cycle', livemode: bool, issuer: string, title: string, status: string, period_start: string|null, period_end: string|null, closes_on: string|null, people: int, evaluations: int, evaluations_done: int, created_at: string, branch?: string|null, department?: string|null, rules?: array<string, mixed>, competencies?: list<array<string, mixed>>, peers_count?: int, share_results?: bool, opened_at?: string|null, closed_at?: string|null, participants?: list<array<string, mixed>>}>
      * @throws FiscalistoException

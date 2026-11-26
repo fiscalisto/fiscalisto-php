@@ -29,12 +29,18 @@ final class CostCenters
      *
      * POST /v1/cost_centers
      *
-     * @param array{issuer?: string, name: string, code?: string|null} $params
+     * @param array{
+     *     issuer?: string,
+     *     name: string,
+     *     code?: string|null,
+     *     metadata?: array<string, mixed>,
+     * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     id: string,
      *     livemode: bool,
      *     object: 'cost_center',
+     *     metadata: array<string, mixed>,
      *     issuer: string,
      *     name: string,
      *     code: string|null,
@@ -65,9 +71,14 @@ final class CostCenters
      *     starting_after?: string,
      *     issuer?: string,
      *     include_archived?: bool,
+     *     'created[gte]'?: string,
+     *     'created[gt]'?: string,
+     *     'created[lte]'?: string,
+     *     'created[lt]'?: string,
+     *     metadata?: array<string, mixed>,
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'cost_center', issuer: string, name: string, code: string|null, archived: bool, invoices: int, created_at: string|null, updated_at: string|null}>
+     * @return Collection<array{id: string, livemode: bool, object: 'cost_center', metadata: array<string, mixed>, issuer: string, name: string, code: string|null, archived: bool, invoices: int, created_at: string|null, updated_at: string|null}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/centros-de-costo/list-cost-centers
      */
@@ -90,6 +101,7 @@ final class CostCenters
      *     id: string,
      *     livemode: bool,
      *     object: 'cost_center',
+     *     metadata: array<string, mixed>,
      *     issuer: string,
      *     name: string,
      *     code: string|null,
@@ -116,12 +128,18 @@ final class CostCenters
      * POST /v1/cost_centers/{id}
      *
      * @param string $id
-     * @param array{name?: string, code?: string|null, archived?: bool} $params
+     * @param array{
+     *     name?: string,
+     *     code?: string|null,
+     *     archived?: bool,
+     *     metadata?: array<string, mixed>|null,
+     * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     id: string,
      *     livemode: bool,
      *     object: 'cost_center',
+     *     metadata: array<string, mixed>,
      *     issuer: string,
      *     name: string,
      *     code: string|null,

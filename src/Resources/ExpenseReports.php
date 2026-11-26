@@ -38,6 +38,7 @@ final class ExpenseReports
      *     far?: bool,
      *     start_date?: string|null,
      *     end_date?: string|null,
+     *     metadata?: array<string, mixed>,
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
@@ -78,6 +79,7 @@ final class ExpenseReports
      *     payroll: array{exempt: float|int, taxed: float|int, adjustment: float|int, net: float|int}|null,
      *     items: list<array{id: string, object: 'expense_item', date: string, category: 'hospedaje'|'alimentos'|'avion'|'transporte'|'auto'|'combustible'|'comidas'|'papeleria'|'mensajeria'|'software'|'otros', description: string|null, amount: float|int, foreign_amount: float|int|null, foreign_currency: string|null, people: int, payment: 'tarjeta_empresa'|'tarjeta_propia'|'efectivo'|'transferencia'|'otro'|null, receipt: 'cfdi'|'extranjero'|'ticket'|'ninguno', uuid: string|null, note: string|null, rejected: bool, reject_reason: string|null, deductible: float|int, non_deductible: float|int, over_policy: bool, issues: list<array<string, mixed>>, created_at: string|null}>,
      *     movements: list<array{id: string, object: 'expense_movement', kind: 'anticipo'|'reembolso'|'devolucion', amount: float|int, date: string, method: 'transferencia'|'efectivo'|'tarjeta'|'nomina', reference: string|null, in_payroll: bool, created_at: string|null}>,
+     *     metadata: array<string, mixed>,
      *     created_at: string|null,
      *     updated_at: string|null,
      * }
@@ -103,9 +105,14 @@ final class ExpenseReports
      *     issuer?: string,
      *     status?: string,
      *     person?: string,
+     *     'created[gte]'?: string,
+     *     'created[gt]'?: string,
+     *     'created[lte]'?: string,
+     *     'created[lt]'?: string,
+     *     metadata?: array<string, mixed>,
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'expense_report', issuer: string, number: int, label: string, person: string, person_name: string, kind: 'viaje'|'gastos', title: string, purpose: string|null, destination: string|null, abroad: bool, far: bool, start_date: string|null, end_date: string|null, status: 'draft'|'submitted'|'rejected'|'approved'|'closed', due_date: string|null, submitted_at: string|null, decided_at: string|null, decision_note: string|null, closed_at: string|null, in_payroll: bool, spent: float|int, rejected: float|int, proven: float|int, deductible: float|int, non_deductible: float|int, advances: float|int, reimbursed: float|int, returned: float|int, balance: float|int, ready: bool, issues: list<array<string, mixed>>, payroll: array<string, mixed>|null, items: list<array<string, mixed>>, movements: list<array<string, mixed>>, created_at: string|null, updated_at: string|null}>
+     * @return Collection<array{id: string, livemode: bool, object: 'expense_report', issuer: string, number: int, label: string, person: string, person_name: string, kind: 'viaje'|'gastos', title: string, purpose: string|null, destination: string|null, abroad: bool, far: bool, start_date: string|null, end_date: string|null, status: 'draft'|'submitted'|'rejected'|'approved'|'closed', due_date: string|null, submitted_at: string|null, decided_at: string|null, decision_note: string|null, closed_at: string|null, in_payroll: bool, spent: float|int, rejected: float|int, proven: float|int, deductible: float|int, non_deductible: float|int, advances: float|int, reimbursed: float|int, returned: float|int, balance: float|int, ready: bool, issues: list<array<string, mixed>>, payroll: array<string, mixed>|null, items: list<array<string, mixed>>, movements: list<array<string, mixed>>, metadata: array<string, mixed>, created_at: string|null, updated_at: string|null}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/viaticos-y-gastos/list-expense-reports
      */
@@ -163,6 +170,7 @@ final class ExpenseReports
      *     payroll: array{exempt: float|int, taxed: float|int, adjustment: float|int, net: float|int}|null,
      *     items: list<array{id: string, object: 'expense_item', date: string, category: 'hospedaje'|'alimentos'|'avion'|'transporte'|'auto'|'combustible'|'comidas'|'papeleria'|'mensajeria'|'software'|'otros', description: string|null, amount: float|int, foreign_amount: float|int|null, foreign_currency: string|null, people: int, payment: 'tarjeta_empresa'|'tarjeta_propia'|'efectivo'|'transferencia'|'otro'|null, receipt: 'cfdi'|'extranjero'|'ticket'|'ninguno', uuid: string|null, note: string|null, rejected: bool, reject_reason: string|null, deductible: float|int, non_deductible: float|int, over_policy: bool, issues: list<array<string, mixed>>, created_at: string|null}>,
      *     movements: list<array{id: string, object: 'expense_movement', kind: 'anticipo'|'reembolso'|'devolucion', amount: float|int, date: string, method: 'transferencia'|'efectivo'|'tarjeta'|'nomina', reference: string|null, in_payroll: bool, created_at: string|null}>,
+     *     metadata: array<string, mixed>,
      *     created_at: string|null,
      *     updated_at: string|null,
      * }
@@ -192,6 +200,7 @@ final class ExpenseReports
      *     far?: bool,
      *     start_date?: string|null,
      *     end_date?: string|null,
+     *     metadata?: array<string, mixed>|null,
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
@@ -232,6 +241,7 @@ final class ExpenseReports
      *     payroll: array{exempt: float|int, taxed: float|int, adjustment: float|int, net: float|int}|null,
      *     items: list<array{id: string, object: 'expense_item', date: string, category: 'hospedaje'|'alimentos'|'avion'|'transporte'|'auto'|'combustible'|'comidas'|'papeleria'|'mensajeria'|'software'|'otros', description: string|null, amount: float|int, foreign_amount: float|int|null, foreign_currency: string|null, people: int, payment: 'tarjeta_empresa'|'tarjeta_propia'|'efectivo'|'transferencia'|'otro'|null, receipt: 'cfdi'|'extranjero'|'ticket'|'ninguno', uuid: string|null, note: string|null, rejected: bool, reject_reason: string|null, deductible: float|int, non_deductible: float|int, over_policy: bool, issues: list<array<string, mixed>>, created_at: string|null}>,
      *     movements: list<array{id: string, object: 'expense_movement', kind: 'anticipo'|'reembolso'|'devolucion', amount: float|int, date: string, method: 'transferencia'|'efectivo'|'tarjeta'|'nomina', reference: string|null, in_payroll: bool, created_at: string|null}>,
+     *     metadata: array<string, mixed>,
      *     created_at: string|null,
      *     updated_at: string|null,
      * }
@@ -312,6 +322,7 @@ final class ExpenseReports
      *     payroll: array{exempt: float|int, taxed: float|int, adjustment: float|int, net: float|int}|null,
      *     items: list<array{id: string, object: 'expense_item', date: string, category: 'hospedaje'|'alimentos'|'avion'|'transporte'|'auto'|'combustible'|'comidas'|'papeleria'|'mensajeria'|'software'|'otros', description: string|null, amount: float|int, foreign_amount: float|int|null, foreign_currency: string|null, people: int, payment: 'tarjeta_empresa'|'tarjeta_propia'|'efectivo'|'transferencia'|'otro'|null, receipt: 'cfdi'|'extranjero'|'ticket'|'ninguno', uuid: string|null, note: string|null, rejected: bool, reject_reason: string|null, deductible: float|int, non_deductible: float|int, over_policy: bool, issues: list<array<string, mixed>>, created_at: string|null}>,
      *     movements: list<array{id: string, object: 'expense_movement', kind: 'anticipo'|'reembolso'|'devolucion', amount: float|int, date: string, method: 'transferencia'|'efectivo'|'tarjeta'|'nomina', reference: string|null, in_payroll: bool, created_at: string|null}>,
+     *     metadata: array<string, mixed>,
      *     created_at: string|null,
      *     updated_at: string|null,
      * }
@@ -374,6 +385,7 @@ final class ExpenseReports
      *     payroll: array{exempt: float|int, taxed: float|int, adjustment: float|int, net: float|int}|null,
      *     items: list<array{id: string, object: 'expense_item', date: string, category: 'hospedaje'|'alimentos'|'avion'|'transporte'|'auto'|'combustible'|'comidas'|'papeleria'|'mensajeria'|'software'|'otros', description: string|null, amount: float|int, foreign_amount: float|int|null, foreign_currency: string|null, people: int, payment: 'tarjeta_empresa'|'tarjeta_propia'|'efectivo'|'transferencia'|'otro'|null, receipt: 'cfdi'|'extranjero'|'ticket'|'ninguno', uuid: string|null, note: string|null, rejected: bool, reject_reason: string|null, deductible: float|int, non_deductible: float|int, over_policy: bool, issues: list<array<string, mixed>>, created_at: string|null}>,
      *     movements: list<array{id: string, object: 'expense_movement', kind: 'anticipo'|'reembolso'|'devolucion', amount: float|int, date: string, method: 'transferencia'|'efectivo'|'tarjeta'|'nomina', reference: string|null, in_payroll: bool, created_at: string|null}>,
+     *     metadata: array<string, mixed>,
      *     created_at: string|null,
      *     updated_at: string|null,
      * }
@@ -435,6 +447,7 @@ final class ExpenseReports
      *     payroll: array{exempt: float|int, taxed: float|int, adjustment: float|int, net: float|int}|null,
      *     items: list<array{id: string, object: 'expense_item', date: string, category: 'hospedaje'|'alimentos'|'avion'|'transporte'|'auto'|'combustible'|'comidas'|'papeleria'|'mensajeria'|'software'|'otros', description: string|null, amount: float|int, foreign_amount: float|int|null, foreign_currency: string|null, people: int, payment: 'tarjeta_empresa'|'tarjeta_propia'|'efectivo'|'transferencia'|'otro'|null, receipt: 'cfdi'|'extranjero'|'ticket'|'ninguno', uuid: string|null, note: string|null, rejected: bool, reject_reason: string|null, deductible: float|int, non_deductible: float|int, over_policy: bool, issues: list<array<string, mixed>>, created_at: string|null}>,
      *     movements: list<array{id: string, object: 'expense_movement', kind: 'anticipo'|'reembolso'|'devolucion', amount: float|int, date: string, method: 'transferencia'|'efectivo'|'tarjeta'|'nomina', reference: string|null, in_payroll: bool, created_at: string|null}>,
+     *     metadata: array<string, mixed>,
      *     created_at: string|null,
      *     updated_at: string|null,
      * }
@@ -495,6 +508,7 @@ final class ExpenseReports
      *     payroll: array{exempt: float|int, taxed: float|int, adjustment: float|int, net: float|int}|null,
      *     items: list<array{id: string, object: 'expense_item', date: string, category: 'hospedaje'|'alimentos'|'avion'|'transporte'|'auto'|'combustible'|'comidas'|'papeleria'|'mensajeria'|'software'|'otros', description: string|null, amount: float|int, foreign_amount: float|int|null, foreign_currency: string|null, people: int, payment: 'tarjeta_empresa'|'tarjeta_propia'|'efectivo'|'transferencia'|'otro'|null, receipt: 'cfdi'|'extranjero'|'ticket'|'ninguno', uuid: string|null, note: string|null, rejected: bool, reject_reason: string|null, deductible: float|int, non_deductible: float|int, over_policy: bool, issues: list<array<string, mixed>>, created_at: string|null}>,
      *     movements: list<array{id: string, object: 'expense_movement', kind: 'anticipo'|'reembolso'|'devolucion', amount: float|int, date: string, method: 'transferencia'|'efectivo'|'tarjeta'|'nomina', reference: string|null, in_payroll: bool, created_at: string|null}>,
+     *     metadata: array<string, mixed>,
      *     created_at: string|null,
      *     updated_at: string|null,
      * }
@@ -569,6 +583,7 @@ final class ExpenseReports
      *     payroll: array{exempt: float|int, taxed: float|int, adjustment: float|int, net: float|int}|null,
      *     items: list<array{id: string, object: 'expense_item', date: string, category: 'hospedaje'|'alimentos'|'avion'|'transporte'|'auto'|'combustible'|'comidas'|'papeleria'|'mensajeria'|'software'|'otros', description: string|null, amount: float|int, foreign_amount: float|int|null, foreign_currency: string|null, people: int, payment: 'tarjeta_empresa'|'tarjeta_propia'|'efectivo'|'transferencia'|'otro'|null, receipt: 'cfdi'|'extranjero'|'ticket'|'ninguno', uuid: string|null, note: string|null, rejected: bool, reject_reason: string|null, deductible: float|int, non_deductible: float|int, over_policy: bool, issues: list<array<string, mixed>>, created_at: string|null}>,
      *     movements: list<array{id: string, object: 'expense_movement', kind: 'anticipo'|'reembolso'|'devolucion', amount: float|int, date: string, method: 'transferencia'|'efectivo'|'tarjeta'|'nomina', reference: string|null, in_payroll: bool, created_at: string|null}>,
+     *     metadata: array<string, mixed>,
      *     created_at: string|null,
      *     updated_at: string|null,
      * }
@@ -644,6 +659,7 @@ final class ExpenseReports
      *     payroll: array{exempt: float|int, taxed: float|int, adjustment: float|int, net: float|int}|null,
      *     items: list<array{id: string, object: 'expense_item', date: string, category: 'hospedaje'|'alimentos'|'avion'|'transporte'|'auto'|'combustible'|'comidas'|'papeleria'|'mensajeria'|'software'|'otros', description: string|null, amount: float|int, foreign_amount: float|int|null, foreign_currency: string|null, people: int, payment: 'tarjeta_empresa'|'tarjeta_propia'|'efectivo'|'transferencia'|'otro'|null, receipt: 'cfdi'|'extranjero'|'ticket'|'ninguno', uuid: string|null, note: string|null, rejected: bool, reject_reason: string|null, deductible: float|int, non_deductible: float|int, over_policy: bool, issues: list<array<string, mixed>>, created_at: string|null}>,
      *     movements: list<array{id: string, object: 'expense_movement', kind: 'anticipo'|'reembolso'|'devolucion', amount: float|int, date: string, method: 'transferencia'|'efectivo'|'tarjeta'|'nomina', reference: string|null, in_payroll: bool, created_at: string|null}>,
+     *     metadata: array<string, mixed>,
      *     created_at: string|null,
      *     updated_at: string|null,
      * }
@@ -704,6 +720,7 @@ final class ExpenseReports
      *     payroll: array{exempt: float|int, taxed: float|int, adjustment: float|int, net: float|int}|null,
      *     items: list<array{id: string, object: 'expense_item', date: string, category: 'hospedaje'|'alimentos'|'avion'|'transporte'|'auto'|'combustible'|'comidas'|'papeleria'|'mensajeria'|'software'|'otros', description: string|null, amount: float|int, foreign_amount: float|int|null, foreign_currency: string|null, people: int, payment: 'tarjeta_empresa'|'tarjeta_propia'|'efectivo'|'transferencia'|'otro'|null, receipt: 'cfdi'|'extranjero'|'ticket'|'ninguno', uuid: string|null, note: string|null, rejected: bool, reject_reason: string|null, deductible: float|int, non_deductible: float|int, over_policy: bool, issues: list<array<string, mixed>>, created_at: string|null}>,
      *     movements: list<array{id: string, object: 'expense_movement', kind: 'anticipo'|'reembolso'|'devolucion', amount: float|int, date: string, method: 'transferencia'|'efectivo'|'tarjeta'|'nomina', reference: string|null, in_payroll: bool, created_at: string|null}>,
+     *     metadata: array<string, mixed>,
      *     created_at: string|null,
      *     updated_at: string|null,
      * }
@@ -772,6 +789,7 @@ final class ExpenseReports
      *     payroll: array{exempt: float|int, taxed: float|int, adjustment: float|int, net: float|int}|null,
      *     items: list<array{id: string, object: 'expense_item', date: string, category: 'hospedaje'|'alimentos'|'avion'|'transporte'|'auto'|'combustible'|'comidas'|'papeleria'|'mensajeria'|'software'|'otros', description: string|null, amount: float|int, foreign_amount: float|int|null, foreign_currency: string|null, people: int, payment: 'tarjeta_empresa'|'tarjeta_propia'|'efectivo'|'transferencia'|'otro'|null, receipt: 'cfdi'|'extranjero'|'ticket'|'ninguno', uuid: string|null, note: string|null, rejected: bool, reject_reason: string|null, deductible: float|int, non_deductible: float|int, over_policy: bool, issues: list<array<string, mixed>>, created_at: string|null}>,
      *     movements: list<array{id: string, object: 'expense_movement', kind: 'anticipo'|'reembolso'|'devolucion', amount: float|int, date: string, method: 'transferencia'|'efectivo'|'tarjeta'|'nomina', reference: string|null, in_payroll: bool, created_at: string|null}>,
+     *     metadata: array<string, mixed>,
      *     created_at: string|null,
      *     updated_at: string|null,
      * }
@@ -832,6 +850,7 @@ final class ExpenseReports
      *     payroll: array{exempt: float|int, taxed: float|int, adjustment: float|int, net: float|int}|null,
      *     items: list<array{id: string, object: 'expense_item', date: string, category: 'hospedaje'|'alimentos'|'avion'|'transporte'|'auto'|'combustible'|'comidas'|'papeleria'|'mensajeria'|'software'|'otros', description: string|null, amount: float|int, foreign_amount: float|int|null, foreign_currency: string|null, people: int, payment: 'tarjeta_empresa'|'tarjeta_propia'|'efectivo'|'transferencia'|'otro'|null, receipt: 'cfdi'|'extranjero'|'ticket'|'ninguno', uuid: string|null, note: string|null, rejected: bool, reject_reason: string|null, deductible: float|int, non_deductible: float|int, over_policy: bool, issues: list<array<string, mixed>>, created_at: string|null}>,
      *     movements: list<array{id: string, object: 'expense_movement', kind: 'anticipo'|'reembolso'|'devolucion', amount: float|int, date: string, method: 'transferencia'|'efectivo'|'tarjeta'|'nomina', reference: string|null, in_payroll: bool, created_at: string|null}>,
+     *     metadata: array<string, mixed>,
      *     created_at: string|null,
      *     updated_at: string|null,
      * }

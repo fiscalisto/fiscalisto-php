@@ -37,8 +37,10 @@ final class Quotes
      *     exchange_rate?: float|int,
      *     payment_form?: string,
      *     payment_method?: 'PUE'|'PPD',
+     *     paid_later?: bool,
      *     use?: string,
      *     notes?: string,
+     *     metadata?: array<string, mixed>,
      *     valid_until?: string,
      *     terms?: string,
      *     auto_invoice?: bool,
@@ -69,6 +71,7 @@ final class Quotes
      *     decided_at: string|null,
      *     decided_by: 'customer'|'user'|null,
      *     invoice: string|null,
+     *     metadata: array<string, mixed>,
      *     created_at: string|null,
      * }
      * @throws FiscalistoException
@@ -92,9 +95,14 @@ final class Quotes
      *     starting_after?: string,
      *     issuer?: string,
      *     status?: 'draft'|'sent'|'viewed'|'accepted'|'rejected'|'withdrawn'|'expired'|'invoiced',
+     *     'created[gte]'?: string,
+     *     'created[gt]'?: string,
+     *     'created[lte]'?: string,
+     *     'created[lt]'?: string,
+     *     metadata?: array<string, mixed>,
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'quote', issuer: string, number: string, version: int, status: 'draft'|'sent'|'viewed'|'accepted'|'rejected'|'withdrawn'|'expired'|'invoiced', url: string|null, customer: array<string, mixed>, currency: string, items: list<array<string, mixed>>, total: float|int|null, valid_until: string, terms: string|null, notes: string|null, auto_invoice: bool, remind: bool, reminded_at: string|null, customer_comment: string|null, sent_at: string|null, viewed_at: string|null, decided_at: string|null, decided_by: 'customer'|'user'|null, invoice: string|null, created_at: string|null}>
+     * @return Collection<array{id: string, livemode: bool, object: 'quote', issuer: string, number: string, version: int, status: 'draft'|'sent'|'viewed'|'accepted'|'rejected'|'withdrawn'|'expired'|'invoiced', url: string|null, customer: array<string, mixed>, currency: string, items: list<array<string, mixed>>, total: float|int|null, valid_until: string, terms: string|null, notes: string|null, auto_invoice: bool, remind: bool, reminded_at: string|null, customer_comment: string|null, sent_at: string|null, viewed_at: string|null, decided_at: string|null, decided_by: 'customer'|'user'|null, invoice: string|null, metadata: array<string, mixed>, created_at: string|null}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/cotizaciones/list-quotes
      */
@@ -138,6 +146,7 @@ final class Quotes
      *     decided_at: string|null,
      *     decided_by: 'customer'|'user'|null,
      *     invoice: string|null,
+     *     metadata: array<string, mixed>,
      *     created_at: string|null,
      * }
      * @throws FiscalistoException
@@ -167,10 +176,12 @@ final class Quotes
      *     exchange_rate?: float|int,
      *     payment_form?: string,
      *     payment_method?: 'PUE'|'PPD',
+     *     paid_later?: bool,
      *     use?: string,
      *     notes?: string,
      *     valid_until?: string,
      *     terms?: string,
+     *     metadata?: array<string, mixed>|null,
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
@@ -198,6 +209,7 @@ final class Quotes
      *     decided_at: string|null,
      *     decided_by: 'customer'|'user'|null,
      *     invoice: string|null,
+     *     metadata: array<string, mixed>,
      *     created_at: string|null,
      * }
      * @throws FiscalistoException
@@ -273,6 +285,7 @@ final class Quotes
      *     decided_at: string|null,
      *     decided_by: 'customer'|'user'|null,
      *     invoice: string|null,
+     *     metadata: array<string, mixed>,
      *     created_at: string|null,
      * }
      * @throws FiscalistoException
@@ -319,6 +332,7 @@ final class Quotes
      *     decided_at: string|null,
      *     decided_by: 'customer'|'user'|null,
      *     invoice: string|null,
+     *     metadata: array<string, mixed>,
      *     created_at: string|null,
      * }
      * @throws FiscalistoException
@@ -368,6 +382,7 @@ final class Quotes
      *     decided_at: string|null,
      *     decided_by: 'customer'|'user'|null,
      *     invoice: string|null,
+     *     metadata: array<string, mixed>,
      *     created_at: string|null,
      * }
      * @throws FiscalistoException
@@ -416,6 +431,7 @@ final class Quotes
      *     decided_at: string|null,
      *     decided_by: 'customer'|'user'|null,
      *     invoice: string|null,
+     *     metadata: array<string, mixed>,
      *     created_at: string|null,
      * }
      * @throws FiscalistoException
@@ -447,7 +463,7 @@ final class Quotes
      *     branch: string|null,
      *     cost_center: string|null,
      *     type: 'I'|'E'|'P'|'T'|'N',
-     *     status: 'processing'|'pending'|'valid'|'rejected'|'canceled',
+     *     status: 'draft'|'processing'|'pending'|'valid'|'rejected'|'canceled',
      *     uuid: string|null,
      *     series: string|null,
      *     folio: string|null,
@@ -482,6 +498,7 @@ final class Quotes
      *     origin: array{type: 'app'|'api'|'assistant'|'point_of_sale'|'autofactura'|'invoice_link'|'quote'|'recurring_invoice'|'global_invoice', name: string|null}|null,
      *     created_at: string|null,
      *     metadata: array<string, mixed>,
+     *     draft?: array{updated_at: string|null, awaiting_approval: bool, stamping: bool, scheduled_at: string|null, send_email: bool, email_cc: string|null},
      *     warnings?: list<string>,
      *     email_error?: string,
      *     substitutes?: array{invoice: string, canceled: bool, cancel_error?: string, cancellation: array<string, mixed>|null},

@@ -31,10 +31,14 @@ final class SatFindings
      * @param array{
      *     issuer?: string,
      *     direction?: 'issued'|'received',
-     *     date_gte?: string,
-     *     date_lte?: string,
+     *     'date[gte]'?: string,
+     *     'date[gt]'?: string,
+     *     'date[lte]'?: string,
+     *     'date[lt]'?: string,
      *     severity?: 'critical'|'warning'|'info',
      *     counterparty?: string,
+     *     date_gte?: string,
+     *     date_lte?: string,
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
      * @return array{

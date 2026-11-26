@@ -33,12 +33,14 @@ final class SupplierGroups
      *     name: string,
      *     color?: 'info'|'warning'|'positive'|'critical'|'muted',
      *     suppliers?: list<string>,
+     *     metadata?: array<string, mixed>,
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     id: string,
      *     livemode: bool,
      *     object: 'supplier_group',
+     *     metadata: array<string, mixed>,
      *     issuer: string,
      *     name: string,
      *     color: string,
@@ -61,9 +63,18 @@ final class SupplierGroups
      *
      * GET /v1/supplier_groups
      *
-     * @param array{limit?: int, starting_after?: string, issuer?: string} $params
+     * @param array{
+     *     limit?: int,
+     *     starting_after?: string,
+     *     issuer?: string,
+     *     'created[gte]'?: string,
+     *     'created[gt]'?: string,
+     *     'created[lte]'?: string,
+     *     'created[lt]'?: string,
+     *     metadata?: array<string, mixed>,
+     * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'supplier_group', issuer: string, name: string, color: string, suppliers: int, created_at: string|null}>
+     * @return Collection<array{id: string, livemode: bool, object: 'supplier_group', metadata: array<string, mixed>, issuer: string, name: string, color: string, suppliers: int, created_at: string|null}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/reglas/list-supplier-groups
      */
@@ -86,6 +97,7 @@ final class SupplierGroups
      *     id: string,
      *     livemode: bool,
      *     object: 'supplier_group',
+     *     metadata: array<string, mixed>,
      *     issuer: string,
      *     name: string,
      *     color: string,
@@ -115,12 +127,14 @@ final class SupplierGroups
      *     color?: 'info'|'warning'|'positive'|'critical'|'muted',
      *     add_suppliers?: list<string>,
      *     remove_suppliers?: list<string>,
+     *     metadata?: array<string, mixed>|null,
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     id: string,
      *     livemode: bool,
      *     object: 'supplier_group',
+     *     metadata: array<string, mixed>,
      *     issuer: string,
      *     name: string,
      *     color: string,

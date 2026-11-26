@@ -31,9 +31,13 @@ final class MaterialitySuppliers
      *
      * @param array{
      *     issuer?: string,
+     *     'date[gte]'?: string,
+     *     'date[gt]'?: string,
+     *     'date[lte]'?: string,
+     *     'date[lt]'?: string,
+     *     supplier_tax_id?: string,
      *     date_gte?: string,
      *     date_lte?: string,
-     *     supplier_tax_id?: string,
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
      * @return array{

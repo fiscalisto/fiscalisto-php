@@ -27,7 +27,14 @@ final class Warehouses
      *
      * GET /v1/warehouses
      *
-     * @param array{issuer?: string, include_archived?: bool} $params
+     * @param array{
+     *     issuer?: string,
+     *     include_archived?: bool,
+     *     'created[gte]'?: string,
+     *     'created[gt]'?: string,
+     *     'created[lte]'?: string,
+     *     'created[lt]'?: string,
+     * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     object: 'list',

@@ -37,6 +37,7 @@ final class ExpensePeople
      *     email?: string|null,
      *     base_city?: string|null,
      *     department?: string|null,
+     *     metadata?: array<string, mixed>,
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
@@ -53,6 +54,7 @@ final class ExpensePeople
      *     department: string|null,
      *     link_active: bool,
      *     archived: bool,
+     *     metadata: array<string, mixed>,
      *     created_at: string|null,
      * }
      * @throws FiscalistoException
@@ -77,9 +79,14 @@ final class ExpensePeople
      *     starting_after?: string,
      *     issuer?: string,
      *     include_archived?: bool,
+     *     'created[gte]'?: string,
+     *     'created[gt]'?: string,
+     *     'created[lte]'?: string,
+     *     'created[lt]'?: string,
+     *     metadata?: array<string, mixed>,
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'expense_person', issuer: string, kind: 'empleado'|'honorarios', employee: string|null, name: string, tax_id: string|null, email: string|null, base_city: string|null, department: string|null, link_active: bool, archived: bool, created_at: string|null}>
+     * @return Collection<array{id: string, livemode: bool, object: 'expense_person', issuer: string, kind: 'empleado'|'honorarios', employee: string|null, name: string, tax_id: string|null, email: string|null, base_city: string|null, department: string|null, link_active: bool, archived: bool, metadata: array<string, mixed>, created_at: string|null}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/viaticos-y-gastos/list-expense-people
      */
@@ -112,6 +119,7 @@ final class ExpensePeople
      *     department: string|null,
      *     link_active: bool,
      *     archived: bool,
+     *     metadata: array<string, mixed>,
      *     created_at: string|null,
      * }
      * @throws FiscalistoException
@@ -141,6 +149,7 @@ final class ExpensePeople
      *     base_city?: string|null,
      *     department?: string|null,
      *     archived?: bool,
+     *     metadata?: array<string, mixed>|null,
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
@@ -157,6 +166,7 @@ final class ExpensePeople
      *     department: string|null,
      *     link_active: bool,
      *     archived: bool,
+     *     metadata: array<string, mixed>,
      *     created_at: string|null,
      * }
      * @throws FiscalistoException

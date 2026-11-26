@@ -36,10 +36,12 @@ final class SalesOrders
      *     customer?: string|array{tax_id: string, legal_name: string, tax_system: string, zip: string, email?: string|null, foreign?: array{country: string, tax_id: string}, ieps_taxpayer?: bool},
      *     items?: list<array{product?: string, description?: string, product_key?: string, unit_key?: string, unit_name?: string|null, sku?: string|null, quantity?: float|int, unit_price?: float|int, discount?: float|int, taxability?: '01'|'02'|'03'|'04'|'05'|'06'|'07'|'08', iva?: '0'|'0.16'|'0.08'|'exento', ieps?: float|int, ieps_factor?: 'Tasa'|'Cuota', ieps_units?: float|int, iva_retention?: float|int, isr_retention?: float|int, predial?: list<string>, pedimentos?: list<string>, third_party?: array{tax_id: string, name: string, tax_system: string, zip: string}, iedu?: array{student_name: string, curp: string, level: 'Preescolar'|'Primaria'|'Secundaria'|'Profesional técnico'|'Bachillerato o su equivalente', rvoe: string, payer_tax_id?: string|null}, used_vehicle?: array{purchase_amount: float|int, sale_amount: float|int, vehicle_key: string, make: string, type: string, model: string, engine_number?: string, serial_number?: string, niv?: string, guide_value: float|int, customs?: list<array<string, mixed>>}, hydrocarbon?: array{permit_type: string, permit_number: string, subproduct: string}, addenda?: array<string, mixed>}>,
      *     confirm?: bool,
+     *     metadata?: array<string, mixed>,
      *     currency?: string,
      *     exchange_rate?: float|int,
      *     payment_form?: string,
      *     payment_method?: 'PUE'|'PPD',
+     *     paid_later?: bool,
      *     use?: string,
      *     notes?: string,
      *     customer_po?: string,
@@ -89,6 +91,7 @@ final class SalesOrders
      *     closed_at: string|null,
      *     canceled_at: string|null,
      *     cancel_reason: string|null,
+     *     metadata: array<string, mixed>,
      *     created_at: string|null,
      * }
      * @throws FiscalistoException
@@ -113,9 +116,14 @@ final class SalesOrders
      *     issuer?: string,
      *     status?: 'draft'|'confirmed'|'partially_delivered'|'delivered'|'invoiced'|'paid'|'closed'|'canceled',
      *     customer?: string,
+     *     'created[gte]'?: string,
+     *     'created[gt]'?: string,
+     *     'created[lte]'?: string,
+     *     'created[lt]'?: string,
+     *     metadata?: array<string, mixed>,
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'sales_order', issuer: string, number: string, status: 'draft'|'confirmed'|'partially_delivered'|'delivered'|'invoiced'|'paid'|'closed'|'canceled', stage: string|null, url: string|null, customer: array<string, mixed>, customer_po: string|null, quote: string|null, currency: string, items: list<array<string, mixed>>, subtotal: float|int, total: float|int, invoiced_total: float|int, paid_total: float|int, expected_on: string|null, payment_days: int, invoice_policy: 'delivered'|'ordered', ship_to: string|null, terms: string|null, notes: string|null, internal_note: string|null, deliveries: list<array<string, mixed>>, invoices: list<array<string, mixed>>, customer_confirmed_at: string|null, sent_at: string|null, viewed_at: string|null, confirmed_at: string|null, delivered_at: string|null, invoiced_at: string|null, paid_at: string|null, closed_at: string|null, canceled_at: string|null, cancel_reason: string|null, created_at: string|null}>
+     * @return Collection<array{id: string, livemode: bool, object: 'sales_order', issuer: string, number: string, status: 'draft'|'confirmed'|'partially_delivered'|'delivered'|'invoiced'|'paid'|'closed'|'canceled', stage: string|null, url: string|null, customer: array<string, mixed>, customer_po: string|null, quote: string|null, currency: string, items: list<array<string, mixed>>, subtotal: float|int, total: float|int, invoiced_total: float|int, paid_total: float|int, expected_on: string|null, payment_days: int, invoice_policy: 'delivered'|'ordered', ship_to: string|null, terms: string|null, notes: string|null, internal_note: string|null, deliveries: list<array<string, mixed>>, invoices: list<array<string, mixed>>, customer_confirmed_at: string|null, sent_at: string|null, viewed_at: string|null, confirmed_at: string|null, delivered_at: string|null, invoiced_at: string|null, paid_at: string|null, closed_at: string|null, canceled_at: string|null, cancel_reason: string|null, metadata: array<string, mixed>, created_at: string|null}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/pedidos/list-sales-orders
      */
@@ -171,6 +179,7 @@ final class SalesOrders
      *     closed_at: string|null,
      *     canceled_at: string|null,
      *     cancel_reason: string|null,
+     *     metadata: array<string, mixed>,
      *     created_at: string|null,
      * }
      * @throws FiscalistoException
@@ -194,10 +203,12 @@ final class SalesOrders
      * @param array{
      *     customer?: string|array{tax_id: string, legal_name: string, tax_system: string, zip: string, email?: string|null, foreign?: array{country: string, tax_id: string}, ieps_taxpayer?: bool},
      *     items?: list<array{product?: string, description?: string, product_key?: string, unit_key?: string, unit_name?: string|null, sku?: string|null, quantity?: float|int, unit_price?: float|int, discount?: float|int, taxability?: '01'|'02'|'03'|'04'|'05'|'06'|'07'|'08', iva?: '0'|'0.16'|'0.08'|'exento', ieps?: float|int, ieps_factor?: 'Tasa'|'Cuota', ieps_units?: float|int, iva_retention?: float|int, isr_retention?: float|int, predial?: list<string>, pedimentos?: list<string>, third_party?: array{tax_id: string, name: string, tax_system: string, zip: string}, iedu?: array{student_name: string, curp: string, level: 'Preescolar'|'Primaria'|'Secundaria'|'Profesional técnico'|'Bachillerato o su equivalente', rvoe: string, payer_tax_id?: string|null}, used_vehicle?: array{purchase_amount: float|int, sale_amount: float|int, vehicle_key: string, make: string, type: string, model: string, engine_number?: string, serial_number?: string, niv?: string, guide_value: float|int, customs?: list<array<string, mixed>>}, hydrocarbon?: array{permit_type: string, permit_number: string, subproduct: string}, addenda?: array<string, mixed>}>,
+     *     metadata?: array<string, mixed>|null,
      *     currency?: string,
      *     exchange_rate?: float|int,
      *     payment_form?: string,
      *     payment_method?: 'PUE'|'PPD',
+     *     paid_later?: bool,
      *     use?: string,
      *     notes?: string,
      *     customer_po?: string,
@@ -247,6 +258,7 @@ final class SalesOrders
      *     closed_at: string|null,
      *     canceled_at: string|null,
      *     cancel_reason: string|null,
+     *     metadata: array<string, mixed>,
      *     created_at: string|null,
      * }
      * @throws FiscalistoException
@@ -325,6 +337,7 @@ final class SalesOrders
      *     closed_at: string|null,
      *     canceled_at: string|null,
      *     cancel_reason: string|null,
+     *     metadata: array<string, mixed>,
      *     created_at: string|null,
      * }
      * @throws FiscalistoException
@@ -393,6 +406,7 @@ final class SalesOrders
      *     closed_at: string|null,
      *     canceled_at: string|null,
      *     cancel_reason: string|null,
+     *     metadata: array<string, mixed>,
      *     created_at: string|null,
      * }
      * @throws FiscalistoException
@@ -452,6 +466,7 @@ final class SalesOrders
      *     closed_at: string|null,
      *     canceled_at: string|null,
      *     cancel_reason: string|null,
+     *     metadata: array<string, mixed>,
      *     created_at: string|null,
      * }
      * @throws FiscalistoException
@@ -489,7 +504,7 @@ final class SalesOrders
      *     branch: string|null,
      *     cost_center: string|null,
      *     type: 'I'|'E'|'P'|'T'|'N',
-     *     status: 'processing'|'pending'|'valid'|'rejected'|'canceled',
+     *     status: 'draft'|'processing'|'pending'|'valid'|'rejected'|'canceled',
      *     uuid: string|null,
      *     series: string|null,
      *     folio: string|null,
@@ -524,6 +539,7 @@ final class SalesOrders
      *     origin: array{type: 'app'|'api'|'assistant'|'point_of_sale'|'autofactura'|'invoice_link'|'quote'|'recurring_invoice'|'global_invoice', name: string|null}|null,
      *     created_at: string|null,
      *     metadata: array<string, mixed>,
+     *     draft?: array{updated_at: string|null, awaiting_approval: bool, stamping: bool, scheduled_at: string|null, send_email: bool, email_cc: string|null},
      *     warnings?: list<string>,
      *     email_error?: string,
      *     substitutes?: array{invoice: string, canceled: bool, cancel_error?: string, cancellation: array<string, mixed>|null},
@@ -587,6 +603,7 @@ final class SalesOrders
      *     closed_at: string|null,
      *     canceled_at: string|null,
      *     cancel_reason: string|null,
+     *     metadata: array<string, mixed>,
      *     created_at: string|null,
      * }
      * @throws FiscalistoException
@@ -645,6 +662,7 @@ final class SalesOrders
      *     closed_at: string|null,
      *     canceled_at: string|null,
      *     cancel_reason: string|null,
+     *     metadata: array<string, mixed>,
      *     created_at: string|null,
      * }
      * @throws FiscalistoException
@@ -703,6 +721,7 @@ final class SalesOrders
      *     closed_at: string|null,
      *     canceled_at: string|null,
      *     cancel_reason: string|null,
+     *     metadata: array<string, mixed>,
      *     created_at: string|null,
      * }
      * @throws FiscalistoException
@@ -763,6 +782,7 @@ final class SalesOrders
      *     closed_at: string|null,
      *     canceled_at: string|null,
      *     cancel_reason: string|null,
+     *     metadata: array<string, mixed>,
      *     created_at: string|null,
      * }
      * @throws FiscalistoException
@@ -820,6 +840,7 @@ final class SalesOrders
      *     closed_at: string|null,
      *     canceled_at: string|null,
      *     cancel_reason: string|null,
+     *     metadata: array<string, mixed>,
      *     created_at: string|null,
      * }
      * @throws FiscalistoException

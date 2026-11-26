@@ -27,7 +27,15 @@ final class ClimateSurveys
      *
      * GET /v1/climate_surveys
      *
-     * @param array{limit?: int, starting_after?: string, issuer?: string} $params
+     * @param array{
+     *     limit?: int,
+     *     starting_after?: string,
+     *     issuer?: string,
+     *     'created[gte]'?: string,
+     *     'created[gt]'?: string,
+     *     'created[lte]'?: string,
+     *     'created[lt]'?: string,
+     * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
      * @return Collection<array{id: string, object: 'climate_survey', livemode: bool, issuer: string, kind: string, title: string, branch: string|null, centro: string, guide: string|null, guide_i: bool, sample: bool, status: string, closes_on: string|null, workers: int|null, invited: int, answered: int, created_at: string, opened_at: string|null, closed_at: string|null, questions?: list<array<string, mixed>>, report?: array<string, mixed>, results?: array<string, mixed>, invites?: list<array<string, mixed>>}>
      * @throws FiscalistoException

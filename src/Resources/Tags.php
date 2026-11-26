@@ -32,12 +32,14 @@ final class Tags
      *     issuer?: string,
      *     name: string,
      *     color?: 'info'|'positive'|'warning'|'critical'|'muted',
+     *     metadata?: array<string, mixed>,
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     id: string,
      *     livemode: bool,
      *     object: 'tag',
+     *     metadata: array<string, mixed>,
      *     issuer: string,
      *     name: string,
      *     color: 'info'|'positive'|'warning'|'critical'|'muted',
@@ -62,9 +64,18 @@ final class Tags
      *
      * GET /v1/tags
      *
-     * @param array{limit?: int, starting_after?: string, issuer?: string} $params
+     * @param array{
+     *     limit?: int,
+     *     starting_after?: string,
+     *     issuer?: string,
+     *     'created[gte]'?: string,
+     *     'created[gt]'?: string,
+     *     'created[lte]'?: string,
+     *     'created[lt]'?: string,
+     *     metadata?: array<string, mixed>,
+     * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'tag', issuer: string, name: string, color: 'info'|'positive'|'warning'|'critical'|'muted', purchase_orders: int, invoices: int, created_at: string|null}>
+     * @return Collection<array{id: string, livemode: bool, object: 'tag', metadata: array<string, mixed>, issuer: string, name: string, color: 'info'|'positive'|'warning'|'critical'|'muted', purchase_orders: int, invoices: int, created_at: string|null}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/etiquetas/list-tags
      */
@@ -87,6 +98,7 @@ final class Tags
      *     id: string,
      *     livemode: bool,
      *     object: 'tag',
+     *     metadata: array<string, mixed>,
      *     issuer: string,
      *     name: string,
      *     color: 'info'|'positive'|'warning'|'critical'|'muted',
@@ -112,12 +124,17 @@ final class Tags
      * POST /v1/tags/{id}
      *
      * @param string $id
-     * @param array{name?: string, color?: 'info'|'positive'|'warning'|'critical'|'muted'} $params
+     * @param array{
+     *     name?: string,
+     *     color?: 'info'|'positive'|'warning'|'critical'|'muted',
+     *     metadata?: array<string, mixed>|null,
+     * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     id: string,
      *     livemode: bool,
      *     object: 'tag',
+     *     metadata: array<string, mixed>,
      *     issuer: string,
      *     name: string,
      *     color: 'info'|'positive'|'warning'|'critical'|'muted',

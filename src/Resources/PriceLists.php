@@ -41,12 +41,14 @@ final class PriceLists
      *     ends_on?: string|null,
      *     is_default?: bool,
      *     items?: list<array{product: string, unit?: string|null, min_quantity?: float|int, unit_price?: float|int, discount_percent?: float|int}>,
+     *     metadata?: array<string, mixed>,
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     id: string,
      *     livemode: bool,
      *     object: 'price_list',
+     *     metadata: array<string, mixed>,
      *     issuer: string,
      *     name: string,
      *     description: string|null,
@@ -80,9 +82,18 @@ final class PriceLists
      *
      * GET /v1/price_lists
      *
-     * @param array{limit?: int, starting_after?: string, issuer?: string} $params
+     * @param array{
+     *     limit?: int,
+     *     starting_after?: string,
+     *     issuer?: string,
+     *     'created[gte]'?: string,
+     *     'created[gt]'?: string,
+     *     'created[lte]'?: string,
+     *     'created[lt]'?: string,
+     *     metadata?: array<string, mixed>,
+     * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'price_list', issuer: string, name: string, description: string|null, base_list: string|null, adjust_percent: float|int, round_to: float|int|null, starts_on: string|null, ends_on: string|null, is_default: bool, active: bool, groups: int, customers: int, items: list<array<string, mixed>>|null, created_at: string|null, updated_at: string|null}>
+     * @return Collection<array{id: string, livemode: bool, object: 'price_list', metadata: array<string, mixed>, issuer: string, name: string, description: string|null, base_list: string|null, adjust_percent: float|int, round_to: float|int|null, starts_on: string|null, ends_on: string|null, is_default: bool, active: bool, groups: int, customers: int, items: list<array<string, mixed>>|null, created_at: string|null, updated_at: string|null}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/listas-de-precios/list-price-lists
      */
@@ -105,6 +116,7 @@ final class PriceLists
      *     id: string,
      *     livemode: bool,
      *     object: 'price_list',
+     *     metadata: array<string, mixed>,
      *     issuer: string,
      *     name: string,
      *     description: string|null,
@@ -149,12 +161,14 @@ final class PriceLists
      *     ends_on?: string|null,
      *     is_default?: bool,
      *     items?: list<array{product: string, unit?: string|null, min_quantity?: float|int, unit_price?: float|int, discount_percent?: float|int}>,
+     *     metadata?: array<string, mixed>|null,
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     id: string,
      *     livemode: bool,
      *     object: 'price_list',
+     *     metadata: array<string, mixed>,
      *     issuer: string,
      *     name: string,
      *     description: string|null,

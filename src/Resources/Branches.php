@@ -42,12 +42,14 @@ final class Branches
      *     pdf_color?: string|null,
      *     pdf_style?: 'clasico'|'moderno'|'compacto'|'minimalista'|null,
      *     time_zone?: 'America/Mexico_City'|'America/Cancun'|'America/Mazatlan'|'America/Hermosillo'|'America/Tijuana'|'America/Matamoros'|'America/Ciudad_Juarez'|null,
+     *     metadata?: array<string, mixed>,
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     id: string,
      *     livemode: bool,
      *     object: 'branch',
+     *     metadata: array<string, mixed>,
      *     issuer: string,
      *     name: string,
      *     zip: string,
@@ -88,9 +90,14 @@ final class Branches
      *     issuer?: string,
      *     include_archived?: bool,
      *     zip?: string,
+     *     'created[gte]'?: string,
+     *     'created[gt]'?: string,
+     *     'created[lte]'?: string,
+     *     'created[lt]'?: string,
+     *     metadata?: array<string, mixed>,
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'branch', issuer: string, name: string, zip: string, address: array<string, mixed>, phone: string|null, email: string|null, series: array<string, mixed>, trade_name: string|null, logo_url: string|null, pdf_color: string|null, pdf_style: 'clasico'|'moderno'|'compacto'|'minimalista'|null, time_zone: string, time_zone_chosen: bool, archived: bool, created_at: string|null, updated_at: string|null}>
+     * @return Collection<array{id: string, livemode: bool, object: 'branch', metadata: array<string, mixed>, issuer: string, name: string, zip: string, address: array<string, mixed>, phone: string|null, email: string|null, series: array<string, mixed>, trade_name: string|null, logo_url: string|null, pdf_color: string|null, pdf_style: 'clasico'|'moderno'|'compacto'|'minimalista'|null, time_zone: string, time_zone_chosen: bool, archived: bool, created_at: string|null, updated_at: string|null}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/sucursales/list-branches
      */
@@ -113,6 +120,7 @@ final class Branches
      *     id: string,
      *     livemode: bool,
      *     object: 'branch',
+     *     metadata: array<string, mixed>,
      *     issuer: string,
      *     name: string,
      *     zip: string,
@@ -162,12 +170,14 @@ final class Branches
      *     pdf_style?: 'clasico'|'moderno'|'compacto'|'minimalista'|null,
      *     time_zone?: 'America/Mexico_City'|'America/Cancun'|'America/Mazatlan'|'America/Hermosillo'|'America/Tijuana'|'America/Matamoros'|'America/Ciudad_Juarez'|null,
      *     archived?: bool,
+     *     metadata?: array<string, mixed>|null,
      * } $params
      * @param array{idempotency_key?: string, timeout?: float|int, max_retries?: int} $options
      * @return array{
      *     id: string,
      *     livemode: bool,
      *     object: 'branch',
+     *     metadata: array<string, mixed>,
      *     issuer: string,
      *     name: string,
      *     zip: string,
@@ -230,6 +240,7 @@ final class Branches
      *     id: string,
      *     livemode: bool,
      *     object: 'branch',
+     *     metadata: array<string, mixed>,
      *     issuer: string,
      *     name: string,
      *     zip: string,
@@ -269,6 +280,7 @@ final class Branches
      *     id: string,
      *     livemode: bool,
      *     object: 'branch',
+     *     metadata: array<string, mixed>,
      *     issuer: string,
      *     name: string,
      *     zip: string,

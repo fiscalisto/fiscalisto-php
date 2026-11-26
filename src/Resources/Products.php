@@ -29,6 +29,7 @@ final class Products
      *
      * @param array{
      *     issuer?: string,
+     *     metadata?: array<string, mixed>|null,
      *     name?: string|null,
      *     description: string,
      *     product_key: string,
@@ -84,6 +85,7 @@ final class Products
      *     portal_visible: bool,
      *     min_order_qty: float|int|null,
      *     order_step: float|int|null,
+     *     metadata: array<string, mixed>,
      *     created_at: string,
      *     updated_at: string|null,
      * }
@@ -110,9 +112,14 @@ final class Products
      *     sku?: string,
      *     product_key?: string,
      *     category?: string,
+     *     'created[gte]'?: string,
+     *     'created[gt]'?: string,
+     *     'created[lte]'?: string,
+     *     'created[lt]'?: string,
+     *     metadata?: array<string, mixed>,
      * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'product', issuer: string, name: string|null, description: string, product_key: string, unit_key: string, unit_name: string|null, sku: string|null, category: string|null, unit_price: float|int, open_price: bool, taxability: string, iva: string, ieps: float|int|null, ieps_factor: string|null, iva_retention: float|int, isr_retention: float|int, local_taxes: list<array<string, mixed>>, hydrocarbon: array<string, mixed>|null, track_stock: bool, cost: float|int|null, barcode: string|null, min_stock: float|int|null, portal_visible: bool, min_order_qty: float|int|null, order_step: float|int|null, created_at: string, updated_at: string|null}>
+     * @return Collection<array{id: string, livemode: bool, object: 'product', issuer: string, name: string|null, description: string, product_key: string, unit_key: string, unit_name: string|null, sku: string|null, category: string|null, unit_price: float|int, open_price: bool, taxability: string, iva: string, ieps: float|int|null, ieps_factor: string|null, iva_retention: float|int, isr_retention: float|int, local_taxes: list<array<string, mixed>>, hydrocarbon: array<string, mixed>|null, track_stock: bool, cost: float|int|null, barcode: string|null, min_stock: float|int|null, portal_visible: bool, min_order_qty: float|int|null, order_step: float|int|null, metadata: array<string, mixed>, created_at: string, updated_at: string|null}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/productos/list-products
      */
@@ -128,15 +135,26 @@ final class Products
      * Con un lenguaje de búsqueda, como el de Stripe: campo:'valor' (igual, sin importar
      * mayúsculas), campo~'valor' (contiene, 3 caracteres o más), >, >=, < y <= en números y
      * fechas, -campo:'valor' (no) y campo:null; hasta 10 cláusulas unidas con AND o con OR. Se
-     * busca por name, description, sku, product_key, unit_key, unit_price y created. Los más
-     * recientes primero, por páginas como las listas. Una búsqueda que no se entiende responde
-     * search_query_invalid diciendo dónde.
+     * busca por name, description, sku, product_key, unit_key, unit_price, created y metadata
+     * (metadata['order_id']:'123', con la llave entre corchetes). Los más recientes primero, por
+     * páginas como las listas. Una búsqueda que no se entiende responde search_query_invalid
+     * diciendo dónde.
      *
      * GET /v1/products/search
      *
-     * @param array{query: string, limit?: int, starting_after?: string, issuer?: string} $params
+     * @param array{
+     *     query: string,
+     *     limit?: int,
+     *     starting_after?: string,
+     *     issuer?: string,
+     *     'created[gte]'?: string,
+     *     'created[gt]'?: string,
+     *     'created[lte]'?: string,
+     *     'created[lt]'?: string,
+     *     metadata?: array<string, mixed>,
+     * } $params
      * @param array{timeout?: float|int, max_retries?: int} $options
-     * @return Collection<array{id: string, livemode: bool, object: 'product', issuer: string, name: string|null, description: string, product_key: string, unit_key: string, unit_name: string|null, sku: string|null, category: string|null, unit_price: float|int, open_price: bool, taxability: string, iva: string, ieps: float|int|null, ieps_factor: string|null, iva_retention: float|int, isr_retention: float|int, local_taxes: list<array<string, mixed>>, hydrocarbon: array<string, mixed>|null, track_stock: bool, cost: float|int|null, barcode: string|null, min_stock: float|int|null, portal_visible: bool, min_order_qty: float|int|null, order_step: float|int|null, created_at: string, updated_at: string|null}>
+     * @return Collection<array{id: string, livemode: bool, object: 'product', issuer: string, name: string|null, description: string, product_key: string, unit_key: string, unit_name: string|null, sku: string|null, category: string|null, unit_price: float|int, open_price: bool, taxability: string, iva: string, ieps: float|int|null, ieps_factor: string|null, iva_retention: float|int, isr_retention: float|int, local_taxes: list<array<string, mixed>>, hydrocarbon: array<string, mixed>|null, track_stock: bool, cost: float|int|null, barcode: string|null, min_stock: float|int|null, portal_visible: bool, min_order_qty: float|int|null, order_step: float|int|null, metadata: array<string, mixed>, created_at: string, updated_at: string|null}>
      * @throws FiscalistoException
      * @see https://fiscalisto.com/docs/api/referencia/productos/search-products
      */
@@ -184,6 +202,7 @@ final class Products
      *     portal_visible: bool,
      *     min_order_qty: float|int|null,
      *     order_step: float|int|null,
+     *     metadata: array<string, mixed>,
      *     created_at: string,
      *     updated_at: string|null,
      * }
@@ -205,6 +224,7 @@ final class Products
      *
      * @param string $id
      * @param array{
+     *     metadata?: array<string, mixed>|null,
      *     name?: string|null,
      *     description?: string,
      *     product_key?: string,
@@ -260,6 +280,7 @@ final class Products
      *     portal_visible: bool,
      *     min_order_qty: float|int|null,
      *     order_step: float|int|null,
+     *     metadata: array<string, mixed>,
      *     created_at: string,
      *     updated_at: string|null,
      * }
